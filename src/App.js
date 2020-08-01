@@ -9,6 +9,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 //Page
 import LandingPage from "views/LandingPage/LandingPage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
+import SignupPage from "views/SignupPage/SignupPage.js";
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class App extends Component {
       <div>
         <Switch>
           <Route path="/login-page" component={LoginPage} />
-          <Route exact path="/" component={LandingPage} />
+          <Route path="/signup-page" component={SignupPage} />
+          <Route path="/" component={LandingPage} />
         </Switch>
       </div>
     );
