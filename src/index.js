@@ -15,6 +15,10 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import { account } from './redux/reducers'
 
+//Router
+import { createBrowserHistory } from "history";
+import { BrowserRouter as Router } from 'react-router-dom';
+
 //Alert
 const options = {
   position: positions.BOTTOM_CENTER,
@@ -33,13 +37,18 @@ const allReducer = combineReducers({
 const store = createStore(allReducer, applyMiddleware(thunk, logger));
 console.log(store);
 
+//Router
+var history = createBrowserHistory();
+
 const render = () => {
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
-        <AlertProvider template={AlertTemplate} {...options}>
-          <App />
-        </AlertProvider>
+        <Router history={history}>
+          <AlertProvider template={AlertTemplate} {...options}>
+            <App />
+          </AlertProvider>
+        </Router>
       </Provider>
     </React.StrictMode>,
     document.getElementById('root')
