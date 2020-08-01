@@ -8,7 +8,7 @@ import {
     hexToRgb
   } from "assets/jss/material-kit-pro-react.js";
   
-  const customCheckboxRadioSwitch = {
+  const customCheckboxRadioSwitchStyle = {
     checkRoot: {
       padding: "14px",
       "&:hover": {
@@ -191,5 +191,5 @@ import {
     }
   };
   
-  export default customCheckboxRadioSwitch;
+  export default customCheckboxRadioSwitchStyle;
   
