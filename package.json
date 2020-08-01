@@ -13,6 +13,7 @@
     "history": "^5.0.0",
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-alert": "^7.0.2",
     "react-alert-template-basic": "^1.0.0",
@@ -29,6 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "compile-sass": "node-sass src/assets/scss/material-kit-pro-react.scss src/assets/css/material-kit-pro-react.css",
     "minify-sass": "node-sass src/assets/scss/material-kit-pro-react.scss src/assets/css/material-kit-pro-react.min.css --output-style compressed",
     "map-sass": "node-sass src/assets/scss/material-kit-pro-react.scss src/assets/css/material-kit-pro-react.css --source-map true"
@@ -49,6 +51,8 @@
     ]
   },
   "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-append-prepend": "^1.0.8",
     "redux-devtools": "^3.6.0"
   }
 }

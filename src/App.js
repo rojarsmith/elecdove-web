@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 
 //Alert
 import { withAlert } from 'react-alert';
