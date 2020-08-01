@@ -19,6 +19,8 @@ import { account } from './redux/reducers'
 import { createBrowserHistory } from "history";
 import { BrowserRouter as Router } from 'react-router-dom';
 
+import "assets/scss/material-kit-pro-react.scss?v=1.9.0";
+
 //Alert
 const options = {
   position: positions.BOTTOM_CENTER,
