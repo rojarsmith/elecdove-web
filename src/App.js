@@ -12,6 +12,7 @@ import ContactUsPage from "views/ContactUsPage/ContactUsPage.js";
 import EcommercePage from "views/EcommercePage/EcommercePage.js";
 import LandingPage from "views/LandingPage/LandingPage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
+import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
 import SignupPage from "views/SignupPage/SignupPage.js";
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
           <Route path="/contact-us" component={ContactUsPage} />
           <Route path="/ecommerce-page" component={EcommercePage} />
           <Route path="/login-page" component={LoginPage} />
+          <Route path="/shopping-cart-page" component={ShoppingCartPage} />
           <Route path="/signup-page" component={SignupPage} />
           <Route path="/" component={LandingPage} />
         </Switch>
