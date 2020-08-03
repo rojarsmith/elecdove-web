@@ -20,6 +20,7 @@ import Phone from "@material-ui/icons/Phone";
 import BusinessCenter from "@material-ui/icons/BusinessCenter";
 // core components
 import Header from "components/Header/Header.js";
+import HeaderBrand from "components/Header/HeaderBrand.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -117,7 +118,7 @@ export default function ContactUsPage() {
   return (
     <div>
       <Header
-        brand="Material Kit PRO React"
+        brand={<HeaderBrand />}
         links={<HeaderLinks dropdownHoverColor="dark" />}
         fixed
         color="dark"

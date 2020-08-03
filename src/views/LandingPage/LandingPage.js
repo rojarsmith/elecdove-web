@@ -11,6 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Favorite from "@material-ui/icons/Favorite";
 // core components
 import Header from "components/Header/Header.js";
+import HeaderBrand from "components/Header/HeaderBrand.js";
 import Footer from "components/Footer/Footer.js";
 import FooterStyleA from "components/Footer/FooterStyleA.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -40,7 +41,7 @@ export default function LandingPage({ ...rest }) {
     <div>
       <Header
         color="transparent"
-        brand={web.BRAND}
+        brand={<HeaderBrand />}
         links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
         changeColorOnScroll={{

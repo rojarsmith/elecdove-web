@@ -10,6 +10,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Favorite from "@material-ui/icons/Favorite";
 // core components
 import Header from "components/Header/Header.js";
+import HeaderBrand from "components/Header/HeaderBrand.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Parallax from "components/Parallax/Parallax.js";
@@ -36,7 +37,7 @@ export default function AboutUsPage() {
   return (
     <div>
       <Header
-        brand="Material Kit PRO React"
+        brand={<HeaderBrand />}
         links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
         color="transparent"
