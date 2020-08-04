@@ -12,7 +12,7 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import { account } from './redux/reducers'
+import { personReducer } from './redux/reducers'
 
 //Router
 import { createBrowserHistory } from "history";
@@ -32,7 +32,7 @@ const options = {
 const logger = createLogger();
 
 const allReducer = combineReducers({
-  account
+  person: personReducer
 })
 
 const store = createStore(allReducer, applyMiddleware(thunk, logger));
@@ -47,7 +47,7 @@ const render = () => {
       <Provider store={store}>
         <Router history={history}>
           <AlertProvider template={AlertTemplate} {...options}>
-            <App />
+            <App store={store} />
           </AlertProvider>
         </Router>
       </Provider>

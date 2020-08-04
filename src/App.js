@@ -1,4 +1,15 @@
 import React, { Component } from 'react';
+import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
+
+//Redux
+import {
+  LOADING_BEGIN,
+  LOADING_COMPLETED,
+  SET_CURRENT_PERSON
+} from 'redux/actions';
+
+//Communication
+import { getCurrentUser } from 'util/RemoteAPIUtils';
 
 //Alert
 import { withAlert } from 'react-alert';
@@ -21,10 +32,35 @@ import AdminLayout from "layouts/Admin.js";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
+  }
+
+  loadCurrentlyLoggedInUser = () => {
+    this.props.store.dispatch({ type: LOADING_BEGIN, data: null });
+
+    getCurrentUser()
+      .then(response => {
+        this.props.store.dispatch({ type: SET_CURRENT_PERSON, data: response });
+        this.props.alert.show("Get !");
+      }).catch(error => {
+        this.props.store.dispatch({ type: LOADING_COMPLETED, data: null });
+        this.props.alert.show("Get account failed !");
+      });
+  }
+
+  componentDidMount = () => {
+    console.log("App/componentDidMount");
+    this.loadCurrentlyLoggedInUser();
   }
 
   render() {
+    const { loading } = this.props.store.getState().person;
+    console.log(this.props.store.getState());
+    if (loading) {
+      return <LoadingIndicator />
+    }
+
     return (
       <div>
         <Switch>
