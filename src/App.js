@@ -45,7 +45,9 @@ class App extends Component {
         this.props.alert.show("Get !");
       }).catch(error => {
         this.props.store.dispatch({ type: LOADING_COMPLETED, data: null });
-        this.props.alert.show("Get account failed !");
+        if (error.status !== 401) {
+          this.props.alert.show("Get account failed !");
+        }
       });
   }
 
