@@ -58,13 +58,6 @@ const request = (options) => {
         return fetch(options.url, options)
             .then(response =>
                 response.json().then(json => {
-                    // switch (response.status) {
-                    //     case 401:
-                    //         json.status = response.status;
-                    //         return json;
-                    //     default: break;
-                    // }
-
                     json.status = response.status;
 
                     if (!response.ok) {

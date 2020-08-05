@@ -4,8 +4,9 @@ import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 //Redux
 import {
   LOADING_BEGIN,
-  LOADING_COMPLETED,
-  SET_CURRENT_PERSON
+  LOADING_END,
+  SET_ACCOUNT,
+  CLEAR_ACCOUNT
 } from 'redux/actions';
 
 //Communication
@@ -41,10 +42,10 @@ class App extends Component {
 
     getCurrentUser()
       .then(response => {
-        this.props.store.dispatch({ type: SET_CURRENT_PERSON, data: response });
+        this.props.store.dispatch({ type: SET_ACCOUNT, data: response });
         this.props.alert.show("Get !");
       }).catch(error => {
-        this.props.store.dispatch({ type: LOADING_COMPLETED, data: null });
+        this.props.store.dispatch({ type: LOADING_END, data: null });
         if (error.status !== 401) {
           this.props.alert.show("Get account failed !");
         }
@@ -57,7 +58,7 @@ class App extends Component {
   }
 
   render() {
-    const { loading } = this.props.store.getState().person;
+    const { loading } = this.props.store.getState().system;
     console.log(this.props.store.getState());
     if (loading) {
       return <LoadingIndicator />

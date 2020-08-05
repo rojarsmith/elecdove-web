@@ -12,7 +12,10 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import { personReducer } from './redux/reducers'
+import {
+  accountReducer,
+  systemReducer
+} from './redux/reducers'
 
 //Router
 import { createBrowserHistory } from "history";
@@ -32,7 +35,8 @@ const options = {
 const logger = createLogger();
 
 const allReducer = combineReducers({
-  person: personReducer
+  account: accountReducer,
+  system: systemReducer
 })
 
 const store = createStore(allReducer, applyMiddleware(thunk, logger));

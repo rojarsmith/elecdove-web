@@ -1,7 +1,10 @@
-//Person
+//System
 export const LOADING_BEGIN = 'LOADING_BEGIN';
-export const LOADING_COMPLETED = 'LOADING_COMPLETED';
-export const SET_CURRENT_PERSON = 'SET_CURRENT_PERSON';
+export const LOADING_END = 'LOADING_END';
+
+//Account
+export const SET_ACCOUNT = 'SET_ACCOUNT';
+export const CLEAR_ACCOUNT = 'CLEAR_ACCOUNT';
 
 //Test
 export const ACT1 = 'ACT1';
