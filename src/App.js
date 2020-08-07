@@ -44,12 +44,15 @@ class App extends Component {
       .then(response => {
         this.props.store.dispatch({ type: SET_ACCOUNT, data: response });
         this.props.alert.show("Get !");
+        //this.props.store.dispatch({ type: LOADING_END, data: null });
       }).catch(error => {
         this.props.store.dispatch({ type: LOADING_END, data: null });
         if (error.status !== 401) {
           this.props.alert.show("Get account failed !");
         }
+        //this.props.store.dispatch({ type: LOADING_END, data: null });
       });
+      this.props.store.dispatch({ type: LOADING_END, data: null });
   }
 
   componentDidMount = () => {
@@ -77,7 +80,8 @@ class App extends Component {
           <Route path="/signup-page" component={SignupPage} />
           <Route path="/admin" component={AdminLayout} />
           {/* <Route path="/control-panel" component={AdminLayout} /> */}
-          <Route path="/" component={LandingPage} />
+          {/* <Route path="/" component={LandingPage} /> */}
+          <Route path="/" component={EcommercePage} />
         </Switch>
       </div>
     );

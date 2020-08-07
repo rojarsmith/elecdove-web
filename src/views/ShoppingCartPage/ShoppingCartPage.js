@@ -15,6 +15,7 @@ import Add from "@material-ui/icons/Add";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 // core components
 import Header from "components/Header/Header.js";
+import HeaderBrand from "components/Header/HeaderBrand.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -33,7 +34,7 @@ import product3 from "assets/img/product3.jpg";
 
 const useStyles = makeStyles(shoppingCartStyle);
 
-export default function ShoppingCartPage() {
+export default function ShoppingCartPage({ ...rest }) {
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
@@ -42,16 +43,16 @@ export default function ShoppingCartPage() {
   return (
     <div>
       <Header
-        brand="Material Kit PRO React"
+        color="transparent"
+        brand={<HeaderBrand />}
         links={<HeaderLinks dropdownHoverColor="info" />}
         fixed
-        color="transparent"
         changeColorOnScroll={{
           height: 300,
           color: "info"
         }}
+        {...rest}
       />
-
       <Parallax
         image={require("assets/img/examples/bg2.jpg")}
         filter="dark"
