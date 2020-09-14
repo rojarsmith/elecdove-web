@@ -35,6 +35,8 @@ class App extends Component {
     super(props);
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
+
+    console.log(process.env.REACT_APP_PLATFORM);
   }
 
   loadCurrentlyLoggedInUser = () => {
