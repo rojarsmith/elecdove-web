@@ -737,6 +737,9 @@ import {
     },
     fileButton: {
       // display: "inline-block"
+    },
+    badge: {
+      margin: ".3125rem 100px"
     }
   };
   

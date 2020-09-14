@@ -74,7 +74,7 @@ export default function HeaderLinks(props) {
         </Button>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Button color="transparent" className={classes.navLink} component={NavLink} to="/shopping-cart-page">
+        <Button badgeContent={1} badgeContentMax={99} color="transparent" className={classes.navLink} component={NavLink} to="/shopping-cart-page">
           <ShoppingCart className={classes.icons} />Shopping Cart
         </Button>
       </ListItem>
