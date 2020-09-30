@@ -11,7 +11,10 @@ import styles from "assets/jss/material-kit-pro-react/components/footerStyleASty
 const useStyles = makeStyles(styles);
 
 export default function FooterStyleA(props) {
+  const { theme, className } = props;
   const classes = useStyles();
+  const themeType =
+    theme === "transparent" || theme == undefined ? false : true;
 
   return (
     <div>
