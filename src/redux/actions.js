@@ -1,4 +1,7 @@
 import AuthService from "service/AuthService";
+//import history from "util/History";
+import { useHistory  } from 'react-router-dom';
+
 
 //System
 export const LOADING_BEGIN = 'LOADING_BEGIN';
@@ -37,11 +40,13 @@ export const userActions = {
 };
 
 function login(username, password, from) {
+    //const history = useHistory();
+
     return dispatch => {
         console.log(username);
         dispatch(request({ username }));
 
-        console.log(username + ' ' + password)
+        console.log(username + ' ' + password + ' ' + from)
         AuthService.login({ username, password })
             .then(
                 user => {

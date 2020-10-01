@@ -19,7 +19,8 @@ import {
 } from './redux/reducers'
 
 //Router
-import { createBrowserHistory } from "history";
+//import history from "util/History";
+//import { createBrowserHistory } from "history";
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import "assets/scss/material-kit-pro-react.scss?v=1.9.0";
@@ -45,18 +46,21 @@ const store = createStore(allReducer, applyMiddleware(thunk, logger));
 console.log(store);
 
 //Router
-var history = createBrowserHistory();
+//var history = createBrowserHistory();
 
 // Disable log at production
 if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'development') {
   console.log = function () { }
+} else {
+  // For Debug.
+  localStorage.removeItem("user");
 }
 
 const render = () => {
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
-        <Router history={history}>
+        <Router>
           <AlertProvider template={AlertTemplate} {...options}>
             <App store={store} />
           </AlertProvider>

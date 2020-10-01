@@ -28,8 +28,9 @@ import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageSty
 
 import image from "assets/img/bg7.jpg";
 
-import { useDispatch, useSelector } from "react-redux";
-
+//import history from "util/History";
+import { Redirect, useLocation,useHistory  } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { userActions } from "redux/actions";
 
 const useStyles = makeStyles(loginPageStyle);
@@ -42,6 +43,8 @@ export default function LoginPage() {
   const { username, password } = inputs;
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
 
   React.useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,15 +61,23 @@ export default function LoginPage() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    console.log('aaa');
     console.log(inputs);
     setSubmitted(true);
     if (username && password) {
       // get return url from location state or default to home page
       const { from } = location.state || { from: { pathname: "/" } };
+      console.log(location);
+      console.log(from);
       dispatch( userActions.login(username, password, from));
+      history.replace(from);
     }
   }
+
+  // function handleClick(e){
+  //   e.preventDefault();
+
+  //   history.replace('/');
+  // }
 
   return (
     <div>
@@ -166,6 +177,7 @@ export default function LoginPage() {
                     <Button simple color="primary" size="lg" type="submit">
                       Login
                     </Button>
+                    {/* <Link to="/register" className="btn btn-link">Register</Link> */}
                   </div>
                 </form>
               </Card>
