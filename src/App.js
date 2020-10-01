@@ -30,13 +30,20 @@ import SignupPage from "views/SignupPage/SignupPage.js";
 //Layout
 import AdminLayout from "layouts/Admin.js";
 
+//Debug
+import AuthService from "service/AuthService";
+
+// Disable log at production
+if (process.env.NODE_ENV === 'test') {
+} else {
+  console.log = function () { }
+}
+
 class App extends Component {
   constructor(props) {
-    super(props);
+    super();
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
-
-    console.log(process.env.REACT_APP_PLATFORM);
   }
 
   loadCurrentlyLoggedInUser = () => {
@@ -54,7 +61,7 @@ class App extends Component {
         }
         //this.props.store.dispatch({ type: LOADING_END, data: null });
       });
-      this.props.store.dispatch({ type: LOADING_END, data: null });
+    this.props.store.dispatch({ type: LOADING_END, data: null });
   }
 
   componentDidMount = () => {

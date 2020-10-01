@@ -1,10 +1,9 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import  AuthService  from './AuthService';
-import 'regenerator-runtime/runtime'
+import AuthService from './AuthService';
 
-test('auth-service-login', async () => {
- var res = await AuthService.login();
- console.log(res);
-  expect(true);
+describe('Upload', () => {
+  test('auth-service-login', async () => {
+    var res = await AuthService.login('aaa111', 'bbb111');
+    console.log(res);
+    expect(res).toHaveProperty('expires_in');
+  });
 });
