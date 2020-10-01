@@ -13,8 +13,8 @@ import styles from "assets/jss/material-kit-pro-react/components/buttonStyle.js"
 
 const stylesBadge = theme => ({
   customBadge: {
-    marginTop: theme.spacing.unit * 1.5,
-    marginRight: theme.spacing.unit * 13.5
+    marginTop: theme.spacing(1.5),
+    marginRight: theme.spacing(13.5)
   }
 });
 
