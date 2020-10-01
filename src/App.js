@@ -38,7 +38,8 @@ class App extends Component {
     super();
 
     this.state = {
-      payload: {}
+      payload: {},
+      payload2: {}
     };
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
@@ -68,12 +69,31 @@ class App extends Component {
     }
 
     const promiseLogin = async () => {
-      const response = await AuthService.login('aaa111', 'bbb111');
+      const response = await AuthService.login({ username: 'aaa111', password: 'bbb111' });
       console.log(response);
       this.setState({ payload: response });
+
     };
 
     promiseLogin()
+
+    var user = localStorage.getItem('user');
+    console.log(user);
+
+    const promiseSignUp = async () => {
+      const response = await AuthService.signUp({
+        name: 'aaaaa',
+        email: 'rojarsmith@live.com',
+        password: 'ccc11111'
+      });
+      console.log(response);
+      this.setState({ payload2: response });
+
+    };
+
+    promiseSignUp();
+
+    console.log(this.state.payload2);
 
     this.loadCurrentlyLoggedInUser();
   }
