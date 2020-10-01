@@ -1,23 +1,8 @@
-import axios from "axios";
+import { apiUserLogin } from "../util/APIUtils";
 const querystring = require('querystring');
 
 class AuthService {
-  login(username, password) {
-    console.log(process.env.REACT_APP_API_BAUTH_PASSWORD)
-    const config = {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      withCredentials: true,
-      auth: {
-        username: process.env.REACT_APP_API_BAUTH_USERNAME,
-        password: process.env.REACT_APP_API_BAUTH_PASSWORD
-      },
-      validateStatus: function (status) {
-        return status >= 200 && status < 300; // default
-      },
-      xsrfCookieName: 'XSRF-TOKEN', // default
-      xsrfHeaderName: 'X-XSRF-TOKEN', // default
-    };
-
+  async login(username, password) {
     let data = querystring.stringify({
       'grant_type': 'password',
       'username': username,
@@ -25,16 +10,14 @@ class AuthService {
       'scope': 'all'
     });
 
-    return axios
-      .post(process.env.REACT_APP_API_BASE_URL + "/oauth/token",
-        data,
-        config)
+    return apiUserLogin(data)
       .then((response) => {
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
+        const payload = response.data;
+        if (payload.accessToken) {
+          localStorage.setItem("user", JSON.stringify(payload));
         }
 
-        return response.data;
+        return payload;
       })
       .catch((error) => {
         console.log(error);

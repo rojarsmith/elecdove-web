@@ -33,15 +33,13 @@ import AdminLayout from "layouts/Admin.js";
 //Debug
 import AuthService from "service/AuthService";
 
-// Disable log at production
-if (process.env.NODE_ENV === 'test') {
-} else {
-  console.log = function () { }
-}
-
 class App extends Component {
   constructor(props) {
     super();
+
+    this.state = {
+      payload: {}
+    };
 
     this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
   }
@@ -68,6 +66,15 @@ class App extends Component {
     if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
       console.log("App/componentDidMount");
     }
+
+    const promiseLogin = async () => {
+      const response = await AuthService.login('aaa111', 'bbb111');
+      console.log(response);
+      this.setState({ payload: response });
+    };
+
+    promiseLogin()
+
     this.loadCurrentlyLoggedInUser();
   }
 

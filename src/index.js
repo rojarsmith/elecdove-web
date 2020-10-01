@@ -45,6 +45,11 @@ console.log(store);
 //Router
 var history = createBrowserHistory();
 
+// Disable log at production
+if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'development') {
+  console.log = function () { }
+}
+
 const render = () => {
   ReactDOM.render(
     <React.StrictMode>
