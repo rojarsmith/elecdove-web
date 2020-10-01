@@ -43,11 +43,8 @@ class AuthService {
       'password': password,
     };
 
-    console.log(data);
-
     return apiSignUp(data)
       .then((response) => {
-        console.log(response);
         return response.data;
       })
       .catch((error) => {
