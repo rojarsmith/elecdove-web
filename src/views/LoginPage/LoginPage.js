@@ -1,14 +1,14 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+//import List from "@material-ui/core/List";
+//import ListItem from "@material-ui/core/ListItem";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Email from "@material-ui/icons/Email";
-import Favorite from "@material-ui/icons/Favorite";
+//import Favorite from "@material-ui/icons/Favorite";
 import Face from "@material-ui/icons/Face";
 // core components
 import Header from "components/Header/Header.js";
@@ -28,14 +28,46 @@ import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageSty
 
 import image from "assets/img/bg7.jpg";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { userActions } from "redux/actions";
+
 const useStyles = makeStyles(loginPageStyle);
 
 export default function LoginPage() {
+  const [inputs, setInputs] = useState({
+    username: '',
+    password: ''
+  });
+  const { username, password } = inputs;
+  const [submitted, setSubmitted] = useState(false);
+  const dispatch = useDispatch();
+
   React.useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
   });
   const classes = useStyles();
+
+
+  function handleChange(e) {
+    const { id, value } = e.target;
+    setInputs(inputs => ({ ...inputs, [id]: value }));
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    console.log('aaa');
+    console.log(inputs);
+    setSubmitted(true);
+    if (username && password) {
+      // get return url from location state or default to home page
+      const { from } = location.state || { from: { pathname: "/" } };
+      dispatch( userActions.login(username, password, from));
+    }
+  }
+
   return (
     <div>
       <Header
@@ -56,14 +88,14 @@ export default function LoginPage() {
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
               <Card>
-                <form className={classes.form}>
+                <form className={classes.form} name="form" method="POST" onSubmit={handleSubmit}>
                   <CardHeader
                     color="primary"
                     signup
                     className={classes.cardHeader}
                   >
                     <h4 className={classes.cardTitle}>Login</h4>
-                    <div className={classes.socialLine}>
+                    {/* <div className={classes.socialLine}>
                       <Button
                         justIcon
                         color="transparent"
@@ -88,44 +120,30 @@ export default function LoginPage() {
                       >
                         <i className="fab fa-google-plus-g" />
                       </Button>
-                    </div>
+                    </div> */}
                   </CardHeader>
-                  <p className={classes.description + " " + classes.textCenter}>
+                  {/* <p className={classes.description + " " + classes.textCenter}>
                     Or Be Classical
-                  </p>
+                  </p> */}
                   <CardBody signup>
                     <CustomInput
-                      id="first"
+                      id="username"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
-                        placeholder: "First Name...",
+                        placeholder: "User Name",
                         type: "text",
                         startAdornment: (
                           <InputAdornment position="start">
                             <Face className={classes.inputIconsColor} />
                           </InputAdornment>
-                        )
+                        ),
+                        onChange: (event) => handleChange(event)
                       }}
                     />
                     <CustomInput
-                      id="email"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "Email...",
-                        type: "email",
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Email className={classes.inputIconsColor} />
-                          </InputAdornment>
-                        )
-                      }}
-                    />
-                    <CustomInput
-                      id="pass"
+                      id="password"
                       formControlProps={{
                         fullWidth: true
                       }}
@@ -139,13 +157,14 @@ export default function LoginPage() {
                             </Icon>
                           </InputAdornment>
                         ),
-                        autoComplete: "off"
+                        autoComplete: "off",
+                        onChange: (event) => handleChange(event)
                       }}
                     />
                   </CardBody>
                   <div className={classes.textCenter}>
-                    <Button simple color="primary" size="lg">
-                      Get started
+                    <Button simple color="primary" size="lg" type="submit">
+                      Login
                     </Button>
                   </div>
                 </form>
@@ -155,7 +174,7 @@ export default function LoginPage() {
         </div>
 
         <Footer className={classes.footer} content={<FooterStyleA />} />
-        
+
       </div>
     </div>
   );

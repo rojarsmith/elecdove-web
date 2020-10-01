@@ -14,7 +14,8 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import {
   accountReducer,
-  systemReducer
+  systemReducer,
+  authenticationReducer
 } from './redux/reducers'
 
 //Router
@@ -36,7 +37,8 @@ const logger = createLogger();
 
 const allReducer = combineReducers({
   account: accountReducer,
-  system: systemReducer
+  system: systemReducer,
+  authentication: authenticationReducer
 })
 
 const store = createStore(allReducer, applyMiddleware(thunk, logger));

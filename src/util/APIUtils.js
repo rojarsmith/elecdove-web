@@ -37,3 +37,16 @@ const jsonRequest = axios.create(configJson);
 export const apiUserLogin = data => xformRequest.post("/oauth/token", data);
 
 export const apiSignUp = data => jsonRequest.post("/auth/signup", data);
+
+export function authHeader() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    console(user);
+
+    if (user && user.accessToken) {
+        return { Authorization: 'Bearer ' + user.accessToken };
+        // for Node.js Express back-end
+        // return { 'x-access-token': user.accessToken };
+    } else {
+        return {};
+    }
+}

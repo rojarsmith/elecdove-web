@@ -38,11 +38,12 @@ class App extends Component {
     super();
 
     this.state = {
+      user: {},
       payload: {},
       payload2: {}
     };
 
-    this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
+    //this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
   }
 
   loadCurrentlyLoggedInUser = () => {
@@ -75,7 +76,7 @@ class App extends Component {
 
     };
 
-    promiseLogin()
+    // promiseLogin()
 
     var user = localStorage.getItem('user');
     console.log(user);
@@ -91,11 +92,11 @@ class App extends Component {
 
     };
 
-    promiseSignUp();
+    // promiseSignUp();
 
     console.log(this.state.payload2);
 
-    this.loadCurrentlyLoggedInUser();
+    //this.loadCurrentlyLoggedInUser();
   }
 
   render() {

@@ -1,3 +1,5 @@
+import { userActionTypes } from "redux/actions";
+
 import {
     LOADING_BEGIN,
     LOADING_END,
@@ -23,6 +25,32 @@ export function accountReducer(
         default: return state;
     };
 };
+
+let user = JSON.parse(localStorage.getItem('user'));
+const initialState = user ? { loggedIn: true, user } : {};
+console.log("initialState:" + initialState.user);
+console.log("initialState:" + initialState.loggedIn);
+
+export function authenticationReducer(state = initialState, action) {
+    switch (action.type) {
+        case userActionTypes.LOGIN_REQUEST:
+            return {
+                loggingIn: true,
+                user: action.user
+            };
+        case userActionTypes.LOGIN_SUCCESS:
+            return {
+                loggedIn: true,
+                user: action.user
+            };
+        case userActionTypes.LOGIN_FAILURE:
+            return {};
+        case userActionTypes.LOGOUT:
+            return {};
+        default:
+            return state
+    }
+}
 
 export function systemReducer(
     state = {
