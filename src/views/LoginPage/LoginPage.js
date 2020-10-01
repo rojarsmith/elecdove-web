@@ -29,7 +29,7 @@ import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageSty
 import image from "assets/img/bg7.jpg";
 
 //import history from "util/History";
-import { Redirect, useLocation,useHistory  } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { userActions } from "redux/actions";
 
@@ -38,9 +38,17 @@ const useStyles = makeStyles(loginPageStyle);
 export default function LoginPage() {
   const [inputs, setInputs] = useState({
     username: '',
-    password: ''
+    password: '',
+    usernameError: false,
+    usernameErrorMessage: '',
+    passwordError: false,
+    passwordErrorMessage: ''
   });
-  const { username, password } = inputs;
+  const {
+    username,
+    password,
+    usernameError,
+    usernameErrorMessage } = inputs;
   const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -53,13 +61,19 @@ export default function LoginPage() {
   const classes = useStyles();
 
 
-  function handleChange(e) {
-    const { id, value } = e.target;
+  function handleChange(event) {
+    const { id, value } = event.target;
     setInputs(inputs => ({ ...inputs, [id]: value }));
+    console.log(inputs);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (checkInputComplete(['username', 'password']) === false) {
+      //this.props.alert.warning("Input not completed!");
+      return false;
+    }
 
     console.log(inputs);
     setSubmitted(true);
@@ -68,7 +82,7 @@ export default function LoginPage() {
       const { from } = location.state || { from: { pathname: "/" } };
       console.log(location);
       console.log(from);
-      dispatch( userActions.login(username, password, from));
+      dispatch(userActions.login(username, password, from));
       history.replace(from);
     }
   }
@@ -78,6 +92,96 @@ export default function LoginPage() {
 
   //   history.replace('/');
   // }
+
+  function handleInputValidate(event) {
+    console.log(event.target.id);
+    handleInputValidateLogic(event.target.id);
+  }
+
+  function handleInputValidateLogic(itemname) {
+    const { username, password } = inputs;
+
+    switch (itemname) {
+      case 'username':
+        if (username === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input user name."
+          }));
+          return false;
+        }
+        else if (validateUsername(username) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Must 5~21 chars, 0~9, a~Z."
+          }));
+          return false;
+        }
+        else {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: false,
+            [itemname + 'ErrorMessage']: ""
+          }));
+          return true;
+        }
+      case 'password':
+        if (password === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input password."
+          }));
+          return false;
+        }
+        else if (validatePassword(password) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Must 8-16 characters with no space."
+          }));
+          return false;
+        }
+        else {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: false,
+            [itemname + 'ErrorMessage']: ""
+          }));
+          return true;
+        }
+      default:
+        return false;
+    }
+  }
+
+  function checkInputComplete(inputs) {
+    var validates = [];
+
+    for (let i = 0; i < inputs.length; i++) {
+      validates[i] = handleInputValidateLogic(inputs[i]);
+    }
+
+    var result = true;
+
+    for (let i = 0; i < validates.length; i++) {
+      result = result && validates[i];
+    }
+
+    return result;
+  }
+
+  const validateUsername = (value) => {
+    const re = /^[a-zA-Z\d]\w{3,19}[a-zA-Z\d]$/;
+    return re.test(value);
+  }
+
+  const validatePassword = (value) => {
+    const re = /^([^\s]){8,16}$/;
+    return re.test(value);
+  }
 
   return (
     <div>
@@ -150,8 +254,11 @@ export default function LoginPage() {
                             <Face className={classes.inputIconsColor} />
                           </InputAdornment>
                         ),
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                       }}
+                      error={inputs.usernameError}
+                      labelText={inputs.usernameErrorMessage}
                     />
                     <CustomInput
                       id="password"
@@ -169,15 +276,18 @@ export default function LoginPage() {
                           </InputAdornment>
                         ),
                         autoComplete: "off",
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                       }}
+                      error={inputs.passwordError}
+                      labelText={inputs.passwordErrorMessage}
                     />
                   </CardBody>
                   <div className={classes.textCenter}>
                     <Button simple color="primary" size="lg" type="submit">
                       Login
                     </Button>
-                    {/* <Link to="/register" className="btn btn-link">Register</Link> */}
+                    <Link to="/signup-page" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Register</Link>
                   </div>
                 </form>
               </Card>
