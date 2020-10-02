@@ -35,6 +35,7 @@ const xformRequest = axios.create(configXForm);
 const jsonRequest = axios.create(configJson);
 
 export const apiUserLogin = data => xformRequest.post("/oauth/token", data);
+export const apiUserCheck = data => xformRequest.post("/oauth/check_token", data);
 
 export const apiSignUp = data => jsonRequest.post("/auth/signup", data);
 

@@ -1,4 +1,4 @@
-import {actionAuthentications} from "../action";
+import { actionAuthentications } from "../action";
 import AuthService from "service/AuthService";
 
 export const creatorAuthentications = {
@@ -8,7 +8,26 @@ export const creatorAuthentications = {
 
 function initial() {
     return dispatch => {
-        dispatch({ type: actionAuthentications.LOGIN_INITIAL, action: "" })
+        let user = JSON.parse(localStorage.getItem("user"));
+
+        if (user) {
+            let token = user.access_token;
+            console.log(token);
+            AuthService.check({ token })
+                .then(
+                    user => {
+                        console.log(user);
+                        dispatch({ type: actionAuthentications.LOGIN_INITIAL, action: user.active });
+                    },
+                    error => {
+                        console.log(error);
+                        localStorage.removeItem("user");
+                        dispatch({ type: actionAuthentications.LOGIN_INITIAL });
+                    }
+                );
+        } else {
+            dispatch({ type: actionAuthentications.LOGIN_INITIAL });
+        }
     }
 }
 

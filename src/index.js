@@ -38,7 +38,7 @@ if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'development') {
   console.log = function () { }
 } else {
   // For Debug.
-  localStorage.removeItem("user");
+  // localStorage.removeItem("user");
 }
 
 const render = () => {

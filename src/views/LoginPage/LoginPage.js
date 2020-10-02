@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -63,17 +63,27 @@ export default function LoginPage() {
     document.body.scrollTop = 0;
   });
 
+  //   componentDidMount = () => {
+  //     dispatch(creatorAuthentications.initial());
+  // }
+  // useLayoutEffect(() => {
+  //   dispatch(creatorAuthentications.initial());
+  // }, []);
   useEffect(() => {
     dispatch(creatorAuthentications.initial());
   }, []);
 
   useEffect(() => {
+    let timeoutID;
     if (authe.loginSuccess) {
       if (seconds >= 0) {
-        setTimeout(() => setSeconds(seconds - 1), 1000);
+        timeoutID = setTimeout(() => setSeconds(seconds - 1), 1000);
       } else {
         setSeconds(0);
       }
+    }
+    return () => {
+      clearInterval(timeoutID);
     }
   });
 
@@ -237,7 +247,7 @@ export default function LoginPage() {
       {authe.loginSuccess &&
         <div>
           <Dialog
-            open={open}
+            open={authe.loginSuccess}
             //  onClose={handleClose}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
@@ -259,7 +269,6 @@ export default function LoginPage() {
           <Delay wait={6000}><Redirect to="/" /></Delay>
         </div>
       }
-
       <Header
         brand={<HeaderBrand />}
         absolute
@@ -287,72 +296,76 @@ export default function LoginPage() {
                     <h4 className={classes.cardTitle}>Login</h4>
                   </CardHeader>
                   <CardBody signup>
-                    <CustomInput
-                      id="username"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "User Name",
-                        type: "text",
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Face className={classes.inputIconsColor} />
-                          </InputAdornment>
-                        ),
-                        onChange: (event) => handleChange(event),
-                        onBlur: (event) => handleInputValidate(event)
-                      }}
-                      error={inputs.usernameError}
-                      labelText={inputs.usernameErrorMessage}
-                    />
-                    <CustomInput
-                      id="password"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "Password",
-                        type: "password",
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Icon className={classes.inputIconsColor}>
-                              lock_utline
+                    {(!authe.loggedIn) && (
+                      <div>
+                        <CustomInput
+                          id="username"
+                          formControlProps={{
+                            fullWidth: true
+                          }}
+                          inputProps={{
+                            placeholder: "User Name",
+                            type: "text",
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <Face className={classes.inputIconsColor} />
+                              </InputAdornment>
+                            ),
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event)
+                          }}
+                          error={inputs.usernameError}
+                          labelText={inputs.usernameErrorMessage}
+                        />
+                        <CustomInput
+                          id="password"
+                          formControlProps={{
+                            fullWidth: true
+                          }}
+                          inputProps={{
+                            placeholder: "Password",
+                            type: "password",
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <Icon className={classes.inputIconsColor}>
+                                  lock_utline
                             </Icon>
-                          </InputAdornment>
-                        ),
-                        autoComplete: "off",
-                        onChange: (event) => handleChange(event),
-                        onBlur: (event) => handleInputValidate(event)
-                      }}
-                      error={inputs.passwordError}
-                      labelText={inputs.passwordErrorMessage}
-                    />
-                    <CustomInput
-                      id="captcha"
-                      formControlProps={{
-                        fullWidth: true
-                      }}
-                      inputProps={{
-                        placeholder: "Captcha",
-                        type: "Text",
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Icon className={classes.inputIconsColor}>
-                              <DoneAllOutlined className={classes.inputIconsColor} />
-                            </Icon>
-                          </InputAdornment>
-                        ),
-                        autoComplete: "off",
-                        onChange: (event) => handleChange(event),
-                        onBlur: (event) => handleInputValidate(event)
-                      }}
-                      error={inputs.captchaError}
-                      labelText={inputs.captchaErrorMessage}
-                    />
-                    <div className={classes.textCenter}>
-                      <RCG result={result} toggleRefresh={authe.loading} ></RCG>
-                    </div>
+                              </InputAdornment>
+                            ),
+                            autoComplete: "off",
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event)
+                          }}
+                          error={inputs.passwordError}
+                          labelText={inputs.passwordErrorMessage}
+                        />
+                        <CustomInput
+                          id="captcha"
+                          formControlProps={{
+                            fullWidth: true
+                          }}
+                          inputProps={{
+                            placeholder: "Captcha",
+                            type: "Text",
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <Icon className={classes.inputIconsColor}>
+                                  <DoneAllOutlined className={classes.inputIconsColor} />
+                                </Icon>
+                              </InputAdornment>
+                            ),
+                            autoComplete: "off",
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event)
+                          }}
+                          error={inputs.captchaError}
+                          labelText={inputs.captchaErrorMessage}
+                        />
+                        <div className={classes.textCenter}>
+                          <RCG result={result} toggleRefresh={authe.loading} ></RCG>
+                        </div>
+                      </div>
+                    )}
                   </CardBody>
                   <div className={classes.textCenter}>
                     <div className={classes.typo}>
