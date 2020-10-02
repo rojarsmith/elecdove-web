@@ -27,31 +27,31 @@ export function accountReducer(
 };
 
 let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loading: false, loggedIn: true, user } : {};
+const initialState = user ? { loading: false, loginFailed: false, loggedIn: false, user } : {};
 console.log("initialState:" + initialState.user);
 console.log("initialState:" + initialState.loggedIn);
 
 export function authenticationReducer(state = initialState, action) {
     switch (action.type) {
+        case userActionTypes.LOGIN_INITIAL:
+            state.loginFailed = false;
+            state.loading = false;
+            return state;
         case userActionTypes.LOGIN_REQUEST:
+            state.loginFailed = false;
             state.loading = true;
-            return {
-                loading: true,
-                loggingIn: true,
-                user: action.user
-            };
+            state.loggedIn = false;
+            return state;
         case userActionTypes.LOGIN_SUCCESS:
+            state.loginFailed = false;
             state.loading = false;
-            return {
-                loading: false,
-                loggedIn: true,
-                user: action.user
-            };
+            state.loggedIn = true;
+            return state;
         case userActionTypes.LOGIN_FAILURE:
+            state.loginFailed = true;
             state.loading = false;
-            return {
-                loading: false,
-            };
+            state.loggedIn = false;
+            return state;
         case userActionTypes.LOGOUT:
             return {};
         default:

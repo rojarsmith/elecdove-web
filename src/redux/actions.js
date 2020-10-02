@@ -20,6 +20,7 @@ export const userActionTypes = {
     REGISTER_SUCCESS: 'USERS_REGISTER_SUCCESS',
     REGISTER_FAILURE: 'USERS_REGISTER_FAILURE',
 
+    LOGIN_INITIAL: 'USERS_LOGIN_INITIAL',
     LOGIN_REQUEST: 'USERS_LOGIN_REQUEST',
     LOGIN_SUCCESS: 'USERS_LOGIN_SUCCESS',
     LOGIN_FAILURE: 'USERS_LOGIN_FAILURE',
@@ -36,8 +37,15 @@ export const userActionTypes = {
 };
 
 export const userActions = {
+    initial,
     login
 };
+
+function initial() {
+    return dispatch => {
+        dispatch( { type: userActionTypes.LOGIN_INITIAL, action: "" })
+    }
+}
 
 function login(username, password, from) {
     //const history = useHistory();

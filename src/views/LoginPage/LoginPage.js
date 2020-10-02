@@ -1,14 +1,10 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-//import List from "@material-ui/core/List";
-//import ListItem from "@material-ui/core/ListItem";
-import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
-import Email from "@material-ui/icons/Email";
-//import Favorite from "@material-ui/icons/Favorite";
+import Icon from "@material-ui/core/Icon";
 import Face from "@material-ui/icons/Face";
 // core components
 import Header from "components/Header/Header.js";
@@ -23,16 +19,14 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
-
+import Danger from "components/Typography/Danger.js";
+import { Link, useLocation, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { userActions } from "redux/actions";
 import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageStyle.js";
 
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import image from "assets/img/bg7.jpg";
-
-//import history from "util/History";
-import { Link, useLocation, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "redux/actions";
 
 const useStyles = makeStyles(loginPageStyle);
 
@@ -47,9 +41,7 @@ export default function LoginPage() {
   });
   const {
     username,
-    password,
-    usernameError,
-    usernameErrorMessage } = inputs;
+    password } = inputs;
   const authe = useSelector(state => state.authentication);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -57,19 +49,21 @@ export default function LoginPage() {
   const location = useLocation();
   const history = useHistory();
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
   });
-  const classes = useStyles();
 
+  useEffect(() => {
+    dispatch(userActions.initial());
+  }, []);
+
+  const classes = useStyles();
 
   function handleChange(event) {
     const { id, value } = event.target;
     setInputs(inputs => ({ ...inputs, [id]: value }));
   }
-
-  console.log(authe);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -295,6 +289,15 @@ export default function LoginPage() {
                       labelText={inputs.passwordErrorMessage}
                     />
                   </CardBody>
+                  <div className={classes.textCenter}>
+                    <div className={classes.typo}>
+                      {authe.loginFailed ? (
+                        <Danger>Login Failed<br />
+                        Check user name and password again.
+                        </Danger>
+                      ) : null}
+                    </div>
+                  </div>
                   <div className={classes.textCenter}>
                     <Button simple color="primary" size="lg" type="submit">
                       Login
