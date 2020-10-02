@@ -12,15 +12,9 @@ import { Provider } from 'react-redux'
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import {
-  accountReducer,
-  systemReducer,
-  authenticationReducer
-} from './redux/reducers'
+import   allReducer from "redux/reducer"
 
 //Router
-//import history from "util/History";
-//import { createBrowserHistory } from "history";
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import "assets/scss/material-kit-pro-react.scss?v=1.9.0";
@@ -36,17 +30,12 @@ const options = {
 //Redux
 const logger = createLogger();
 
-const allReducer = combineReducers({
-  account: accountReducer,
-  system: systemReducer,
-  authentication: authenticationReducer
-})
+// const allReducer = combineReducers({
+//   authentication: reducerAuthentication
+// })
 
 const store = createStore(allReducer, applyMiddleware(thunk, logger));
 console.log(store);
-
-//Router
-//var history = createBrowserHistory();
 
 // Disable log at production
 if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'development') {

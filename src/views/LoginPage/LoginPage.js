@@ -22,7 +22,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Danger from "components/Typography/Danger.js";
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "redux/actions";
+import { creatorAuthentications } from "redux/creator";
 import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageStyle.js";
 
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
@@ -55,7 +55,7 @@ export default function LoginPage() {
   });
 
   useEffect(() => {
-    dispatch(userActions.initial());
+    dispatch(creatorAuthentications.initial());
   }, []);
 
   const classes = useStyles();
@@ -85,7 +85,7 @@ export default function LoginPage() {
       const { from } = location.state || { from: { pathname: "/" } };
       console.log(location);
       console.log(from);
-      dispatch(userActions.login(username, password, from));
+      dispatch(creatorAuthentications.login(username, password, from));
       // setLoading(false);
       console.log(authe);
       //history.replace(from);
