@@ -11,6 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // @material-ui/icons
 import Icon from "@material-ui/core/Icon";
 import Face from "@material-ui/icons/Face";
+import DoneAllOutlined from '@material-ui/icons/DoneAllOutlined';
 // core components
 import Header from "components/Header/Header.js";
 import HeaderBrand from "components/Header/HeaderBrand.js";
@@ -30,8 +31,7 @@ import Delay from "components/Delay";
 import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { creatorAuthentications } from "redux/creator";
-
-
+import RCG from "components/ReactCaptchaGenerator";
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageStyle.js";
 import image from "assets/img/bg7.jpg";
@@ -50,6 +50,7 @@ export default function LoginPage() {
   const authe = useSelector(state => state.authentication);
   const [seconds, setSeconds] = useState(5);
   const [submitted, setSubmitted] = useState(false);
+  const [captcha, setCaptcha] = useState("");
   // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -194,6 +195,11 @@ export default function LoginPage() {
     return re.test(value);
   }
 
+  function result(text) {
+    console.log(text);
+    setCaptcha(text);
+  }
+
   return (
     <div>
       {authe.loading && submitted && <LoadingIndicator />}
@@ -291,6 +297,31 @@ export default function LoginPage() {
                       error={inputs.passwordError}
                       labelText={inputs.passwordErrorMessage}
                     />
+                    <CustomInput
+                      id="captcha"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                      inputProps={{
+                        placeholder: "Captcha",
+                        type: "Text",
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <Icon className={classes.inputIconsColor}>
+                             <DoneAllOutlined className={classes.inputIconsColor} />
+                            </Icon>
+                          </InputAdornment>
+                        ),
+                        autoComplete: "off",
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
+                      }}
+                      error={inputs.passwordError}
+                      labelText={inputs.passwordErrorMessage}
+                    />
+                    <div className={classes.textCenter}>
+                      <RCG result={result}></RCG>
+                    </div>
                   </CardBody>
                   <div className={classes.textCenter}>
                     <div className={classes.typo}>
