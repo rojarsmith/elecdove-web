@@ -26,11 +26,12 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageStyle.js";
 
+import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import image from "assets/img/bg7.jpg";
 
 //import history from "util/History";
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "redux/actions";
 
 const useStyles = makeStyles(loginPageStyle);
@@ -49,7 +50,9 @@ export default function LoginPage() {
     password,
     usernameError,
     usernameErrorMessage } = inputs;
+  const authe = useSelector(state => state.authentication);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -64,11 +67,14 @@ export default function LoginPage() {
   function handleChange(event) {
     const { id, value } = event.target;
     setInputs(inputs => ({ ...inputs, [id]: value }));
-    console.log(inputs);
   }
+
+  console.log(authe);
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    // setLoading(true);
 
     if (checkInputComplete(['username', 'password']) === false) {
       //this.props.alert.warning("Input not completed!");
@@ -76,6 +82,9 @@ export default function LoginPage() {
     }
 
     console.log(inputs);
+
+    console.log(authe);
+
     setSubmitted(true);
     if (username && password) {
       // get return url from location state or default to home page
@@ -83,7 +92,9 @@ export default function LoginPage() {
       console.log(location);
       console.log(from);
       dispatch(userActions.login(username, password, from));
-      history.replace(from);
+      // setLoading(false);
+      console.log(authe);
+      //history.replace(from);
     }
   }
 
@@ -185,6 +196,7 @@ export default function LoginPage() {
 
   return (
     <div>
+      {authe.loading && <LoadingIndicator />}
       <Header
         brand={<HeaderBrand />}
         absolute
@@ -294,9 +306,7 @@ export default function LoginPage() {
             </GridItem>
           </GridContainer>
         </div>
-
         <Footer className={classes.footer} content={<FooterStyleA />} />
-
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import {
   LOADING_BEGIN,
   LOADING_END,
   SET_ACCOUNT,
-  CLEAR_ACCOUNT
+  // CLEAR_ACCOUNT
 } from 'redux/actions';
 
 //Communication
@@ -22,7 +22,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
 import ContactUsPage from "views/ContactUsPage/ContactUsPage.js";
 import EcommercePage from "views/EcommercePage/EcommercePage.js";
-import LandingPage from "views/LandingPage/LandingPage.js";
+// import LandingPage from "views/LandingPage/LandingPage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
 import SignupPage from "views/SignupPage/SignupPage.js";

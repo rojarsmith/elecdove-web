@@ -5,8 +5,8 @@ import {
     LOADING_END,
     SET_ACCOUNT,
     CLEAR_ACCOUNT,
-    ACT1,
-    ACT2
+    // ACT1,
+    // ACT2
 } from './actions';
 
 export function accountReducer(
@@ -27,24 +27,31 @@ export function accountReducer(
 };
 
 let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loggedIn: true, user } : {};
+const initialState = user ? { loading: false, loggedIn: true, user } : {};
 console.log("initialState:" + initialState.user);
 console.log("initialState:" + initialState.loggedIn);
 
 export function authenticationReducer(state = initialState, action) {
     switch (action.type) {
         case userActionTypes.LOGIN_REQUEST:
+            state.loading = true;
             return {
+                loading: true,
                 loggingIn: true,
                 user: action.user
             };
         case userActionTypes.LOGIN_SUCCESS:
+            state.loading = false;
             return {
+                loading: false,
                 loggedIn: true,
                 user: action.user
             };
         case userActionTypes.LOGIN_FAILURE:
-            return {};
+            state.loading = false;
+            return {
+                loading: false,
+            };
         case userActionTypes.LOGOUT:
             return {};
         default:

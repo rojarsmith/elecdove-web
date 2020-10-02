@@ -42,9 +42,9 @@ const RegularButton = React.forwardRef((props, ref) => {
   } = props;
   const classes = useStyles();
   const classesBadge = useStylesBadge();
-  const badgeClasses = classNames({
-    [classes.badge]: badge
-  });
+  // const badgeClasses = classNames({
+  //   [classes.badge]: badge
+  // });
   const btnClasses = classNames({
     [classes.button]: true,
     [classes[size]]: size,
