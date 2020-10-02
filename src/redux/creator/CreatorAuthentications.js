@@ -14,7 +14,6 @@ function initial() {
 
 function login(username, password, from) {
     return dispatch => {
-        console.log(username);
         dispatch(request({ username }));
 
         console.log(username + ' ' + password + ' ' + from)

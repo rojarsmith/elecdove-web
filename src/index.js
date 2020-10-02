@@ -9,7 +9,7 @@ import AlertTemplate from 'react-alert-template-basic';
 
 //Redux
 import { Provider } from 'react-redux'
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import   allReducer from "redux/reducer"
@@ -29,10 +29,6 @@ const options = {
 
 //Redux
 const logger = createLogger();
-
-// const allReducer = combineReducers({
-//   authentication: reducerAuthentication
-// })
 
 const store = createStore(allReducer, applyMiddleware(thunk, logger));
 console.log(store);

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LoadingIndicator from 'components/LoadingIndicator/LoadingIndicator';
 
 //Redux
 // import {
@@ -100,12 +99,6 @@ class App extends Component {
   }
 
   render() {
-    // const { loading } = this.props.store.getState().system;
-    // console.log(this.props.store.getState());
-    // if (loading) {
-    //   return <LoadingIndicator />
-    // }
-
     return (
       <div>
         <Switch>

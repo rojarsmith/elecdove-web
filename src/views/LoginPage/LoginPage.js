@@ -3,6 +3,11 @@ import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 // @material-ui/icons
 import Icon from "@material-ui/core/Icon";
 import Face from "@material-ui/icons/Face";
@@ -20,12 +25,15 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Danger from "components/Typography/Danger.js";
-import { Link, useLocation, useHistory } from 'react-router-dom';
+import Delay from "components/Delay";
+// Redux
+import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { creatorAuthentications } from "redux/creator";
-import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageStyle.js";
+
 
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
+import loginPageStyle from "assets/jss/material-kit-pro-react/views/loginPageStyle.js";
 import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(loginPageStyle);
@@ -39,12 +47,10 @@ export default function LoginPage() {
     passwordError: false,
     passwordErrorMessage: ''
   });
-  const {
-    username,
-    password } = inputs;
   const authe = useSelector(state => state.authentication);
+  const [seconds, setSeconds] = useState(5);
   const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -58,6 +64,16 @@ export default function LoginPage() {
     dispatch(creatorAuthentications.initial());
   }, []);
 
+  useEffect(() => {
+    if (authe.loginSuccess) {
+      if (seconds >= 0) {
+        setTimeout(() => setSeconds(seconds - 1), 1000);
+      } else {
+        setSeconds(0);
+      }
+    }
+  });
+
   const classes = useStyles();
 
   function handleChange(event) {
@@ -65,41 +81,31 @@ export default function LoginPage() {
     setInputs(inputs => ({ ...inputs, [id]: value }));
   }
 
+  function handleOK(event) {
+    event.preventDefault();
+
+    const { from } = location.state || { from: { pathname: "/" } };
+    history.replace(from);
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
-    // setLoading(true);
-
     if (checkInputComplete(['username', 'password']) === false) {
-      //this.props.alert.warning("Input not completed!");
       return false;
     }
 
-    console.log(inputs);
-
-    console.log(authe);
-
     setSubmitted(true);
-    if (username && password) {
+    if (inputs.username && inputs.password) {
       // get return url from location state or default to home page
       const { from } = location.state || { from: { pathname: "/" } };
-      console.log(location);
-      console.log(from);
-      dispatch(creatorAuthentications.login(username, password, from));
-      // setLoading(false);
+      console.log(location + ' ' + from);
+      dispatch(creatorAuthentications.login(inputs.username, inputs.password, from));
       console.log(authe);
-      //history.replace(from);
     }
   }
 
-  // function handleClick(e){
-  //   e.preventDefault();
-
-  //   history.replace('/');
-  // }
-
   function handleInputValidate(event) {
-    console.log(event.target.id);
     handleInputValidateLogic(event.target.id);
   }
 
@@ -190,7 +196,33 @@ export default function LoginPage() {
 
   return (
     <div>
-      {authe.loading && <LoadingIndicator />}
+      {authe.loading && submitted && <LoadingIndicator />}
+      {authe.loginSuccess &&
+        <div>
+          <Dialog
+            open={open}
+            //  onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Login Success !"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Happy buying.
+         </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={handleOK}
+                color="primary" autoFocus>
+                OK ({seconds})
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Delay wait={6000}><Redirect to="/" /></Delay>
+        </div>
+      }
+
       <Header
         brand={<HeaderBrand />}
         absolute
@@ -216,36 +248,7 @@ export default function LoginPage() {
                     className={classes.cardHeader}
                   >
                     <h4 className={classes.cardTitle}>Login</h4>
-                    {/* <div className={classes.socialLine}>
-                      <Button
-                        justIcon
-                        color="transparent"
-                        className={classes.iconButtons}
-                        onClick={e => e.preventDefault()}
-                      >
-                        <i className="fab fa-twitter" />
-                      </Button>
-                      <Button
-                        justIcon
-                        color="transparent"
-                        className={classes.iconButtons}
-                        onClick={e => e.preventDefault()}
-                      >
-                        <i className="fab fa-facebook" />
-                      </Button>
-                      <Button
-                        justIcon
-                        color="transparent"
-                        className={classes.iconButtons}
-                        onClick={e => e.preventDefault()}
-                      >
-                        <i className="fab fa-google-plus-g" />
-                      </Button>
-                    </div> */}
                   </CardHeader>
-                  {/* <p className={classes.description + " " + classes.textCenter}>
-                    Or Be Classical
-                  </p> */}
                   <CardBody signup>
                     <CustomInput
                       id="username"
