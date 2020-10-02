@@ -12,26 +12,27 @@ class ReactCaptchaGenerator extends Component {
             paddingLeft: props.paddingLeft,
             paddingTop: props.paddingTop,
             length: props.length,
-            background: props.background
+            background: props.background,
+            text: '',
+            toggleRefresh: false
         };
-        this.setData = this.setData.bind(this);
         this.setData = this.setData.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount = () => {
         this.setData();
     }
 
-    componentWillReceiveProps({ toggleRefresh }) {
-        if (toggleRefresh != this.props.toggleRefresh) {
+    componentDidUpdate({ toggleRefresh }, prevState) {
+        if (toggleRefresh !== prevState.toggleRefresh) {
             this.setData();
         }
     }
 
     setData() {
-        const text = this.props.text;
+        let { text } = this.props;
         let length = this.state.length;
-        if (text != '') {
+        if (text !== '') {
             length = text.length;
         }
 
@@ -40,7 +41,7 @@ class ReactCaptchaGenerator extends Component {
         this.possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         for (var i = 0; i < length; i++) {
             let char = this.possible.charAt(Math.floor(Math.random() * this.possible.length));
-            if (text != '') {
+            if (text !== '') {
                 char = text[i];
             }
             this.text.push(
@@ -66,12 +67,16 @@ class ReactCaptchaGenerator extends Component {
 
         }
         this.props.result(this.originText.join(''));
+        this.setState(state => ({
+            ...state,
+            text: this.text.join()
+        }));
     }
 
     render() {
-        const { height, width } = this.state;
+        const { height, width, text } = this.state;
         let image;
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" height="${height}" width="${width}">${this.text.join()}</svg>`;
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" height="${height}" width="${width}">${text}</svg>`;
         image = btoa(svg);
         return <img style={{ background: this.state.background, height: height, width: width }} src={`data:image/svg+xml;base64,${image}`} alt="" />;
     }

@@ -166,31 +166,31 @@ export default function LoginPage() {
           }));
           return true;
         }
-        case 'captcha':
-          if (inputs.captcha === '') {
-            setInputs(inputs => ({
-              ...inputs,
-              [itemname + "Error"]: true,
-              [itemname + 'ErrorMessage']: "Please input captcha."
-            }));
-            return false;
-          }
-          else if (validateCaptcha(inputs.captcha) === false) {
-            setInputs(inputs => ({
-              ...inputs,
-              [itemname + "Error"]: true,
-              [itemname + 'ErrorMessage']: "Must the same, non case sensitive."
-            }));
-            return false;
-          }
-          else {
-            setInputs(inputs => ({
-              ...inputs,
-              [itemname + "Error"]: false,
-              [itemname + 'ErrorMessage']: ""
-            }));
-            return true;
-          }
+      case 'captcha':
+        if (inputs.captcha === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input captcha."
+          }));
+          return false;
+        }
+        else if (validateCaptcha(inputs.captcha) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Must the same, non case sensitive."
+          }));
+          return false;
+        }
+        else {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: false,
+            [itemname + 'ErrorMessage']: ""
+          }));
+          return true;
+        }
       default:
         return false;
     }
@@ -222,7 +222,7 @@ export default function LoginPage() {
     return re.test(value);
   }
 
-  const validateCaptcha = (value)=>{
+  const validateCaptcha = (value) => {
     return value.toUpperCase() === captcha.toUpperCase();
   }
 
@@ -339,7 +339,7 @@ export default function LoginPage() {
                         startAdornment: (
                           <InputAdornment position="start">
                             <Icon className={classes.inputIconsColor}>
-                             <DoneAllOutlined className={classes.inputIconsColor} />
+                              <DoneAllOutlined className={classes.inputIconsColor} />
                             </Icon>
                           </InputAdornment>
                         ),
@@ -351,7 +351,7 @@ export default function LoginPage() {
                       labelText={inputs.captchaErrorMessage}
                     />
                     <div className={classes.textCenter}>
-                      <RCG result={result} toggleRefresh={authe.loading}></RCG>
+                      <RCG result={result} toggleRefresh={authe.loading} ></RCG>
                     </div>
                   </CardBody>
                   <div className={classes.textCenter}>
@@ -363,11 +363,24 @@ export default function LoginPage() {
                       ) : null}
                     </div>
                   </div>
-                  <div className={classes.textCenter}>
-                    <Button simple color="primary" size="lg" type="submit">
+                  <div className={classes.textCenter} style={{ marginTop: "5vh" }}>
+                    <Button color="primary" size="lg" type="submit">
                       Login
                     </Button>
-                    <Link to="/signup-page" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Register</Link>
+                  </div>
+                  <div className={classes.textCenter} style={{ marginTop: "5vh" }}>
+                    <div className={classes.typo}>
+                      <Link to="/signup-page" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Register</Link>
+                    </div>
+                  </div>
+                  <div className={classes.textCenter} style={{ marginTop: "1vh" }}>
+                    <div className={classes.typo}>
+                      <Link to="/signup-page" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Forgot Password</Link>
+                    </div>
+                  </div>
+                  <div className={classes.textCenter} style={{ marginTop: "5vh" }}>
+                    <div className={classes.typo}>
+                    </div>
                   </div>
                 </form>
               </Card>
