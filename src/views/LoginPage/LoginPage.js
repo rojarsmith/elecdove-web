@@ -42,16 +42,18 @@ export default function LoginPage() {
   const [inputs, setInputs] = useState({
     username: '',
     password: '',
+    captcha: '',
     usernameError: false,
     usernameErrorMessage: '',
     passwordError: false,
-    passwordErrorMessage: ''
+    passwordErrorMessage: '',
+    captchaError: false,
+    captchaErrorMessage: ''
   });
   const authe = useSelector(state => state.authentication);
   const [seconds, setSeconds] = useState(5);
   const [submitted, setSubmitted] = useState(false);
   const [captcha, setCaptcha] = useState("");
-  // const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
@@ -92,7 +94,7 @@ export default function LoginPage() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (checkInputComplete(['username', 'password']) === false) {
+    if (checkInputComplete(['username', 'password', 'captcha']) === false) {
       return false;
     }
 
@@ -164,6 +166,31 @@ export default function LoginPage() {
           }));
           return true;
         }
+        case 'captcha':
+          if (inputs.captcha === '') {
+            setInputs(inputs => ({
+              ...inputs,
+              [itemname + "Error"]: true,
+              [itemname + 'ErrorMessage']: "Please input captcha."
+            }));
+            return false;
+          }
+          else if (validateCaptcha(inputs.captcha) === false) {
+            setInputs(inputs => ({
+              ...inputs,
+              [itemname + "Error"]: true,
+              [itemname + 'ErrorMessage']: "Must the same, non case sensitive."
+            }));
+            return false;
+          }
+          else {
+            setInputs(inputs => ({
+              ...inputs,
+              [itemname + "Error"]: false,
+              [itemname + 'ErrorMessage']: ""
+            }));
+            return true;
+          }
       default:
         return false;
     }
@@ -193,6 +220,10 @@ export default function LoginPage() {
   const validatePassword = (value) => {
     const re = /^([^\s]){8,16}$/;
     return re.test(value);
+  }
+
+  const validateCaptcha = (value)=>{
+    return value.toUpperCase() === captcha.toUpperCase();
   }
 
   function result(text) {
@@ -316,11 +347,11 @@ export default function LoginPage() {
                         onChange: (event) => handleChange(event),
                         onBlur: (event) => handleInputValidate(event)
                       }}
-                      error={inputs.passwordError}
-                      labelText={inputs.passwordErrorMessage}
+                      error={inputs.captchaError}
+                      labelText={inputs.captchaErrorMessage}
                     />
                     <div className={classes.textCenter}>
-                      <RCG result={result}></RCG>
+                      <RCG result={result} toggleRefresh={authe.loading}></RCG>
                     </div>
                   </CardBody>
                   <div className={classes.textCenter}>
