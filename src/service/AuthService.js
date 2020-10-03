@@ -31,7 +31,8 @@ class AuthService {
       });
   }
 
-  logOut() {
+  logout() {
+    // remove user from local storage to log user out
     localStorage.removeItem("user");
   }
 
@@ -46,7 +47,7 @@ class AuthService {
       .then((response) => {
         const payload = response.data;
         if (!payload.active) {
-          throw "Invalid token.";
+          throw new Error("Invalid token.");
         }
 
         return payload;

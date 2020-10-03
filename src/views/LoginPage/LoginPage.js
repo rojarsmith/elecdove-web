@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useEffect, useState, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -26,6 +26,7 @@ import CardBody from "components/Card/CardBody.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Danger from "components/Typography/Danger.js";
+import Info from "components/Typography/Info";
 import Delay from "components/Delay";
 // Redux
 import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
@@ -53,6 +54,7 @@ export default function LoginPage() {
   const authe = useSelector(state => state.authentication);
   const [seconds, setSeconds] = useState(5);
   const [submitted, setSubmitted] = useState(false);
+  const [hidden, setHidden] = useState("");
   const [captcha, setCaptcha] = useState("");
   const dispatch = useDispatch();
   const location = useLocation();
@@ -63,12 +65,6 @@ export default function LoginPage() {
     document.body.scrollTop = 0;
   });
 
-  //   componentDidMount = () => {
-  //     dispatch(creatorAuthentications.initial());
-  // }
-  // useLayoutEffect(() => {
-  //   dispatch(creatorAuthentications.initial());
-  // }, []);
   useEffect(() => {
     dispatch(creatorAuthentications.initial());
   }, []);
@@ -103,6 +99,14 @@ export default function LoginPage() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    console.log(hidden);
+    if (hidden === "logout") {
+      dispatch(creatorAuthentications.logout());
+      const { from } = location.state || { from: { pathname: "/" } };
+      history.replace(from);
+      return;
+    }
 
     if (checkInputComplete(['username', 'password', 'captcha']) === false) {
       return false;
@@ -374,12 +378,24 @@ export default function LoginPage() {
                         Check user name and password again.
                         </Danger>
                       ) : null}
+                      {authe.loggedIn ? (
+                        <div style={{ marginTop: "5vh" }}>
+                          <Info>You Are Already Logged In
+                        </Info>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                   <div className={classes.textCenter} style={{ marginTop: "5vh" }}>
-                    <Button color="primary" size="lg" type="submit">
-                      Login
+                    {authe.loggedIn ?
+                      <Button id="logout" color="primary" size="lg" type="submit" onClick={() => setHidden("logout")}>
+                        Logout
                     </Button>
+                      :
+                      <Button color="primary" size="lg" type="submit">
+                        Login
+                    </Button>
+                    }
                   </div>
                   <div className={classes.textCenter} style={{ marginTop: "5vh" }}>
                     <div className={classes.typo}>

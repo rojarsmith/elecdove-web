@@ -3,7 +3,8 @@ import AuthService from "service/AuthService";
 
 export const creatorAuthentications = {
     initial,
-    login
+    login,
+    logout
 };
 
 function initial() {
@@ -51,4 +52,9 @@ function login(username, password, from) {
     function request(user) { return { type: actionAuthentications.LOGIN_REQUEST, user } }
     function success(user) { return { type: actionAuthentications.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: actionAuthentications.LOGIN_FAILURE, error } }
+}
+
+function logout() {
+    AuthService.logout();
+    return { type: actionAuthentications.LOGOUT };
 }
