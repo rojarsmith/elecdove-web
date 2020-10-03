@@ -25,7 +25,8 @@ import EcommercePage from "views/EcommercePage/EcommercePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
 import SignupPage from "views/SignupPage/SignupPage.js";
-
+// Component
+import { ModalLogout } from "components/Modal";
 //Layout
 import AdminLayout from "layouts/Admin.js";
 
@@ -99,8 +100,13 @@ class App extends Component {
   }
 
   render() {
+    const { loggedIn } = this.props.store.getState();
+
     return (
       <div>
+        {
+!loggedIn && <ModalLogout />
+        }
         <Switch>
           <Route path="/about-us" component={AboutUsPage} />
           <Route path="/contact-us" component={ContactUsPage} />
