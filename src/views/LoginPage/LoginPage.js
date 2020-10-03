@@ -28,8 +28,8 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Danger from "components/Typography/Danger.js";
 import Info from "components/Typography/Info";
 import Delay from "components/Delay";
-// Redux
 import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { creatorAuthentications } from "redux/creator";
 import RCG from "components/ReactCaptchaGenerator";

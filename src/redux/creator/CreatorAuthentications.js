@@ -13,7 +13,6 @@ function initial() {
 
         if (user) {
             let token = user.access_token;
-            console.log(token);
             AuthService.check({ token })
                 .then(
                     user => {
@@ -36,7 +35,6 @@ function login(username, password, from) {
     return dispatch => {
         dispatch(request({ username }));
 
-        console.log(username + ' ' + password + ' ' + from)
         AuthService.login({ username, password })
             .then(
                 user => {

@@ -3,7 +3,7 @@ import React from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // react components for routing our app without refresh
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
@@ -11,15 +11,24 @@ import ListItem from "@material-ui/core/ListItem";
 // @material-ui/icons
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 import Fingerprint from "@material-ui/icons/Fingerprint";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import Person from "@material-ui/icons/Person";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 // core components
 import Button from "components/CustomButtons/Button.js";
-
+import CustomDropdown from "components/CustomDropdown/CustomDropdown";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { creatorAuthentications } from "redux/creator";
 import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
+  const authe = useSelector(state => state.authentication);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const easeInOutQuad = (t, b, c, d) => {
     t /= d / 2;
     if (t < 1) return (c / 2) * t * t + b;
@@ -41,6 +50,7 @@ export default function HeaderLinks(props) {
       }
     }
   };
+
   const scrollGo = (element, to, duration) => {
     var start = element.scrollTop,
       change = to - start,
@@ -59,20 +69,57 @@ export default function HeaderLinks(props) {
   };
   var onClickSections = {};
 
+  function handleClickLogout(event) {
+    event.preventDefault();
+
+    dispatch(creatorAuthentications.logout());
+    const { from } = location.state || { from: { pathname: "/" } };
+    history.replace(from);
+  }
+
   const { dropdownHoverColor } = props;
   const classes = useStyles();
   return (
     <List className={classes.list + " " + classes.mlAuto}>
-      <ListItem className={classes.listItem}>
-        <Button color="transparent" className={classes.navLink} component={NavLink} to="/login-page">
-          <Fingerprint className={classes.icons} />Login
+      {!authe.loggedIn && (
+        <ListItem className={classes.listItem}>
+          <Button color="transparent" className={classes.navLink} component={NavLink} to="/login-page">
+            <Fingerprint className={classes.icons} />Login
         </Button>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Button color="transparent" className={classes.navLink} component={NavLink} to="/signup-page">
-          <PersonAdd className={classes.icons} />Signup
+        </ListItem>
+      )}
+      {!authe.loggedIn && (
+        <ListItem className={classes.listItem}>
+          <Button color="transparent" className={classes.navLink} component={NavLink} to="/signup-page">
+            <PersonAdd className={classes.icons} />Signup
         </Button>
-      </ListItem>
+        </ListItem>
+      )}
+      {authe.loggedIn && (
+        <ListItem className={classes.listItem}>
+          <CustomDropdown
+            noLiPadding
+            navDropdown
+            hoverColor={dropdownHoverColor}
+            buttonText="USER"
+            buttonProps={{
+              className: classes.navLink,
+              color: "transparent"
+            }}
+            buttonIcon={AccountCircle}
+            dropdownList={[
+              <Link className={classes.dropdownLink}>
+                Profile
+            </Link>,
+              <Link
+                className={classes.dropdownLink}
+                onClick={handleClickLogout}>
+                Sign out
+            </Link>
+            ]}
+          />
+        </ListItem>
+      )}
       <ListItem className={classes.listItem}>
         <Button badgeContent={1} badgeContentMax={99} color="transparent" className={classes.navLink} component={NavLink} to="/shopping-cart-page">
           <ShoppingCart className={classes.icons} />Shopping Cart
