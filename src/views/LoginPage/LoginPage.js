@@ -100,11 +100,12 @@ export default function LoginPage() {
   function handleSubmit(event) {
     event.preventDefault();
 
-    console.log(hidden);
     if (hidden === "logout") {
       dispatch(creatorAuthentications.logout());
-      const { from } = location.state || { from: { pathname: "/" } };
-      history.replace(from);
+      dispatch({ type: actionModals.OPEN_LOGOUT });
+      // dispatch(creatorAuthentications.logout());
+      // const { from } = location.state || { from: { pathname: "/" } };
+      // history.replace(from);
       return;
     }
 
@@ -297,7 +298,7 @@ export default function LoginPage() {
                     signup
                     className={classes.cardHeader}
                   >
-                    <h4 className={classes.cardTitle}>Login</h4>
+                    <h4 className={classes.cardTitle}>Sign In</h4>
                   </CardHeader>
                   <CardBody signup>
                     {(!authe.loggedIn) && (
@@ -389,17 +390,17 @@ export default function LoginPage() {
                   <div className={classes.textCenter} style={{ marginTop: "5vh" }}>
                     {authe.loggedIn ?
                       <Button id="logout" color="primary" size="lg" type="submit" onClick={() => setHidden("logout")}>
-                        Logout
+                        Sign Out
                     </Button>
                       :
                       <Button color="primary" size="lg" type="submit">
-                        Login
+                        Sign In
                     </Button>
                     }
                   </div>
                   <div className={classes.textCenter} style={{ marginTop: "5vh" }}>
                     <div className={classes.typo}>
-                      <Link to="/signup-page" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Register</Link>
+                      <Link to="/signup-page" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Sign Up</Link>
                     </div>
                   </div>
                   <div className={classes.textCenter} style={{ marginTop: "1vh" }}>

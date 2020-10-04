@@ -20,6 +20,7 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { creatorAuthentications } from "redux/creator";
+import { actionModals } from "redux/action";
 import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -67,15 +68,18 @@ export default function HeaderLinks(props) {
     };
     animateScroll();
   };
-  var onClickSections = {};
 
   function handleClickLogout(event) {
     event.preventDefault();
 
-
     dispatch(creatorAuthentications.logout());
-    const { from } = location.state || { from: { pathname: "/" } };
-    history.replace(from);
+    dispatch({ type: actionModals.OPEN_LOGOUT });
+  }
+
+  function debug1(event) {
+    event.preventDefault();
+
+    dispatch({ type: actionModals.OPEN_LOGOUT });
   }
 
   const { dropdownHoverColor } = props;
@@ -85,14 +89,14 @@ export default function HeaderLinks(props) {
       {!authe.loggedIn && (
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink} component={NavLink} to="/login-page">
-            <Fingerprint className={classes.icons} />Login
+            <Fingerprint className={classes.icons} />Sign In
         </Button>
         </ListItem>
       )}
       {!authe.loggedIn && (
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink} component={NavLink} to="/signup-page">
-            <PersonAdd className={classes.icons} />Signup
+            <PersonAdd className={classes.icons} />Sign Up
         </Button>
         </ListItem>
       )}
@@ -126,6 +130,14 @@ export default function HeaderLinks(props) {
           <ShoppingCart className={classes.icons} />Shopping Cart
         </Button>
       </ListItem>
+      {
+        process.env.REACT_APP_DEV &&
+        <ListItem className={classes.listItem}>
+          <Button color="transparent" className={classes.navLink} onClick={debug1}>
+            Debug1
+          </Button>
+        </ListItem>
+      }
     </List>
   );
 }

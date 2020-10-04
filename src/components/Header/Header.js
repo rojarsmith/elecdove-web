@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { Link } from "react-router-dom";
 // nodejs library that concatenates classes
 import classNames from "classnames";
@@ -36,9 +36,15 @@ export default function Header(props) {
       }
     };
   });
+
+  useEffect(() => {
+    setMobileOpen(props.mobileOpen);
+  }, [props]);
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
   const headerColorChange = () => {
     const { color, changeColorOnScroll } = props;
 
@@ -59,6 +65,7 @@ export default function Header(props) {
         .classList.remove(classes[changeColorOnScroll.color]);
     }
   };
+
   const { color, links, brand, fixed, absolute } = props;
   const appBarClasses = classNames({
     [classes.appBar]: true,

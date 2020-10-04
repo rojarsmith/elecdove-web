@@ -12,7 +12,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import   allReducer from "redux/reducer"
+import allReducer from "redux/reducer"
 
 //Router
 import { BrowserRouter as Router } from 'react-router-dom';

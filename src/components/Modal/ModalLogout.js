@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Slide from "@material-ui/core/Slide";
@@ -6,8 +6,6 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
-// @material-ui/icons
-import Close from "@material-ui/icons/Close";
 // core components
 import Button from "components/CustomButtons/Button.js";
 
@@ -19,14 +17,40 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const useStyles = makeStyles(style);
 
+/**
+ * Modal after logout
+ * 
+ * @param {NewType} props.open Control modal display on/off.
+ * @param {afterclose} props.afterclose Callback after close.
+ */
 export default function ModalLogout(props) {
-  const [show, setShow] = React.useState(props.open);
+  const [open, setOpen] = useState(false);
+  const afterclose = props.afterclose ? props.afterclose : () => { };
+  const [keep, setKeep] = useState(props.keep ? props.keep : 5); // Second
   const classes = useStyles();
-  console.log(props);
-  console.log(props.afterfunc);
+
   useEffect(() => {
-    setShow(props.open);
+    setOpen(props.open);
   }, [props]);
+
+  useEffect(() => {
+    setKeep(5);
+  }, [props]);
+
+  useEffect(() => {
+    let timeoutID;
+    if (open) {
+      if (keep > 0) {
+        timeoutID = setTimeout(() => setKeep(keep - 1), 1000);
+      } else {
+        setOpen(false);
+        afterclose();
+      }
+    }
+    return () => {
+      clearInterval(timeoutID);
+    }
+  }, [open, keep, afterclose]);
 
   return (
     <div>
@@ -35,10 +59,13 @@ export default function ModalLogout(props) {
           root: classes.modalRoot,
           paper: classes.modal
         }}
-        open={show}
+        open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={() => setShow(false)}
+        onClose={() => {
+          setOpen(false)
+          afterclose();
+        }}
         aria-labelledby="classic-modal-slide-title"
         aria-describedby="classic-modal-slide-description"
       >
@@ -47,35 +74,22 @@ export default function ModalLogout(props) {
           disableTypography
           className={classes.modalHeader}
         >
-          {/* <Button
-            simple
-            className={classes.modalCloseButton}
-            key="close"
-            aria-label="Close"
-            onClick={() => setLiveDemo(false)}
-          >
-            {" "}
-            
-            <Close //X button
-             className={classes.modalClose} />   
-          </Button> */}
-          <h4 className={classes.modalTitle}>Modal title</h4>
+          <h4 className={classes.modalTitle}>Logout Success</h4>
         </DialogTitle>
         <DialogContent
           id="classic-modal-slide-description"
           className={classes.modalBody}
         >
-          <p>Woohoo, you're reading this text in a modal!</p>
+          <p>See you next time!</p>
         </DialogContent>
         <DialogActions className={classes.modalFooter}>
           <Button onClick={() => {
-            setShow(false)
-             props.afterfunc()
+            setOpen(false);
+            afterclose();
           }
-          } color="secondary">
-            Close
+          } color="primary">
+            Ok ({keep})
           </Button>
-          <Button color="primary">Save changes</Button>
         </DialogActions>
       </Dialog>
     </div>
