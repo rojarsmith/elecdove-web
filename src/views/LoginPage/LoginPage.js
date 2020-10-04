@@ -103,9 +103,6 @@ export default function LoginPage() {
     if (hidden === "logout") {
       dispatch(creatorAuthentications.logout());
       dispatch({ type: actionModals.OPEN_LOGOUT });
-      // dispatch(creatorAuthentications.logout());
-      // const { from } = location.state || { from: { pathname: "/" } };
-      // history.replace(from);
       return;
     }
 
