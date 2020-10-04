@@ -72,6 +72,7 @@ export default function HeaderLinks(props) {
   function handleClickLogout(event) {
     event.preventDefault();
 
+
     dispatch(creatorAuthentications.logout());
     const { from } = location.state || { from: { pathname: "/" } };
     history.replace(from);

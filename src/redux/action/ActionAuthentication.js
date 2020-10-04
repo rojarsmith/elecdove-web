@@ -10,4 +10,5 @@ export const actionAuthentications = {
     LOGIN_FAILURE: 'USERS_LOGIN_FAILURE',
 
     LOGOUT: 'USERS_LOGOUT',
+    LOGOUT_SUCCESS: 'USERS_LOGOUT_SUCCESS',
 };

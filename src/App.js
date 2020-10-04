@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
-
-//Redux
-// import {
-//   LOADING_BEGIN,
-//   LOADING_END,
-//   SET_ACCOUNT,
-//   // CLEAR_ACCOUNT
-// } from 'redux/actions';
-
 //Communication
 import { getCurrentUser } from 'util/RemoteAPIUtils';
-
 //Alert
 import { withAlert } from 'react-alert';
-
 //Router
 import { Route, Switch, withRouter } from 'react-router-dom';
-
 //Page
 import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
 import ContactUsPage from "views/ContactUsPage/ContactUsPage.js";
@@ -26,12 +14,15 @@ import LoginPage from "views/LoginPage/LoginPage.js";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
 import SignupPage from "views/SignupPage/SignupPage.js";
 // Component
+import Button from "components/CustomButtons/Button.js";
 import { ModalLogout } from "components/Modal";
 //Layout
 import AdminLayout from "layouts/Admin.js";
 
 //Debug
+import { creatorAuthentications } from "redux/creator";
 import AuthService from "service/AuthService";
+import { actionAuthentications } from "redux/action";
 
 class App extends Component {
   constructor(props) {
@@ -99,13 +90,35 @@ class App extends Component {
     //this.loadCurrentlyLoggedInUser();
   }
 
-  render() {
-    const { loggedIn } = this.props.store.getState();
+  componentDidUpdate() {
 
+  }
+
+  debug1 = () => {
+    console.log("debug1");
+    this.props.store.dispatch(creatorAuthentications.logout());
+  }
+
+  debug2 = () => {
+     console.log("debug2");
+     console.log(actionAuthentications);
+    // this.props.store.dispatch(actionAuthentications.LOGOUT_SUCCESS);
+     this.props.store.dispatch(creatorAuthentications.initial());
+  }
+
+  render() {
+    const { loggedIn, logout } = this.props.store.getState();
+    console.log(this.props.store.getState());
+    console.log(this.props.store.getState().logout);
     return (
       <div>
+        <div style={{ marginTop: "5vh" }}>
+          <Button color="primary" onClick={this.debug1}>
+            Launch Demo Modal
+      </Button>
+        </div>
         {
-!loggedIn && <ModalLogout />
+          <ModalLogout open={this.props.store.getState().authentication.logout} afterfunc={this.debug2}/>
         }
         <Switch>
           <Route path="/about-us" component={AboutUsPage} />

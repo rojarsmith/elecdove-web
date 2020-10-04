@@ -17,11 +17,14 @@ import Menu from "@material-ui/icons/Menu";
 import Close from "@material-ui/icons/Close";
 // core components
 import styles from "assets/jss/material-kit-pro-react/components/headerStyle.js";
+// Redux
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const authe = useSelector(state => state.authentication);
+  const [mobileOpen, setMobileOpen] = React.useState(authe.mobileOpen);
   const classes = useStyles();
   React.useEffect(() => {
     if (props.changeColorOnScroll) {

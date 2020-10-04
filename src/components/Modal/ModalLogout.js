@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Slide from "@material-ui/core/Slide";
@@ -20,22 +20,25 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const useStyles = makeStyles(style);
 
 export default function ModalLogout(props) {
-  const [liveDemo, setLiveDemo] = React.useState(false);
+  const [show, setShow] = React.useState(props.open);
   const classes = useStyles();
+  console.log(props);
+  console.log(props.afterfunc);
+  useEffect(() => {
+    setShow(props.open);
+  }, [props]);
+
   return (
     <div>
-      <Button color="primary" onClick={() => setLiveDemo(true)}>
-        Launch Demo Modal
-      </Button>
       <Dialog
         classes={{
           root: classes.modalRoot,
           paper: classes.modal
         }}
-        open={liveDemo}
+        open={show}
         TransitionComponent={Transition}
         keepMounted
-        onClose={() => setLiveDemo(false)}
+        onClose={() => setShow(false)}
         aria-labelledby="classic-modal-slide-title"
         aria-describedby="classic-modal-slide-description"
       >
@@ -44,7 +47,7 @@ export default function ModalLogout(props) {
           disableTypography
           className={classes.modalHeader}
         >
-          <Button
+          {/* <Button
             simple
             className={classes.modalCloseButton}
             key="close"
@@ -52,8 +55,10 @@ export default function ModalLogout(props) {
             onClick={() => setLiveDemo(false)}
           >
             {" "}
-            {/* <Close className={classes.modalClose} /> */ /*X button*/ }
-          </Button>
+            
+            <Close //X button
+             className={classes.modalClose} />   
+          </Button> */}
           <h4 className={classes.modalTitle}>Modal title</h4>
         </DialogTitle>
         <DialogContent
@@ -63,7 +68,11 @@ export default function ModalLogout(props) {
           <p>Woohoo, you're reading this text in a modal!</p>
         </DialogContent>
         <DialogActions className={classes.modalFooter}>
-          <Button onClick={() => setLiveDemo(false)} color="secondary">
+          <Button onClick={() => {
+            setShow(false)
+             props.afterfunc()
+          }
+          } color="secondary">
             Close
           </Button>
           <Button color="primary">Save changes</Button>

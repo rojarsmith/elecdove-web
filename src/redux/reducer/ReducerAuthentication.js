@@ -9,6 +9,7 @@ export function reducerAuthentication(state = initialState, action) {
             state.loginSuccess = false;
             state.loginFailed = false;
             state.loading = false;
+            state.logout = false;
             state.preAction = action.type;
             state.loggedIn = action.action;
             return state;
@@ -36,6 +37,13 @@ export function reducerAuthentication(state = initialState, action) {
             state.loginFailed = false;
             state.loading = false;
             state.loggedIn = false;
+            state.logout = true;
+            state.mobileOpen = false;
+            state.preAction = action.type;
+            return state;
+        case actionAuthentications.LOGOUT_SUCCESS:
+            state.logout = false;
+            state.mobileOpen = false;
             state.preAction = action.type;
             return state;
         default:
