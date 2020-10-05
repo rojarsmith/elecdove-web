@@ -3,7 +3,7 @@ module.exports = {
     // First application
     {
       name: 'elecdove-web',
-      script: 'node_modules/react-scripts/scripts/start.js --name "elecdove-web"',
+      script: 'node_modules/react-scripts/bin/react-scripts.js --name "elecdove-web"',
       exec_mode: 'fork',
       // instance: 1,
       watch: false,
@@ -35,7 +35,7 @@ module.exports = {
       repo: 'git@github.com:rojarsmith/elecdove-web.git',
       path: '~/service/web/elecdove-web',
       'pre-deploy-local': '',
-      'post-deploy': 'cp ~/service/web/.env.production.local ~/service/web/elecdove-web/current/ && npm install && npm audit fix && chmod -R 777 node_modules/react-scripts/scripts/start.js && pm2 reload ecosystem.config.js --env production',
+      'post-deploy': 'cp ~/service/web/.env.production.local ~/service/web/elecdove-web/current/ && npm install && npm audit fix && chmod -R 777 node_modules/react-scripts/bin/react-scripts.js && pm2 reload ecosystem.config.js --env production',
       'pre-setup': '',
       env_production: {
         NODE_ENV: 'production'
