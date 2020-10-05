@@ -36,7 +36,6 @@ module.exports = {
       repo: 'git@github.com:rojarsmith/elecdove-web.git',
       path: '~/service/web/elecdove-web',
       'pre-deploy-local': '',
-      'post-deploy': 'cp ~/service/web/.env.production.local ~/service/web/elecdove-web/current/ && npm install && npm audit fix && pm2 reload ecosystem.config.js --env production',
       'pre-setup': '',
       env_production: {
         NODE_ENV: 'production'
