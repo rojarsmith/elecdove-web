@@ -3,7 +3,8 @@ module.exports = {
     // First application
     {
       name: 'elecdove-web',
-      script: 'node_modules/react-scripts/scripts/start.js --name "elecdove-web"',
+      script: 'npm',
+      args: 'run start:production',
       exec_mode: 'fork',
       // instance: 1,
       watch: false,
