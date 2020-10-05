@@ -3,7 +3,7 @@ module.exports = {
     // First application
     {
       name: 'elecdove-web',
-      script: 'bin/www',
+      script: 'node_modules/react-scripts/scripts/start.js --name "elecdove-web"',
       exec_mode: 'fork',
       // instance: 1,
       watch: false,
