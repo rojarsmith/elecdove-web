@@ -34,6 +34,7 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 import Danger from "components/Typography/Danger.js";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+import { actionModals } from "redux/action";
 import { creatorAuthentications } from "redux/creator";
 import RCG from "components/ReactCaptchaGenerator";
 import ValidationUtils from "util/ValidationUtils";
@@ -68,14 +69,17 @@ export default function SignUpPage({ ...rest }) {
   });
   const [checked, setChecked] = useState([-1]);
   const [captcha, setCaptcha] = useState("");
+  const dispatch = useDispatch();
 
-  const handleToggle = value => {
+  const handleToggle = (event) => {
+    let { event: e, payload: value } = event;
+    e.preventDefault();
+
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
-      // setIinputs.iagree
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
@@ -209,7 +213,6 @@ export default function SignUpPage({ ...rest }) {
         else {
           setInputs(inputs => ({ ...inputs, gsbutton: true }));
         }
-
         break;
       default:
         return false;
@@ -226,6 +229,13 @@ export default function SignUpPage({ ...rest }) {
   const resultCaptcha = (text) => {
     console.log(text);
     setCaptcha(text);
+  }
+
+  function handlerTerms(event) {
+    event.preventDefault();
+
+    let a = 56;
+    dispatch({ type: actionModals.OPEN_TERMS });
   }
 
   return (
@@ -395,41 +405,44 @@ export default function SignUpPage({ ...rest }) {
                           <RCG result={resultCaptcha} toggleRefresh={authe.loading} ></RCG>
                         </div>
 
-                        {inputs.iagreeError ? (
+                        {inputs.iagreeError && !inputs.gsbutton ? (
                           <div className={classes.textCenter}>
                             <Danger>
                               Please read terms and click I agree.
                             </Danger>
                           </div>
                         ) : null}
-                        <FormControlLabel
-                          classes={{
-                            label: classes.label
-                          }}
-                          control={
-                            <Checkbox
-                              id="iagree"
-                              tabIndex={-1}
-                              onClick={() => handleToggle(1)}
-                              checkedIcon={
-                                <Check className={classes.checkedIcon} />
-                              }
-                              icon={<Check className={classes.uncheckedIcon} />}
-                              classes={{
-                                checked: classes.checked,
-                                root: classes.checkRoot
-                              }}
-                              checked={checked.indexOf(1) !== -1 ? true : false}
-                            />
-                          }
-                          label={
-                            <span>
-                              I agree to the{" "}
-                              <a href="#pablo">terms and conditions</a>.
-                            </span>
-                          }
-                        />
                         <div className={classes.textCenter}>
+                          <FormControlLabel
+                            classes={{
+                              label: classes.label
+                            }}
+                            control={
+                              <Checkbox
+                                id="iagree"
+                                tabIndex={-1}
+                                onClick={(event) => handleToggle({ event: event, payload: 1 })}
+                                checkedIcon={
+                                  <Check className={classes.checkedIcon} />
+                                }
+                                icon={<Check className={classes.uncheckedIcon} />}
+                                classes={{
+                                  checked: classes.checked,
+                                  root: classes.checkRoot
+                                }}
+                                checked={checked.indexOf(1) !== -1 ? true : false}
+                              />
+                            }
+                            label={
+
+                              <span>
+                                I agree to the{" "}
+                                <a href="#gsbutton" onClick={handlerTerms}>terms and conditions</a>.
+                            </span>
+                            }
+                          />
+                        </div>
+                        <div id="gsbutton" className={classes.textCenter}>
                           <Button disabled={inputs.gsbutton} round color="primary" type="submit">
                             Get started
                           </Button>

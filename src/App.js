@@ -15,7 +15,7 @@ import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
 import SignupPage from "views/SignupPage/SignupPage.js";
 // Component
 import Button from "components/CustomButtons/Button.js";
-import { ModalLogout } from "components/Modal";
+import { ModalLogout, ModalTerms } from "components/Modal";
 //Layout
 import AdminLayout from "layouts/Admin.js";
 
@@ -99,6 +99,14 @@ class App extends Component {
     this.props.history.replace("/");
   }
 
+  afterModalTerms = () => {
+    this.props.store.dispatch({ type: actionModals.CLOSE_TERMS });
+  }
+
+  emptyfunc = () => {
+
+  }
+
   debug1 = () => {
     console.log("debug1");
     this.props.store.dispatch(creatorAuthentications.logout());
@@ -118,7 +126,10 @@ class App extends Component {
     return (
       <div>
         {
-          <ModalLogout open={this.props.store.getState().reducer.logoutOpen} afterclose={this.signout} />
+          <div>
+            <ModalLogout open={this.props.store.getState().reducer.logoutOpen} afterclose={this.signout} />
+            <ModalTerms open={this.props.store.getState().reducer.termsOpen} afterclose={this.afterModalTerms} />
+          </div>
         }
         <Switch>
           <Route path="/about-us" component={AboutUsPage} />

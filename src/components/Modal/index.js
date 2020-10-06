@@ -12,3 +12,4 @@ export * from "./ModalLogout";
  * @param {afterclose} props.afterclose Callback after close.
  */
 export { default as ModalLogout } from "./ModalLogout";
+export { default as ModalTerms } from "./ModalTerms";
