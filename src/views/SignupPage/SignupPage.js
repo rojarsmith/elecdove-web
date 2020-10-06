@@ -31,10 +31,12 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import InfoArea from "components/InfoArea/InfoArea.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import Danger from "components/Typography/Danger.js";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { creatorAuthentications } from "redux/creator";
 import RCG from "components/ReactCaptchaGenerator";
+import ValidationUtils from "util/ValidationUtils";
 import signupPageStyle from "assets/jss/material-kit-pro-react/views/signupPageStyle.js";
 import image from "assets/img/bg7.jpg";
 
@@ -42,17 +44,43 @@ const useStyles = makeStyles(signupPageStyle);
 
 export default function SignUpPage({ ...rest }) {
   const authe = useSelector(state => state.authentication);
-  const [checked, setChecked] = useState([1]);
+  const [inputs, setInputs] = useState({
+    username: '',
+    email: '',
+    password: '',
+    passwordagain: '',
+    captcha: '',
+    iagree: false,
+    gsbutton: true,
+    usernameError: false,
+    usernameErrorMessage: '',
+    email: '',
+    emailError: '',
+    emailErrorMessage: '',
+    passwordError: false,
+    passwordErrorMessage: '',
+    passwordagainError: false,
+    passwordagainErrorMessage: '',
+    captchaError: false,
+    captchaErrorMessage: '',
+    iagreeError: false,
+    iagreeErrorMessage: ''
+  });
+  const [checked, setChecked] = useState([-1]);
   const [captcha, setCaptcha] = useState("");
+
   const handleToggle = value => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {
+      // setIinputs.iagree
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
+
+    handleInputValidateLogic("iagree");
   };
 
   useEffect(() => {
@@ -62,7 +90,140 @@ export default function SignUpPage({ ...rest }) {
 
   const classes = useStyles();
 
-  var result = (text) => {
+  function handleChange(event) {
+    const { id, value } = event.target;
+    setInputs(inputs => ({ ...inputs, [id]: value }));
+  }
+
+  function handleInputValidate(event) {
+    if (process.env.REACT_APP_DEV) console.log()
+    handleInputValidateLogic(event.target.id);
+  }
+
+  const handleInputFocus = (event) => {
+    const { id } = event.target;
+    setInputs(inputs => ({ ...inputs, [id + 'Error']: false }));
+  }
+
+  function handleInputValidateLogic(itemname) {
+    switch (itemname) {
+      case 'username':
+        if (inputs.username === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input user name."
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validateUsername(inputs.username) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Must 5~21 chars, 0~9, a~Z."
+          }));
+          return false;
+        }
+        break;
+      case 'email':
+        if (inputs.email === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input E-mail."
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validateEmail(inputs.email) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Invalid E-mail."
+          }));
+          return false;
+        }
+        break;
+      case 'password':
+        if (inputs.password === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input password."
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validatePassword(password) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Must 8-16 characters with no space."
+          }));
+          return false;
+        }
+        break;
+      case 'passwordagain':
+        if (inputs.passwordagain === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input password again."
+          }));
+          return false;
+        }
+        else if (inputs.passwordagain !== inputs.password) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Again must the same."
+          }));
+          return false;
+        }
+        break;
+      case 'captcha':
+        if (inputs.captcha === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Please input captcha."
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validateCaptcha(inputs.captcha, captcha)) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+            [itemname + 'ErrorMessage']: "Must the same, non case sensitive."
+          }));
+          return false;
+        }
+        break;
+      case 'iagree':
+        if (checked.length === 1 && checked[checked.length - 1] === -1) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "Error"]: true,
+          }));
+          setInputs(inputs => ({ ...inputs, gsbutton: false }));
+          return false;
+        }
+        else {
+          setInputs(inputs => ({ ...inputs, gsbutton: true }));
+        }
+
+        break;
+      default:
+        return false;
+    }
+
+    setInputs(inputs => ({
+      ...inputs,
+      [itemname + "Error"]: false,
+      [itemname + 'ErrorMessage']: ""
+    }));
+    return true;
+  }
+
+  const resultCaptcha = (text) => {
     console.log(text);
     setCaptcha(text);
   }
@@ -116,6 +277,7 @@ export default function SignUpPage({ ...rest }) {
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            placeholder: "User Name",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -124,8 +286,12 @@ export default function SignUpPage({ ...rest }) {
                                 <Face className={classes.inputAdornmentIcon} />
                               </InputAdornment>
                             ),
-                            placeholder: "User Name"
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event),
+                            onFocus: (event) => handleInputFocus(event)
                           }}
+                          error={inputs.usernameError}
+                          labelText={inputs.usernameErrorMessage}
                         />
                         <CustomInput
                           id="email"
@@ -134,6 +300,7 @@ export default function SignUpPage({ ...rest }) {
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            placeholder: "Email",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -142,8 +309,12 @@ export default function SignUpPage({ ...rest }) {
                                 <Email className={classes.inputAdornmentIcon} />
                               </InputAdornment>
                             ),
-                            placeholder: "Email"
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event),
+                            onFocus: (event) => handleInputFocus(event)
                           }}
+                          error={inputs.emailError}
+                          labelText={inputs.emailErrorMessage}
                         />
                         <CustomInput
                           id="password"
@@ -152,6 +323,7 @@ export default function SignUpPage({ ...rest }) {
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            placeholder: "Password",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -162,8 +334,12 @@ export default function SignUpPage({ ...rest }) {
                                 </Icon>
                               </InputAdornment>
                             ),
-                            placeholder: "Password"
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event),
+                            onFocus: (event) => handleInputFocus(event)
                           }}
+                          error={inputs.passwordError}
+                          labelText={inputs.passwordErrorMessage}
                         />
                         <CustomInput
                           id="passwordagain"
@@ -172,6 +348,7 @@ export default function SignUpPage({ ...rest }) {
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            placeholder: "Password again",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -182,8 +359,12 @@ export default function SignUpPage({ ...rest }) {
                                 </Icon>
                               </InputAdornment>
                             ),
-                            placeholder: "Password again"
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event),
+                            onFocus: (event) => handleInputFocus(event)
                           }}
+                          error={inputs.passwordagainError}
+                          labelText={inputs.passwordagainErrorMessage}
                         />
                         <CustomInput
                           id="captcha"
@@ -192,6 +373,7 @@ export default function SignUpPage({ ...rest }) {
                             className: classes.customFormControlClasses
                           }}
                           inputProps={{
+                            placeholder: "Captcha",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -202,12 +384,24 @@ export default function SignUpPage({ ...rest }) {
                                 </Icon>
                               </InputAdornment>
                             ),
-                            placeholder: "Captcha"
+                            onChange: (event) => handleChange(event),
+                            onBlur: (event) => handleInputValidate(event),
+                            onFocus: (event) => handleInputFocus(event)
                           }}
+                          error={inputs.captchaError}
+                          labelText={inputs.captchaErrorMessage}
                         />
                         <div className={classes.textCenter}>
-                          <RCG result={result} toggleRefresh={authe.loading} ></RCG>
+                          <RCG result={resultCaptcha} toggleRefresh={authe.loading} ></RCG>
                         </div>
+
+                        {inputs.iagreeError ? (
+                          <div className={classes.textCenter}>
+                            <Danger>
+                              Please read terms and click I agree.
+                            </Danger>
+                          </div>
+                        ) : null}
                         <FormControlLabel
                           classes={{
                             label: classes.label
@@ -236,7 +430,7 @@ export default function SignUpPage({ ...rest }) {
                           }
                         />
                         <div className={classes.textCenter}>
-                          <Button round color="primary" type="submit">
+                          <Button disabled={inputs.gsbutton} round color="primary" type="submit">
                             Get started
                           </Button>
                         </div>
