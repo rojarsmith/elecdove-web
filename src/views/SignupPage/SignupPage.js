@@ -37,6 +37,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionModals } from "redux/action";
 import { creatorAuthentications } from "redux/creator";
 import RCG from "components/ReactCaptchaGenerator";
+import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import ValidationUtils from "util/ValidationUtils";
 import signupPageStyle from "assets/jss/material-kit-pro-react/views/signupPageStyle.js";
 import image from "assets/img/bg7.jpg";
@@ -84,7 +85,7 @@ export default function SignUpPage({ ...rest }) {
     }
     setChecked(newChecked);
 
-    handleInputValidateLogic("iagree");
+    // handleInputValidateLogic("iagree");
   };
 
   useEffect(() => {
@@ -156,7 +157,7 @@ export default function SignUpPage({ ...rest }) {
           }));
           return false;
         }
-        else if (ValidationUtils.validatePassword(password) === false) {
+        else if (ValidationUtils.validatePassword(inputs.password) === false) {
           setInputs(inputs => ({
             ...inputs,
             [itemname + "Error"]: true,
@@ -207,11 +208,7 @@ export default function SignUpPage({ ...rest }) {
             ...inputs,
             [itemname + "Error"]: true,
           }));
-          setInputs(inputs => ({ ...inputs, gsbutton: false }));
           return false;
-        }
-        else {
-          setInputs(inputs => ({ ...inputs, gsbutton: true }));
         }
         break;
       default:
@@ -234,12 +231,41 @@ export default function SignUpPage({ ...rest }) {
   function handlerTerms(event) {
     event.preventDefault();
 
-    let a = 56;
     dispatch({ type: actionModals.OPEN_TERMS });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (checkInputComplete(['username', 'email', 'password', 'passwordagain', 'captcha', 'iagree']) === false) {
+      return false;
+    }
+
+    const { from } = location.state || { from: { pathname: "/" } };
+    console.log(location);
+    console.log(from);
+    dispatch(creatorAuthentications.signup(inputs));
+  }
+
+  function checkInputComplete(inputs) {
+    var validates = [];
+
+    for (let i = 0; i < inputs.length; i++) {
+      validates[i] = handleInputValidateLogic(inputs[i]);
+    }
+
+    var result = true;
+
+    for (let i = 0; i < validates.length; i++) {
+      result = result && validates[i];
+    }
+
+    return result;
   }
 
   return (
     <div>
+      {authe.loading && <LoadingIndicator />}
       <Header
         brand={<HeaderBrand />}
         absolute
@@ -279,7 +305,7 @@ export default function SignUpPage({ ...rest }) {
                       />
                     </GridItem>
                     <GridItem xs={12} sm={5} md={5}>
-                      <form className={classes.form}>
+                      <form className={classes.form} method="POST" onSubmit={handleSubmit}>
                         <CustomInput
                           id="username"
                           formControlProps={{
@@ -405,7 +431,7 @@ export default function SignUpPage({ ...rest }) {
                           <RCG result={resultCaptcha} toggleRefresh={authe.loading} ></RCG>
                         </div>
 
-                        {inputs.iagreeError && !inputs.gsbutton ? (
+                        {inputs.iagreeError ? (
                           <div className={classes.textCenter}>
                             <Danger>
                               Please read terms and click I agree.
@@ -425,7 +451,7 @@ export default function SignUpPage({ ...rest }) {
                                 checkedIcon={
                                   <Check className={classes.checkedIcon} />
                                 }
-                                icon={<Check className={classes.uncheckedIcon} />}
+                                icon={<Check className={classes.uncheckedIcon} style={{ position: "relative" }} />}
                                 classes={{
                                   checked: classes.checked,
                                   root: classes.checkRoot
@@ -443,7 +469,7 @@ export default function SignUpPage({ ...rest }) {
                           />
                         </div>
                         <div id="gsbutton" className={classes.textCenter}>
-                          <Button disabled={inputs.gsbutton} round color="primary" type="submit">
+                          <Button disabled={checked.indexOf(1) !== -1 ? false : true} round color="primary" type="submit">
                             Get started
                           </Button>
                         </div>

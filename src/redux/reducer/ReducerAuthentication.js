@@ -46,6 +46,18 @@ export function reducerAuthentication(state = initialState, action) {
             state.mobileOpen = false;
             state.preAction = action.type;
             return state;
+        case actionAuthentications.SIGNUP_INITIAL:
+            state.loading = false;
+            return state;
+        case actionAuthentications.SIGNUP_REQUEST:
+            state.loading = true;
+            return state;
+        case actionAuthentications.SIGNUP_SUCCESS:
+            state.loading = false;
+            return state;
+        case actionAuthentications.SIGNUP_FAILURE:
+            state.loading = false;
+            return state;
         default:
             return state
     }

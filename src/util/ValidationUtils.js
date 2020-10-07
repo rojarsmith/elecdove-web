@@ -11,6 +11,7 @@ class ValidationUtils {
 
     validatePassword(value) {
         const re = /^([^\s]){8,16}$/;
+        console.log("validatePassword=" + re.test(value));
         return re.test(value);
     }
 

@@ -58,11 +58,11 @@ class AuthService {
       });
   }
 
-  signUp(signupRequest) {
-    const { name, email, password } = signupRequest;
+  signup(user) {
+    const { username, email, password } = user;
 
     let data = {
-      'name': name,
+      'name': username,
       'email': email,
       'password': password,
     };

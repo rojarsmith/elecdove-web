@@ -4,7 +4,8 @@ import AuthService from "service/AuthService";
 export const creatorAuthentications = {
     initial,
     login,
-    logout
+    logout,
+    signup
 };
 
 function initial() {
@@ -55,4 +56,25 @@ function login(username, password, from) {
 function logout() {
     AuthService.logout();
     return { type: actionAuthentications.LOGOUT };
+}
+
+function signup(user) {
+    return dispatch => {
+        dispatch(request(user));
+
+        AuthService.signup(user)
+            .then(
+                user => {
+                    dispatch(success(user));
+                },
+                error => {
+                    dispatch(failure(error));
+                    //dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(user) { return { type: actionAuthentications.SIGNUP_REQUEST, user } }
+    function success(user) { return { type: actionAuthentications.SIGNUP_SUCCESS, user } }
+    function failure(error) { return { type: actionAuthentications.SIGNUP_FAILURE, error } }
 }
