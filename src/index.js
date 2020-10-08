@@ -31,7 +31,9 @@ const options = {
 const logger = createLogger();
 
 const store = createStore(allReducer, applyMiddleware(thunk, logger));
-console.log(store);
+
+console.log("NODE_ENV=" + process.env.NODE_ENV);
+console.log("REACT_APP_DEV=" + process.env.REACT_APP_DEV);
 
 // Disable log at production
 if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'development') {

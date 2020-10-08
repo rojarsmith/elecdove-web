@@ -3,18 +3,20 @@ module.exports = {
     // First application
     {
       name: 'elecdove-web',
-      script: 'npm',
-      args: ' -- start',
+      script: 'serve',
+      args: '',
       exec_mode: 'fork',
       // instance: 1,
       watch: false,
-      max_memory_restart: '200M',
+      max_memory_restart: '400M',
       time: true,
       log_date_format: 'YYYY-MM-DD HH:mm Z',
       error_file: '~/service/web/log',
       out_file: '~/service/web/log',
       autorestart: true,
       env: {
+        PM2_SERVE_PATH: 'build',
+        PM2_SERVE_PORT: 3010,
         COMMON_VARIABLE: "true",
         NODE_ENV: 'development',
         "PORT": "3010"
