@@ -36,6 +36,7 @@ module.exports = {
       path: '~/service/web/elecdove-web',
       'pre-deploy-local': '',
       'pre-setup': '',
+      "post-setup": 'npm install -g serve',
       env_production: {
         NODE_ENV: 'production'
       }
