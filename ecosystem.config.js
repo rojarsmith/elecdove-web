@@ -15,11 +15,8 @@ module.exports = {
       out_file: '~/service/web/log',
       autorestart: true,
       env: {
-        PM2_SERVE_PATH: 'build',
-        PM2_SERVE_PORT: 3010,
         COMMON_VARIABLE: "true",
-        NODE_ENV: 'development',
-        PORT: 3010
+        NODE_ENV: 'development'
       },
       env_production: {
         NODE_ENV: 'production'
