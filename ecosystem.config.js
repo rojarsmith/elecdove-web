@@ -3,8 +3,8 @@ module.exports = {
     // First application
     {
       name: 'elecdove-web',
-      script: 'npm',
-      args: 'run start:production',
+      script: 'serve',
+      args: '',
       exec_mode: 'fork',
       // instance: 1,
       watch: false,
@@ -15,6 +15,8 @@ module.exports = {
       out_file: '~/service/web/log',
       autorestart: true,
       env: {
+        PM2_SERVE_PATH: 'build',
+        PM2_SERVE_PORT: 3010,
         COMMON_VARIABLE: "true",
         NODE_ENV: 'development'
       },
@@ -36,7 +38,7 @@ module.exports = {
       path: '~/service/web/elecdove-web',
       'pre-deploy-local': '',
       'pre-setup': '',
-      "post-setup": 'npm install -g serve',
+      "post-setup": 'npm install -g serve && npm run build',
       env_production: {
         NODE_ENV: 'production'
       }
