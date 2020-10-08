@@ -3,8 +3,8 @@ module.exports = {
     // First application
     {
       name: 'elecdove-web',
-      script: 'serve',
-      args: '',
+      script: 'npm',
+      args: 'run start:production',
       exec_mode: 'fork',
       // instance: 1,
       watch: false,
@@ -19,7 +19,7 @@ module.exports = {
         PM2_SERVE_PORT: 3010,
         COMMON_VARIABLE: "true",
         NODE_ENV: 'development',
-        "PORT": "3010"
+        PORT: 3010
       },
       env_production: {
         NODE_ENV: 'production'
@@ -39,6 +39,7 @@ module.exports = {
       path: '~/service/web/elecdove-web',
       'pre-deploy-local': '',
       'pre-setup': '',
+      'post-deploy': 'npm install && pm2 reload ecosystem.config.js --env production',
       env_production: {
         NODE_ENV: 'production'
       }
