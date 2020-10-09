@@ -13,6 +13,7 @@ import EcommercePage from "views/EcommercePage/EcommercePage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
 import SignupPage from "views/SignupPage/SignupPage.js";
+import MessagePage from "views/MessagePage/MessagePage";
 // Component
 import Button from "components/CustomButtons/Button.js";
 import { ModalLogout, ModalTerms } from "components/Modal";
@@ -138,6 +139,7 @@ class App extends Component {
           <Route path="/login-page" component={LoginPage} />
           <Route path="/shopping-cart-page" component={ShoppingCartPage} />
           <Route path="/signup-page" component={SignupPage} />
+          <Route path="/message-page" component={MessagePage} />
           <Route path="/admin" component={AdminLayout} />
           {/* <Route path="/control-panel" component={AdminLayout} /> */}
           {/* <Route path="/" component={LandingPage} /> */}

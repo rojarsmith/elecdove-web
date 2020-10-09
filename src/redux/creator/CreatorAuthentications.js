@@ -1,4 +1,4 @@
-import { actionAuthentications } from "../action";
+import { actionAuthentications, actionMessages } from "../action";
 import AuthService from "service/AuthService";
 
 export const creatorAuthentications = {
@@ -69,7 +69,6 @@ function signup(user) {
                 },
                 error => {
                     dispatch(failure(error));
-                    //dispatch(alertActions.error(error.toString()));
                 }
             );
     };

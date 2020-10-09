@@ -32,9 +32,10 @@ import CardBody from "components/Card/CardBody.js";
 import InfoArea from "components/InfoArea/InfoArea.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import Danger from "components/Typography/Danger.js";
+import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { actionModals } from "redux/action";
+import { actionModals, actionAuthentications, actionMessages } from "redux/action";
 import { creatorAuthentications } from "redux/creator";
 import RCG from "components/ReactCaptchaGenerator";
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
@@ -71,6 +72,7 @@ export default function SignUpPage({ ...rest }) {
   const [checked, setChecked] = useState([-1]);
   const [captcha, setCaptcha] = useState("");
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleToggle = (event) => {
     let { event: e, payload: value } = event;
@@ -84,14 +86,20 @@ export default function SignUpPage({ ...rest }) {
       newChecked.splice(currentIndex, 1);
     }
     setChecked(newChecked);
-
-    // handleInputValidateLogic("iagree");
   };
 
   useEffect(() => {
+    dispatch({ type: actionAuthentications.SIGNUP_INITIAL });
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-  },[]);
+  }, []);
+
+  useEffect(() => {
+    if (authe.signedup) {
+      dispatch({ type: actionMessages.TO_MESSAGE, action: { type: 'signup' } });
+      history.replace("/message-page");
+    }
+  });
 
   const classes = useStyles();
 
@@ -266,6 +274,7 @@ export default function SignUpPage({ ...rest }) {
   return (
     <div>
       {authe.loading && <LoadingIndicator />}
+      {/* {authe.signedup && <Redirect to="/message-page" />} */}
       <Header
         brand={<HeaderBrand />}
         absolute

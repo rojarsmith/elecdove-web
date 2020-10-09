@@ -20,7 +20,7 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { creatorAuthentications } from "redux/creator";
-import { actionModals } from "redux/action";
+import { actionModals, actionMessages } from "redux/action";
 import styles from "assets/jss/material-kit-pro-react/components/headerLinksStyle.js";
 
 const useStyles = makeStyles(styles);
@@ -82,6 +82,13 @@ export default function HeaderLinks(props) {
     dispatch({ type: actionModals.OPEN_LOGOUT });
   }
 
+  function debugMessage(event) {
+    event.preventDefault();
+
+    dispatch({ type: actionMessages.TO_MESSAGE, action: { type: 'signup' } });
+    history.replace("/message-page");
+  }
+
   const { dropdownHoverColor } = props;
   const classes = useStyles();
   return (
@@ -135,6 +142,10 @@ export default function HeaderLinks(props) {
         <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink} onClick={debug1}>
             Debug1
+          </Button>
+          <br />
+          <Button color="transparent" className={classes.navLink} onClick={debugMessage}>
+            debugMessage
           </Button>
         </ListItem>
       }

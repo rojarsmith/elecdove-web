@@ -47,12 +47,14 @@ export function reducerAuthentication(state = initialState, action) {
             state.preAction = action.type;
             return state;
         case actionAuthentications.SIGNUP_INITIAL:
+            state.signedup = false;
             state.loading = false;
             return state;
         case actionAuthentications.SIGNUP_REQUEST:
             state.loading = true;
             return state;
         case actionAuthentications.SIGNUP_SUCCESS:
+            state.signedup = true;
             state.loading = false;
             return state;
         case actionAuthentications.SIGNUP_FAILURE:
