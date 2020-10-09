@@ -82,11 +82,15 @@ export default function HeaderLinks(props) {
     dispatch({ type: actionModals.OPEN_LOGOUT });
   }
 
-  function debugMessage(event) {
+  function debug2(event) {
     event.preventDefault();
 
-    dispatch({ type: actionMessages.TO_MESSAGE, action: { type: 'signup' } });
-    history.replace("/message-page");
+
+    // dispatch(creatorAuthentications.signup({ username: 'aaa111', password: 'bbbb1111', email: 'rojarsmith@gmail.com'}));
+    dispatch(creatorAuthentications.signup({ username: 'aaa1112', password: 'bbbb1111', email: 'rojarsmith2@gmail.com'}));
+
+    // dispatch({ type: actionMessages.TO_MESSAGE, action: { type: 'signup' } });
+    // history.replace("/message-page");
   }
 
   const { dropdownHoverColor } = props;
@@ -144,8 +148,8 @@ export default function HeaderLinks(props) {
             Debug1
           </Button>
           <br />
-          <Button color="transparent" className={classes.navLink} onClick={debugMessage}>
-            debugMessage
+          <Button color="transparent" className={classes.navLink} onClick={debug2}>
+            debug2
           </Button>
         </ListItem>
       }

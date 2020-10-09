@@ -369,6 +369,7 @@ export default function SignUpPage({ ...rest }) {
                           }}
                           inputProps={{
                             placeholder: "Password",
+                            type: "password",
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -394,6 +395,7 @@ export default function SignUpPage({ ...rest }) {
                           }}
                           inputProps={{
                             placeholder: "Password again",
+                            type: "password",
                             startAdornment: (
                               <InputAdornment
                                 position="start"

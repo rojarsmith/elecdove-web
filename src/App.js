@@ -16,7 +16,7 @@ import SignupPage from "views/SignupPage/SignupPage.js";
 import MessagePage from "views/MessagePage/MessagePage";
 // Component
 import Button from "components/CustomButtons/Button.js";
-import { ModalLogout, ModalTerms } from "components/Modal";
+import { ModalLogout, ModalTerms, ModalError } from "components/Modal";
 //Layout
 import AdminLayout from "layouts/Admin.js";
 
@@ -104,6 +104,10 @@ class App extends Component {
     this.props.store.dispatch({ type: actionModals.CLOSE_TERMS });
   }
 
+  afterModalError = () => {
+    this.props.store.dispatch({ type: actionModals.CLOSE_ERROR });
+  }
+
   emptyfunc = () => {
 
   }
@@ -130,6 +134,7 @@ class App extends Component {
           <div>
             <ModalLogout open={this.props.store.getState().reducer.logoutOpen} afterclose={this.signout} />
             <ModalTerms open={this.props.store.getState().reducer.termsOpen} afterclose={this.afterModalTerms} />
+            <ModalError open={this.props.store.getState().reducer.errorOpen} afterclose={this.afterModalError} message={this.props.store.getState().reducer.message} />
           </div>
         }
         <Switch>

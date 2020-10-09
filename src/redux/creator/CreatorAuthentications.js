@@ -1,4 +1,4 @@
-import { actionAuthentications, actionMessages } from "../action";
+import { actionModals, actionAuthentications, actionMessages } from "../action";
 import AuthService from "service/AuthService";
 
 export const creatorAuthentications = {
@@ -69,6 +69,16 @@ function signup(user) {
                 },
                 error => {
                     dispatch(failure(error));
+                    dispatch({
+                        type: actionModals.OPEN_ERROR, action:
+                            () => {
+                                try {
+                                    return error.response.data.message;
+                                } catch (e) {
+                                    return 'Service in maintenance.'
+                                }
+                            }
+                    });
                 }
             );
     };
