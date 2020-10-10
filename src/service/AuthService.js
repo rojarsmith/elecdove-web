@@ -59,6 +59,25 @@ class AuthService {
       });
   }
 
+  signup(user) {
+    const { username, email, password } = user;
+
+    let data = {
+      'name': username,
+      'email': email,
+      'password': password,
+    };
+
+    return apiUserSignUp(data)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
   confirmMail(token) {
     return apiUserConfirmMail(token)
       .then((response) => {

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -12,6 +13,10 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Icon from "@material-ui/core/Icon";
 import Face from "@material-ui/icons/Face";
 import DoneAllOutlined from '@material-ui/icons/DoneAllOutlined';
+import {
+  Visibility,
+  VisibilityOff
+} from '@material-ui/icons';
 // core components
 import Header from "components/Header/Header.js";
 import HeaderBrand from "components/Header/HeaderBrand.js";
@@ -39,6 +44,12 @@ import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(loginPageStyle);
 
+const useStylesAdorned = makeStyles({
+  adornedEnd: {
+    paddingRight: 100,
+  },
+});
+
 export default function LoginPage() {
   const [inputs, setInputs] = useState({
     username: '',
@@ -55,6 +66,7 @@ export default function LoginPage() {
   const [seconds, setSeconds] = useState(5);
   const [submitted, setSubmitted] = useState(false);
   const [hidden, setHidden] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [captcha, setCaptcha] = useState("");
   const dispatch = useDispatch();
   const location = useLocation();
@@ -243,6 +255,16 @@ export default function LoginPage() {
     setCaptcha(text);
   }
 
+  const handleClickShowPassword = (event) => {
+    event.preventDefault();
+
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
+
   return (
     <div>
       {authe.loading && submitted && <LoadingIndicator />}
@@ -326,14 +348,28 @@ export default function LoginPage() {
                           }}
                           inputProps={{
                             placeholder: "Password",
-                            type: "password",
+                            type: (showPassword ? 'text' : 'password'),
                             startAdornment: (
                               <InputAdornment position="start">
                                 <Icon className={classes.inputIconsColor}>
                                   lock_utline
-                            </Icon>
+                                </Icon>
                               </InputAdornment>
                             ),
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={(event) => handleClickShowPassword(event)}
+                                  onMouseDown={(event) => handleMouseDownPassword(event)}
+                                  edge="end"
+                                  style={{ marginRight: 30 }}
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                            classes: { adornedEnd: useStylesAdorned.adornedEnd },
                             autoComplete: "off",
                             onChange: (event) => handleChange(event),
                             onBlur: (event) => handleInputValidate(event)

@@ -2,22 +2,23 @@
 import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
 import Icon from "@material-ui/core/Icon";
 // @material-ui/icons
 import Payment from "@material-ui/icons/Payment";
 import ContactSupport from "@material-ui/icons/ContactSupport";
-import Group from "@material-ui/icons/Group";
 import Face from "@material-ui/icons/Face";
 import Email from "@material-ui/icons/Email";
 import DoneAllOutlined from '@material-ui/icons/DoneAllOutlined';
 import EnhancedEncryption from '@material-ui/icons/EnhancedEncryption';
 import Check from "@material-ui/icons/Check";
-import Favorite from "@material-ui/icons/Favorite";
+import {
+  Visibility,
+  VisibilityOff
+} from '@material-ui/icons';
 // core components
 import Header from "components/Header/Header.js";
 import HeaderBrand from "components/Header/HeaderBrand.js";
@@ -71,6 +72,7 @@ export default function SignUpPage({ ...rest }) {
   });
   const [checked, setChecked] = useState([-1]);
   const [captcha, setCaptcha] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -271,6 +273,16 @@ export default function SignUpPage({ ...rest }) {
     return result;
   }
 
+  const handleClickShowPassword = (event) => {
+    event.preventDefault();
+
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault();
+  };
+
   return (
     <div>
       {authe.loading && <LoadingIndicator />}
@@ -369,7 +381,7 @@ export default function SignUpPage({ ...rest }) {
                           }}
                           inputProps={{
                             placeholder: "Password",
-                            type: "password",
+                            type: (showPassword ? 'text' : 'password'),
                             startAdornment: (
                               <InputAdornment
                                 position="start"
@@ -378,6 +390,19 @@ export default function SignUpPage({ ...rest }) {
                                 <Icon className={classes.inputAdornmentIcon}>
                                   lock_outline
                                 </Icon>
+                              </InputAdornment>
+                            ),
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={(event) => handleClickShowPassword(event)}
+                                  onMouseDown={(event) => handleMouseDownPassword(event)}
+                                  edge="end"
+                                  style={{ marginRight: 30 }}
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
                               </InputAdornment>
                             ),
                             onChange: (event) => handleChange(event),

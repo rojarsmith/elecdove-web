@@ -1,4 +1,4 @@
-import { actionModals, actionAuthentications, actionMessages } from "../action";
+import { actionModals, actionAuthentications } from "../action";
 import AuthService from "service/AuthService";
 
 export const creatorAuthentications = {
