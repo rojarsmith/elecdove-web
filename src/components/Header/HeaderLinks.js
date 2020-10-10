@@ -79,7 +79,7 @@ export default function HeaderLinks(props) {
   function debug1(event) {
     event.preventDefault();
 
-    dispatch({ type: actionModals.OPEN_LOGOUT });
+    // dispatch({ type: actionModals.OPEN_LOGOUT });
   }
 
   function debug2(event) {
@@ -87,10 +87,12 @@ export default function HeaderLinks(props) {
 
 
     // dispatch(creatorAuthentications.signup({ username: 'aaa111', password: 'bbbb1111', email: 'rojarsmith@gmail.com'}));
-    dispatch(creatorAuthentications.signup({ username: 'aaa1112', password: 'bbbb1111', email: 'rojarsmith2@gmail.com'}));
+    // dispatch(creatorAuthentications.signup({ username: 'aaa1112', password: 'bbbb1111', email: 'rojarsmith2@gmail.com'}));
 
     // dispatch({ type: actionMessages.TO_MESSAGE, action: { type: 'signup' } });
     // history.replace("/message-page");
+
+    history.push("/confirm-account/:token");
   }
 
   const { dropdownHoverColor } = props;
@@ -147,9 +149,21 @@ export default function HeaderLinks(props) {
           <Button color="transparent" className={classes.navLink} onClick={debug1}>
             Debug1
           </Button>
-          <br />
+        </ListItem>
+      }
+      {
+        process.env.REACT_APP_DEV &&
+        <ListItem className={classes.listItem}>
           <Button color="transparent" className={classes.navLink} onClick={debug2}>
-            debug2
+            Debug2
+          </Button>
+        </ListItem>
+      }
+      {
+        process.env.REACT_APP_DEV &&
+        <ListItem className={classes.listItem}>
+          <Button color="transparent" className={classes.navLink} onClick={debug1}>
+            Debug3
           </Button>
         </ListItem>
       }

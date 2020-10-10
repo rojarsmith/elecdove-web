@@ -1,7 +1,14 @@
 import { actionAuthentications } from "../action";
 
 let user = JSON.parse(localStorage.getItem('user'));
-const initialState = user ? { loading: false, loginFailed: false, loggedIn: true, user } : {};
+const initialState = user ? {
+    loading: false,
+    loginFailed: false,
+    loggedIn: true,
+    confirmed: -1,
+    confirmMessage: '',
+    user
+} : {};
 
 export function reducerAuthentication(state = initialState, action) {
     switch (action.type) {
@@ -58,6 +65,21 @@ export function reducerAuthentication(state = initialState, action) {
             state.loading = false;
             return state;
         case actionAuthentications.SIGNUP_FAILURE:
+            state.loading = false;
+            return state;
+        case actionAuthentications.CONFIRM_REQUEST:
+            state.confirmed = -1;
+            state.confirmMessage = '';
+            state.loading = true;
+            return state;
+        case actionAuthentications.CONFIRM_SUCCESS:
+            state.confirmed = 1;
+            state.confirmMessage = action.payload.message;
+            state.loading = false;
+            return state;
+        case actionAuthentications.CONFIRM_FAILURE:
+            state.confirmed = 0;
+            state.confirmMessage = action.payload.message;
             state.loading = false;
             return state;
         default:

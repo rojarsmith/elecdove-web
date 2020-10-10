@@ -1,7 +1,8 @@
 import {
   apiUserLogin,
   apiUserCheck,
-  apiSignUp
+  apiUserSignUp,
+  apiUserConfirmMail
 } from "../util/APIUtils";
 const querystring = require('querystring');
 
@@ -58,16 +59,8 @@ class AuthService {
       });
   }
 
-  signup(user) {
-    const { username, email, password } = user;
-
-    let data = {
-      'name': username,
-      'email': email,
-      'password': password,
-    };
-
-    return apiSignUp(data)
+  confirmMail(token) {
+    return apiUserConfirmMail(token)
       .then((response) => {
         return response.data;
       })

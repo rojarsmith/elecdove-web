@@ -5,7 +5,8 @@ export const creatorAuthentications = {
     initial,
     login,
     logout,
-    signup
+    signup,
+    confirmMail
 };
 
 function initial() {
@@ -86,4 +87,35 @@ function signup(user) {
     function request(user) { return { type: actionAuthentications.SIGNUP_REQUEST, user } }
     function success(user) { return { type: actionAuthentications.SIGNUP_SUCCESS, user } }
     function failure(error) { return { type: actionAuthentications.SIGNUP_FAILURE, error } }
+}
+
+function confirmMail(token) {
+    return dispatch => {
+        dispatch(request(token));
+
+        AuthService.confirmMail(token)
+            .then(
+                payload => {
+                    dispatch(success(payload));
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+
+    function request(token) { return { type: actionAuthentications.CONFIRM_REQUEST, token } }
+    function success(payload) { return { type: actionAuthentications.CONFIRM_SUCCESS, payload } }
+    function failure(error) {
+        let emsg = '';
+        try {
+            emsg = error.response.data.message
+        } catch (e) {
+            emsg = 'Service in maintenance.'
+        }
+
+        return {
+            type: actionAuthentications.CONFIRM_FAILURE, payload: { message: emsg }
+        }
+    }
 }

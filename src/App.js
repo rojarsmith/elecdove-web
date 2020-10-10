@@ -145,6 +145,7 @@ class App extends Component {
           <Route path="/shopping-cart-page" component={ShoppingCartPage} />
           <Route path="/signup-page" component={SignupPage} />
           <Route path="/message-page" component={MessagePage} />
+          <Route path="/confirm-account/:token" render={(props) => <MessagePage type="confirmmail" {...props} />} />
           <Route path="/admin" component={AdminLayout} />
           {/* <Route path="/control-panel" component={AdminLayout} /> */}
           {/* <Route path="/" component={LandingPage} /> */}
