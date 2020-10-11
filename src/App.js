@@ -14,6 +14,7 @@ import LoginPage from "views/LoginPage/LoginPage.js";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
 import SignupPage from "views/SignupPage/SignupPage.js";
 import MessagePage from "views/MessagePage/MessagePage";
+import NewPasswordPage from "views/NewPasswordPage/NewPasswordPage"
 import ResetPasswordPage from "views/ResetPasswordPage/ResetPasswordPage";
 // Component
 import Button from "components/CustomButtons/Button.js";
@@ -147,6 +148,7 @@ class App extends Component {
           <Route path="/signup-page" component={SignupPage} />
           <Route path="/message-page" component={MessagePage} />
           <Route path="/confirm-account/:token" render={(props) => <MessagePage type="confirmmail" {...props} />} />
+          <Route path="/reset-password/:token" render={(props) => <NewPasswordPage {...props} />} />
           <Route path="/reset-password" render={(props) => <ResetPasswordPage {...props} />} />
           <Route path="/admin" component={AdminLayout} />
           {/* <Route path="/control-panel" component={AdminLayout} /> */}

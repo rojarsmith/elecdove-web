@@ -7,7 +7,8 @@ export const creatorAuthentications = {
     logout,
     signup,
     confirmMail,
-    askResetPassword
+    askResetPassword,
+    resetPassword,
 };
 
 function initial() {
@@ -161,4 +162,46 @@ function askResetPassword(email) {
         }
     }
 }
+
+function resetPassword(data) {
+    return dispatch => {
+        dispatch(request(data));
+
+        AuthService.resetPassword(data)
+            .then(
+                payload => {
+                    dispatch(success(payload));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch({
+                        type: actionModals.OPEN_ERROR, action:
+                            () => {
+                                try {
+                                    return error.response.data.message;
+                                } catch (e) {
+                                    return 'Service in maintenance.'
+                                }
+                            }
+                    });
+                }
+            );
+    };
+
+    function request(data) { return { type: actionAuthentications.FORGET_REQUEST, data } }
+    function success(payload) { return { type: actionAuthentications.FORGET_SUCCESS, payload } }
+    function failure(error) {
+        let emsg = '';
+        try {
+            emsg = error.response.data.message
+        } catch (e) {
+            emsg = 'Service in maintenance.'
+        }
+
+        return {
+            type: actionAuthentications.FORGET_FAILURE, payload: { message: emsg }
+        }
+    }
+}
+
 

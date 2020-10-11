@@ -32,7 +32,7 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import InfoArea from "components/InfoArea/InfoArea.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
-import Danger from "components/Typography/Danger.js";
+import { useParams } from "react-router";
 import { Redirect, Link, useLocation, useHistory } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -46,7 +46,7 @@ import image from "assets/img/bg7.jpg";
 
 const useStyles = makeStyles(signupPageStyle);
 
-export default function SignUpPage({ ...rest }) {
+export default function NewPasswordPage({ ...rest }) {
   const authe = useSelector(state => state.authentication);
   const [inputs, setInputs] = useState({
     username: '',
@@ -70,40 +70,28 @@ export default function SignUpPage({ ...rest }) {
     iagreeError: false,
     iagreeErrorMessage: ''
   });
-  const [checked, setChecked] = useState([-1]);
   const [captcha, setCaptcha] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { token } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const handleToggle = (event) => {
-    let { event: e, payload: value } = event;
-    e.preventDefault();
-
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-  };
+  const classes = useStyles();
 
   useEffect(() => {
-    dispatch({ type: actionAuthentications.SIGNUP_INITIAL });
+    console.log("token=" + token);
+
+    dispatch({ type: actionAuthentications.FORGET_INITIAL });
+
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
   }, []);
 
   useEffect(() => {
-    if (authe.signedup) {
-      dispatch({ type: actionMessages.TO_MESSAGE, action: { type: 'signup' } });
+    if (authe.responseSuccess) {
+      dispatch({ type: actionMessages.TO_MESSAGE, action: { type: 'resetpasswordtoken' } });
       history.replace("/message-page");
     }
-  });
-
-  const classes = useStyles();
+  }, [authe.responseSuccess]);
 
   function handleChange(event) {
     const { id, value } = event.target;
@@ -122,42 +110,6 @@ export default function SignUpPage({ ...rest }) {
 
   function handleInputValidateLogic(itemname) {
     switch (itemname) {
-      case 'username':
-        if (inputs.username === '') {
-          setInputs(inputs => ({
-            ...inputs,
-            [itemname + "Error"]: true,
-            [itemname + 'ErrorMessage']: "Please input user name."
-          }));
-          return false;
-        }
-        else if (ValidationUtils.validateUsername(inputs.username) === false) {
-          setInputs(inputs => ({
-            ...inputs,
-            [itemname + "Error"]: true,
-            [itemname + 'ErrorMessage']: "Must 5~21 chars, 0~9, a~Z."
-          }));
-          return false;
-        }
-        break;
-      case 'email':
-        if (inputs.email === '') {
-          setInputs(inputs => ({
-            ...inputs,
-            [itemname + "Error"]: true,
-            [itemname + 'ErrorMessage']: "Please input E-mail."
-          }));
-          return false;
-        }
-        else if (ValidationUtils.validateEmail(inputs.email) === false) {
-          setInputs(inputs => ({
-            ...inputs,
-            [itemname + "Error"]: true,
-            [itemname + 'ErrorMessage']: "Invalid E-mail."
-          }));
-          return false;
-        }
-        break;
       case 'password':
         if (inputs.password === '') {
           setInputs(inputs => ({
@@ -212,15 +164,6 @@ export default function SignUpPage({ ...rest }) {
           return false;
         }
         break;
-      case 'iagree':
-        if (checked.length === 1 && checked[checked.length - 1] === -1) {
-          setInputs(inputs => ({
-            ...inputs,
-            [itemname + "Error"]: true,
-          }));
-          return false;
-        }
-        break;
       default:
         return false;
     }
@@ -238,23 +181,14 @@ export default function SignUpPage({ ...rest }) {
     setCaptcha(text);
   }
 
-  function handlerTerms(event) {
-    event.preventDefault();
-
-    dispatch({ type: actionModals.OPEN_TERMS });
-  }
-
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (checkInputComplete(['username', 'email', 'password', 'passwordagain', 'captcha', 'iagree']) === false) {
+    if (checkInputComplete(['password', 'passwordagain', 'captcha']) === false) {
       return false;
     }
 
-    const { from } = location.state || { from: { pathname: "/" } };
-    console.log(location);
-    console.log(from);
-    dispatch(creatorAuthentications.signup(inputs));
+    dispatch(creatorAuthentications.resetPassword({ password: inputs.password, token: token }));
   }
 
   function checkInputComplete(inputs) {
@@ -306,73 +240,20 @@ export default function SignUpPage({ ...rest }) {
           <GridContainer justify="center">
             <GridItem xs={12} sm={10} md={10}>
               <Card className={classes.cardSignup}>
-                <h2 className={classes.cardTitle}>Sign Up</h2>
+                <h2 className={classes.cardTitle}>New Password</h2>
                 <CardBody>
                   <GridContainer justify="center">
                     <GridItem xs={12} sm={5} md={5}>
                       <InfoArea
                         className={classes.infoArea}
-                        title="Order"
-                        description="You must sign up the accout for paying your order."
-                        icon={Payment}
-                        iconColor="info"
-                      />
-                      <InfoArea
-                        className={classes.infoArea}
-                        title="Support"
-                        description="Get more much advance help."
+                        title="Hint"
+                        description="Input the new password."
                         icon={ContactSupport}
-                        iconColor="primary"
+                        iconColor="info"
                       />
                     </GridItem>
                     <GridItem xs={12} sm={5} md={5}>
                       <form className={classes.form} method="POST" onSubmit={handleSubmit}>
-                        <CustomInput
-                          id="username"
-                          formControlProps={{
-                            fullWidth: true,
-                            className: classes.customFormControlClasses
-                          }}
-                          inputProps={{
-                            placeholder: "User Name",
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Face className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            onChange: (event) => handleChange(event),
-                            onBlur: (event) => handleInputValidate(event),
-                            onFocus: (event) => handleInputFocus(event)
-                          }}
-                          error={inputs.usernameError}
-                          labelText={inputs.usernameErrorMessage}
-                        />
-                        <CustomInput
-                          id="email"
-                          formControlProps={{
-                            fullWidth: true,
-                            className: classes.customFormControlClasses
-                          }}
-                          inputProps={{
-                            placeholder: "Email",
-                            startAdornment: (
-                              <InputAdornment
-                                position="start"
-                                className={classes.inputAdornment}
-                              >
-                                <Email className={classes.inputAdornmentIcon} />
-                              </InputAdornment>
-                            ),
-                            onChange: (event) => handleChange(event),
-                            onBlur: (event) => handleInputValidate(event),
-                            onFocus: (event) => handleInputFocus(event)
-                          }}
-                          error={inputs.emailError}
-                          labelText={inputs.emailErrorMessage}
-                        />
                         <CustomInput
                           id="password"
                           formControlProps={{
@@ -465,47 +346,12 @@ export default function SignUpPage({ ...rest }) {
                           labelText={inputs.captchaErrorMessage}
                         />
                         <div className={classes.textCenter}>
-                          <RCG result={resultCaptcha} toggleRefresh={authe.loading} ></RCG>
+                          <RCG result={resultCaptcha} toggleRefresh={authe.response} ></RCG>
                         </div>
 
-                        {inputs.iagreeError ? (
-                          <div className={classes.textCenter}>
-                            <Danger>
-                              Please read terms and click I agree.
-                            </Danger>
-                          </div>
-                        ) : null}
-                        <div className={classes.textCenter}>
-                          <FormControlLabel
-                            classes={{
-                              label: classes.label
-                            }}
-                            control={
-                              <Checkbox
-                                id="iagree"
-                                tabIndex={-1}
-                                onClick={(event) => handleToggle({ event: event, payload: 1 })}
-                                checkedIcon={
-                                  <Check className={classes.checkedIcon} />
-                                }
-                                icon={<Check className={classes.uncheckedIcon} style={{ position: "relative" }} />}
-                                classes={{
-                                  checked: classes.checked,
-                                  root: classes.checkRoot
-                                }}
-                                checked={checked.indexOf(1) !== -1 ? true : false}
-                              />
-                            }
-                            label={
-                              <span>
-                                I agree to the{" "}
-                                <a href="#gsbutton" onClick={handlerTerms}>terms and conditions</a>.
-                              </span>
-                            }
-                          />
-                        </div>
+
                         <div id="gsbutton" className={classes.textCenter}>
-                          <Button disabled={checked.indexOf(1) !== -1 ? false : true} round color="primary" type="submit">
+                          <Button disabled={false} round color="primary" type="submit">
                             Get started
                           </Button>
                         </div>

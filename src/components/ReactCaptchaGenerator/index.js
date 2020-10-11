@@ -14,7 +14,9 @@ class ReactCaptchaGenerator extends Component {
             length: props.length,
             background: props.background,
             text: '',
-            toggleRefresh: false
+            toggleRefresh: false,
+            toggleRefreshPre1_1: false,
+            toggleRefreshPre1_2: false
         };
         this.setData = this.setData.bind(this);
     }
@@ -23,9 +25,18 @@ class ReactCaptchaGenerator extends Component {
         this.setData();
     }
 
-    componentDidUpdate({ toggleRefresh }, prevState) {
+    componentDidUpdate(prevProps, prevState) {
+        let { toggleRefresh } = prevProps;
         if (toggleRefresh !== prevState.toggleRefresh) {
-            this.setData();
+            console.log("toggleRefresh=" + toggleRefresh + ", prevState.toggleRefresh=" + prevState.toggleRefresh);
+            if (this.state.toggleRefreshPre1_1 !== this.state.toggleRefresh ||
+                this.state.toggleRefreshPre1_2 !== prevState.toggleRefresh) {
+                this.setData();
+            }
+
+            this.state.toggleRefreshPre1_1 = this.state.toggleRefresh;
+            this.state.toggleRefreshPre1_2 = prevState.toggleRefresh;
+            this.state.toggleRefresh = toggleRefresh;
         }
     }
 

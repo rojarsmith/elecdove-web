@@ -31,13 +31,14 @@ export default function SignUpPage({ ...rest }) {
   const [typeSignUp, setTypeSignUp] = useState(message.type === 'signup');
   const [typeConfirmMail, setTypeConfirmMail] = useState(rest.type === 'confirmmail');
   const [typeResetPassword, setTypeResetPassword] = useState(message.type === 'resetpassword');
+  const [typeResetPasswordToken, setTypeResetPasswordToken] = useState(message.type === 'resetpasswordtoken');
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useParams();
   const classes = useStyles();
 
   useEffect(() => {
-    if (!typeSignUp && !typeConfirmMail && !typeResetPassword) {
+    if (!typeSignUp && !typeConfirmMail && !typeResetPassword && !typeResetPasswordToken) {
       history.replace('/');
     }
     window.scrollTo(0, 0);
@@ -54,8 +55,11 @@ export default function SignUpPage({ ...rest }) {
     else if (typeConfirmMail) {
       return "Confirm Mail";
     }
-    else if(typeResetPassword){
+    else if (typeResetPassword) {
       return "Begin Reset Password";
+    }
+    else if (typeResetPasswordToken) {
+      return "New Password Completed";
     }
   }
 
@@ -75,8 +79,11 @@ export default function SignUpPage({ ...rest }) {
         return <div>{authe.confirmMessage}<br />Sign in your account and enjoy.</div>;
       }
     }
-    else if(typeResetPassword){
+    else if (typeResetPassword) {
       return <div>{authe.resetPasswordMessage}<br />You will receive the e-mail and click the link for reseting.</div>;
+    }
+    else if (typeResetPasswordToken) {
+      return <div>{authe.responseMessage}<br />Sign in with your new password.</div>;
     }
   }
 
@@ -100,6 +107,13 @@ export default function SignUpPage({ ...rest }) {
         return <IconFail />;
       }
       else if (authe.resetPassword === 1) {
+        return <IconOk />;
+      }
+    } else if (typeResetPasswordToken) {
+      if (!authe.responseSuccess && authe.response) {
+        return <IconFail />;
+      }
+      else if (authe.responseSuccess && authe.response) {
         return <IconOk />;
       }
     }

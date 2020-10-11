@@ -110,19 +110,32 @@ export function reducerAuthentication(state = initialState, action) {
             state.resetPasswordMessage = action.payload.message;
             state.loading = false;
             return state;
-        case actionAuthentications.FORGET_REQUEST:
+        case actionAuthentications.FORGET_INITIAL:
+            state.responseSuccess= false;
             state.confirmed = -1;
             state.confirmMessage = '';
+            state.response = false;
+            state.loading = false;
+            return state;
+        case actionAuthentications.FORGET_REQUEST:
+            state.responseSuccess= false;
+            state.confirmed = -1;
+            state.confirmMessage = '';
+            state.response = false;
             state.loading = true;
             return state;
         case actionAuthentications.FORGET_SUCCESS:
+            state.responseSuccess= true;
             state.confirmed = 1;
             state.confirmMessage = action.payload.message;
+            state.response = true;
             state.loading = false;
             return state;
         case actionAuthentications.FORGET_FAILURE:
+            state.responseSuccess= false;
             state.confirmed = 0;
             state.confirmMessage = action.payload.message;
+            state.response = true;
             state.loading = false;
             return state;
         default:
