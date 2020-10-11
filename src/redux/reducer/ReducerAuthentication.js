@@ -112,6 +112,7 @@ export function reducerAuthentication(state = initialState, action) {
             return state;
         case actionAuthentications.FORGET_INITIAL:
             state.responseSuccess= false;
+            state.responseMessage= action.payload.message;
             state.confirmed = -1;
             state.confirmMessage = '';
             state.response = false;
@@ -126,6 +127,7 @@ export function reducerAuthentication(state = initialState, action) {
             return state;
         case actionAuthentications.FORGET_SUCCESS:
             state.responseSuccess= true;
+            state.responseMessage= action.payload.message;
             state.confirmed = 1;
             state.confirmMessage = action.payload.message;
             state.response = true;
@@ -133,6 +135,7 @@ export function reducerAuthentication(state = initialState, action) {
             return state;
         case actionAuthentications.FORGET_FAILURE:
             state.responseSuccess= false;
+            state.responseMessage= action.payload.message;
             state.confirmed = 0;
             state.confirmMessage = action.payload.message;
             state.response = true;
