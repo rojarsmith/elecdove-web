@@ -84,24 +84,29 @@ export function reducerAuthentication(state = initialState, action) {
             return state;
         case actionAuthentications.ASK_FORGET_INITIAL:
             state.resetPassword = -1;
-            state.rp =false;
+            state.rp = false;
+            state.rcg = false;
             state.resetPasswordMessage = '';
             state.loading = false;
             return state;
         case actionAuthentications.ASK_FORGET_REQUEST:
             state.resetPassword = -1;
-            state.rp =false;
+            state.rp = false;
+            state.rcg = false;
             state.resetPasswordMessage = '';
             state.loading = true;
             return state;
         case actionAuthentications.ASK_FORGET_SUCCESS:
             state.resetPassword = 1;
-            state.rp =true;
+            state.rp = true;
+            state.rcg = true;
             state.resetPasswordMessage = action.payload.message;
             state.loading = false;
             return state;
         case actionAuthentications.ASK_FORGET_FAILURE:
             state.resetPassword = 0;
+            state.rp = false;
+            state.rcg = true;
             state.resetPasswordMessage = action.payload.message;
             state.loading = false;
             return state;

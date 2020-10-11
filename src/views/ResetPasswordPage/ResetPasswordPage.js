@@ -254,7 +254,7 @@ export default function ResetPasswordPage({ ...rest }) {
                           labelText={inputs.captchaErrorMessage}
                         />
                         <div className={classes.textCenter}>
-                          <RCG result={resultCaptcha} toggleRefresh={authe.loading} ></RCG>
+                          <RCG result={resultCaptcha} toggleRefresh={authe.rcg} ></RCG>
                         </div>
                         <div id="gsbutton" className={classes.textCenter}>
                           <Button round color="primary" type="submit">
