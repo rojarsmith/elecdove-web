@@ -30,21 +30,21 @@ export default function SignUpPage({ ...rest }) {
   const message = useSelector(state => state.message);
   const [typeSignUp, setTypeSignUp] = useState(message.type === 'signup');
   const [typeConfirmMail, setTypeConfirmMail] = useState(rest.type === 'confirmmail');
+  const [typeResetPassword, setTypeResetPassword] = useState(message.type === 'resetpassword');
   const dispatch = useDispatch();
   const history = useHistory();
   const { token } = useParams();
   const classes = useStyles();
 
   useEffect(() => {
-    console.log(token);
-    console.log("typeSignUp=" + typeSignUp);
-    if (!typeSignUp && !typeConfirmMail) {
+    if (!typeSignUp && !typeConfirmMail && !typeResetPassword) {
       history.replace('/');
     }
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-
-    dispatch(creatorAuthentications.confirmMail(token));
+    if (typeConfirmMail) {
+      dispatch(creatorAuthentications.confirmMail(token));
+    }
   }, []);
 
   const renderTitle = (param) => {
@@ -53,6 +53,9 @@ export default function SignUpPage({ ...rest }) {
     }
     else if (typeConfirmMail) {
       return "Confirm Mail";
+    }
+    else if(typeResetPassword){
+      return "Begin Reset Password";
     }
   }
 
@@ -72,6 +75,9 @@ export default function SignUpPage({ ...rest }) {
         return <div>{authe.confirmMessage}<br />Sign in your account and enjoy.</div>;
       }
     }
+    else if(typeResetPassword){
+      return <div>{authe.resetPasswordMessage}<br />You will receive the e-mail and click the link for reseting.</div>;
+    }
   }
 
   const renderItem3 = (param) => {
@@ -86,6 +92,14 @@ export default function SignUpPage({ ...rest }) {
         return <IconFail />;
       }
       else if (authe.confirmed === 1) {
+        return <IconOk />;
+      }
+    }
+    else if (typeResetPassword) {
+      if (authe.resetPassword === 0) {
+        return <IconFail />;
+      }
+      else if (authe.resetPassword === 1) {
         return <IconOk />;
       }
     }

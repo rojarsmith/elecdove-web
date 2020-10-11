@@ -438,7 +438,7 @@ export default function LoginPage() {
                   </div>
                   <div className={classes.textCenter} style={{ marginTop: "1vh" }}>
                     <div className={classes.typo}>
-                      <Link to="/signup-page" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Forgot Password</Link>
+                      <Link to="/reset-password" className="btn btn-link" color="primary" size="lg" style={{ margin: ".3125rem 1px", padding: "1.125rem 2.25rem" }}>Forgot Password</Link>
                     </div>
                   </div>
                   <div className={classes.textCenter} style={{ marginTop: "5vh" }}>

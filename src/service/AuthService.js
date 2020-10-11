@@ -2,7 +2,9 @@ import {
   apiUserLogin,
   apiUserCheck,
   apiUserSignUp,
-  apiUserConfirmMail
+  apiUserConfirmMail,
+  apiUserAskResetPassword,
+  apiUserResetPassword,
 } from "../util/APIUtils";
 const querystring = require('querystring');
 
@@ -80,6 +82,28 @@ class AuthService {
 
   confirmMail(token) {
     return apiUserConfirmMail(token)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
+  askResetPassword(email) {
+    return apiUserAskResetPassword(email)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
+  resetPassword(data) {
+    return apiUserResetPassword(data)
       .then((response) => {
         return response.data;
       })

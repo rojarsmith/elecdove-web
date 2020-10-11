@@ -496,11 +496,10 @@ export default function SignUpPage({ ...rest }) {
                               />
                             }
                             label={
-
                               <span>
                                 I agree to the{" "}
                                 <a href="#gsbutton" onClick={handlerTerms}>terms and conditions</a>.
-                            </span>
+                              </span>
                             }
                           />
                         </div>
