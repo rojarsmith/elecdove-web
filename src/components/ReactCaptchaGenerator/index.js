@@ -34,9 +34,9 @@ class ReactCaptchaGenerator extends Component {
                 this.setData();
             }
 
-            this.state.toggleRefreshPre1_1 = this.state.toggleRefresh;
-            this.state.toggleRefreshPre1_2 = prevState.toggleRefresh;
-            this.state.toggleRefresh = toggleRefresh;
+            this.setState({ toggleRefreshPre1_1: this.state.toggleRefresh });
+            this.setState({ toggleRefreshPre1_2: prevState.toggleRefresh });
+            this.setState({ toggleRefresh: toggleRefresh });
         }
     }
 

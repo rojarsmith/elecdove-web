@@ -29,25 +29,21 @@ export default function SectionServices() {
             classes.textCenter
           )}
         >
-          <h2 className={classes.title}>We build awesome products</h2>
+          <h2 className={classes.title}>We have long relationships</h2>
           <h5 className={classes.description}>
-            This is the paragraph where you can write more details about your
-            product. Keep you user engaged by providing meaningful information.
+             With our distributors and direct customers – with mutual trust and collaboration, together we will find the best and most suitable solutions to meet customers’ needs.
           </h5>
         </GridItem>
       </GridContainer>
       <GridContainer>
         <GridItem md={4} sm={4}>
           <InfoArea
-            title="1. Design"
+            title="History"
             description={
               <span>
                 <p>
-                  The moment you use Material Kit, you know you’ve never felt
-                  anything like it. With a single use, this powerfull UI Kit
-                  lets you do more than ever before.{" "}
+                  In 1994 – two student friends started building up the business Emerging Display Technologies Corp. from scratch with the vision of becoming one of the leading display manufacturing companies worldwide – offering the best in Quality, Technology, Service and Value to our customers.{" "}
                 </p>
-                <a href="#pablo">Find more...</a>
               </span>
             }
             icon={Gesture}
@@ -56,15 +52,12 @@ export default function SectionServices() {
         </GridItem>
         <GridItem md={4} sm={4}>
           <InfoArea
-            title="2. Develop"
+            title="Technology"
             description={
               <span>
                 <p>
-                  Divide details about your product or agency work into parts.
-                  Write a few lines about each one. A paragraph describing a
-                  feature will be enough.{" "}
+                 One of the first display companies to embrace Capacitive Touch technology – today we are an integrated touchscreen manufacturer combining displays, touch panels, and cover lenses to provide customers with complete user interface solutions for their products.{" "}
                 </p>
-                <a href="#pablo">Find more...</a>
               </span>
             }
             icon={Build}
@@ -73,15 +66,12 @@ export default function SectionServices() {
         </GridItem>
         <GridItem md={4} sm={4}>
           <InfoArea
-            title="3. Make Edits"
+            title="Long Relationships"
             description={
               <span>
                 <p>
-                  Divide details about your product or agency work into parts.
-                  Write a few lines about each one. A paragraph describing a
-                  feature will be enough.{" "}
+                  With our distributors and direct customers – with mutual trust and collaboration, together we will find the best and most suitable solutions to meet customers’ needs.{" "}
                 </p>
-                <a href="#pablo">Find more...</a>
               </span>
             }
             icon="mode_edit"
