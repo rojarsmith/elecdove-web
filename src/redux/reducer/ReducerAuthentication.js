@@ -112,7 +112,7 @@ export function reducerAuthentication(state = initialState, action) {
             return state;
         case actionAuthentications.FORGET_INITIAL:
             state.responseSuccess= false;
-            state.responseMessage= action.payload.message;
+            state.responseMessage= '';
             state.confirmed = -1;
             state.confirmMessage = '';
             state.response = false;
