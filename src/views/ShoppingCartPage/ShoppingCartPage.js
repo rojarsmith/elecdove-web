@@ -300,7 +300,7 @@ export default function ShoppingCartPage({ ...rest }) {
               <List className={classes.list}>
                 <ListItem className={classes.inlineBlock}>
                   <a
-                    href="https://www.creative-tim.com/?ref=mkpr-shopping-cart"
+                    href="https://elecdove.com/?ref=mkpr-shopping-cart"
                     target="_blank"
                     className={classes.block}
                   >
@@ -309,7 +309,7 @@ export default function ShoppingCartPage({ ...rest }) {
                 </ListItem>
                 <ListItem className={classes.inlineBlock}>
                   <a
-                    href="https://www.creative-tim.com/presentation?ref=mkpr-shopping-cart"
+                    href="https://elecdove.com/presentation?ref=mkpr-shopping-cart"
                     target="_blank"
                     className={classes.block}
                   >
@@ -327,7 +327,7 @@ export default function ShoppingCartPage({ ...rest }) {
                 </ListItem>
                 <ListItem className={classes.inlineBlock}>
                   <a
-                    href="https://www.creative-tim.com/license?ref=mkpr-shopping-cart"
+                    href="https://elecdove.com/license?ref=mkpr-shopping-cart"
                     target="_blank"
                     className={classes.block}
                   >
@@ -340,7 +340,7 @@ export default function ShoppingCartPage({ ...rest }) {
               &copy; {1900 + new Date().getYear()} , made with{" "}
               <Favorite className={classes.icon} /> by{" "}
               <a
-                href="https://www.creative-tim.com?ref=mkpr-shopping-cart"
+                href="https://elecdove.com?ref=mkpr-shopping-cart"
                 target="_blank"
               >
                 Creative Tim

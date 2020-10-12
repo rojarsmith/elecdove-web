@@ -69,6 +69,12 @@ export default function HeaderLinks(props) {
     animateScroll();
   };
 
+  function handleClickCustomerCenter(event) {
+    event.preventDefault();
+
+    history.push("/admin");
+  }
+
   function handleClickLogout(event) {
     event.preventDefault();
 
@@ -126,13 +132,14 @@ export default function HeaderLinks(props) {
             }}
             buttonIcon={AccountCircle}
             dropdownList={[
-              <Link className={classes.dropdownLink}>
-                Profile
+              <Link className={classes.dropdownLink}
+                onClick={handleClickCustomerCenter}>
+                Customer Center
             </Link>,
               <Link
                 className={classes.dropdownLink}
                 onClick={handleClickLogout}>
-                Sign out
+                Sign Out
             </Link>
             ]}
           />
