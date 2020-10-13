@@ -318,7 +318,7 @@ export default function ShoppingCartPage({ ...rest }) {
                 </ListItem>
                 <ListItem className={classes.inlineBlock}>
                   <a
-                    href="https://blog.creative-tim.com/?ref=mkpr-shopping-cart"
+                    href=""
                     target="_blank"
                     className={classes.block}
                   >

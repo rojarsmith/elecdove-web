@@ -17,7 +17,8 @@ import allReducer from "redux/reducer"
 //Router
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import "assets/scss/material-kit-pro-react.scss?v=1.9.0";
+// import "assets/scss/material-kit-pro-react.scss?v=1.9.0";
+import "assets/scss/material-dashboard-pro-react.scss?v=1.9.0";
 
 //Alert
 const options = {
