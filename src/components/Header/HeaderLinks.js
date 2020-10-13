@@ -72,7 +72,7 @@ export default function HeaderLinks(props) {
   function handleClickCustomerCenter(event) {
     event.preventDefault();
 
-    history.push("/admin");
+    history.push("/contol-panel");
   }
 
   function handleClickLogout(event) {

@@ -150,7 +150,7 @@ class App extends Component {
           <Route path="/confirm-account/:token" render={(props) => <MessagePage type="confirmmail" {...props} />} />
           <Route path="/reset-password/:token" render={(props) => <NewPasswordPage {...props} />} />
           <Route path="/reset-password" render={(props) => <ResetPasswordPage {...props} />} />
-          <Route path="/admin" component={AdminLayout} />
+          <Route path="/contol-panel" component={AdminLayout} />
           {/* <Route path="/control-panel" component={AdminLayout} /> */}
           {/* <Route path="/" component={LandingPage} /> */}
           <Route path="/" component={EcommercePage} />
