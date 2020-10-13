@@ -31,11 +31,11 @@ import GridItem from "components/Grid/GridItem.js";
 import Table from "components/Table/Table.js";
 import Button from "components/CustomButtons/Button.js";
 import Danger from "components/Typography/Danger.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardIcon from "components/Card/CardIcon.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
+import Card from "components/CardDash/Card.js";
+import CardHeader from "components/CardDash/CardHeader.js";
+import CardIcon from "components/CardDash/CardIcon.js";
+import CardBody from "components/CardDash/CardBody.js";
+import CardFooter from "components/CardDash/CardFooter.js";
 
 import {
   dailySalesChart,

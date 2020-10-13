@@ -278,7 +278,7 @@ export default function FixedPlugin(props) {
             <div>
               <Button
                 color="info"
-                href="https://demos.creative-tim.com/material-dashboard-pro-react/#/documentation/tutorial?ref=mdpr-fixed-plugin"
+                href="https://elecdove.com/material-dashboard-pro-react/#/documentation/tutorial?ref=mdpr-fixed-plugin"
                 target="_blank"
                 fullWidth
               >

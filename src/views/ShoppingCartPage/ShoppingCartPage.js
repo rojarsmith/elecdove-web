@@ -304,7 +304,7 @@ export default function ShoppingCartPage({ ...rest }) {
                     target="_blank"
                     className={classes.block}
                   >
-                    Creative Tim
+                    Elecdove
                   </a>
                 </ListItem>
                 <ListItem className={classes.inlineBlock}>
@@ -343,7 +343,7 @@ export default function ShoppingCartPage({ ...rest }) {
                 href="https://elecdove.com?ref=mkpr-shopping-cart"
                 target="_blank"
               >
-                Creative Tim
+                Elecdove
               </a>{" "}
               for a better web.
             </div>
