@@ -38,30 +38,22 @@ export default function UserProfile() {
             </CardHeader>
             <CardBody>
               <GridContainer>
-                <GridItem xs={12} sm={12} md={5}>
+                <GridItem xs={12} sm={12} md={6}>
+                  <InputLabel style={{ color: "#AAAAAA" }}>User Name</InputLabel>
                   <CustomInput
-                    labelText="Company (disabled)"
-                    id="company-disabled"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      disabled: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={3}>
-                  <CustomInput
-                    labelText="Username"
                     id="username"
                     formControlProps={{
                       fullWidth: true
                     }}
+                    inputProps={{
+                      disabled: true,
+                      defaultValue: "account"
+                    }}
                   />
                 </GridItem>
-                <GridItem xs={12} sm={12} md={4}>
+                <GridItem xs={12} sm={12} md={6}>
+                  <InputLabel style={{ color: "#AAAAAA" }}>Email</InputLabel>
                   <CustomInput
-                    labelText="Email address"
                     id="email-address"
                     formControlProps={{
                       fullWidth: true
