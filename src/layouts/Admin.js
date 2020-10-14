@@ -36,6 +36,7 @@ export default function Dashboard(props) {
   // styles
   const classes = useStyles();
   const authe = useSelector(state => state.authentication);
+  const accou = useSelector(state => state.account);
   const dispatch = useDispatch();
 
   const mainPanelClasses =
@@ -48,20 +49,15 @@ export default function Dashboard(props) {
     });
 
   useEffect(() => {
-    if(process.env.REACT_APP_DEV){
+    if (process.env.REACT_APP_DEV) {
       console.log("Admin/useEffect()@props");
     }
-    let user = JSON.parse(localStorage.getItem('user'));
     dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
-  }, [props]);
-
-  // useEffect(() => {
-  //   let user = JSON.parse(localStorage.getItem('user'));
-  //   dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
-  // }, []);
+  }, []);
 
   // ref for main panel div
   const mainPanel = React.createRef();
+
   // effect instead of componentDidMount, componentDidUpdate and componentWillUnmount
   useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -81,7 +77,6 @@ export default function Dashboard(props) {
       window.removeEventListener("resize", resizeFunction);
     };
   });
-
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -108,17 +103,10 @@ export default function Dashboard(props) {
     return activeRoute;
   };
 
-  const getUser = () => {
-    let user = JSON.parse(localStorage.getItem('user'));
-    dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
-  }
-
   const getRoutes = routes => {
     if (process.env.REACT_APP_DEV) {
       console.log("Admin/getRoutes(routes)");
     }
-
-    // getUser();
 
     return routes.map((prop, key) => {
       if (prop.collapse) {
@@ -126,12 +114,12 @@ export default function Dashboard(props) {
       }
       if (prop.layout === "/contol-panel") {
 
-        // getUser();
+        const ComponentPar = prop.component;
 
         return (
           <Route
             path={prop.layout + prop.path}
-            component={prop.component}
+            component={(props) => <ComponentPar {...props} account={accou.responseData} />}
             key={key}
           />
         );

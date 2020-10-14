@@ -22,8 +22,15 @@ import styles from "assets/jss/material-dashboard-pro-react/views/userProfileSty
 
 const useStyles = makeStyles(styles);
 
-export default function UserProfile() {
+export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
+  const [account, setAccount] = useState(()=> { 
+    if(props.account && props.account != ''){
+      return props.account;
+    }else{
+      return     { user_name: 'Reading...'   }
+    }
+  });
   const [inputs, setInputs] = useState({
     realname: '',
     realnameError: false,
@@ -71,7 +78,7 @@ export default function UserProfile() {
             <CardBody>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  User Name: BBB
+  User Name: {account.user_name}BBB
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   Email: aaa@aaa.com
