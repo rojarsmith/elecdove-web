@@ -18,19 +18,27 @@ import CardIcon from "components/CardDash/CardIcon.js";
 import { useDispatch, useSelector } from "react-redux";
 import { actionModals, actionAuthentications, actionMessages } from "redux/action";
 import { creatorAuthentications } from "redux/creator";
+// import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import styles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.js";
 
 const useStyles = makeStyles(styles);
 
 export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
-  const [account, setAccount] = useState(()=> { 
-    if(props.account && props.account != ''){
-      return props.account;
-    }else{
-      return     { user_name: 'Reading...'   }
+  const account = useSelector((state) => {
+    if (state.account.responseData) {
+      return state.account.responseData;
+    } else {
+      return { user_name: 'Reading...' }
     }
   });
+  // const [account, setAccount] = useState(()=> { 
+  //   if(props.account && props.account != ''){
+  //     return props.account;
+  //   }else{
+  //     return     { user_name: 'Reading...'   }
+  //   }
+  // });
   const [inputs, setInputs] = useState({
     realname: '',
     realnameError: false,
@@ -64,6 +72,8 @@ export default function UserProfile(props) {
 
   return (
     <div>
+      {/* {account.loading && <LoadingIndicator />} */}
+      <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
@@ -78,7 +88,7 @@ export default function UserProfile(props) {
             <CardBody>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-  User Name: {account.user_name}BBB
+                  User Name: {account.user_name}
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   Email: aaa@aaa.com
@@ -95,22 +105,22 @@ export default function UserProfile(props) {
                   />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
+                  <CustomInput
                     labelText="Company"
                     id="company"
                     formControlProps={{
                       fullWidth: true
                     }}
-                  />                
+                  />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
+                  <CustomInput
                     labelText="Job"
                     id="job"
                     formControlProps={{
                       fullWidth: true
                     }}
-                  />                
+                  />
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   <CustomInput
@@ -150,6 +160,7 @@ export default function UserProfile(props) {
           </Card>
         </GridItem>
       </GridContainer>
+      </div>
     </div>
   );
 }

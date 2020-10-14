@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { creatorAccounts } from "redux/creator";
 import { useParams } from "react-router";
 import routes from "routes.js";
+import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import styles from "assets/jss/material-dashboard-pro-react/layouts/adminStyle.js";
 
 var ps;
@@ -152,6 +153,7 @@ export default function Dashboard(props) {
         {...rest}
       />
       <div className={mainPanelClasses} ref={mainPanel}>
+      {accou.loading && <LoadingIndicator />}
         <AdminNavbar
           sidebarMinimize={sidebarMinimize.bind(this)}
           miniActive={miniActive}
