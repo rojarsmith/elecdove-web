@@ -2,21 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
 //Alert
 import { transitions, positions, Provider as AlertProvider } from 'react-alert';
 import AlertTemplate from 'react-alert-template-basic';
-
 //Redux
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import allReducer from "redux/reducer"
-
 //Router
 import { BrowserRouter as Router } from 'react-router-dom';
-
 // import "assets/scss/material-kit-pro-react.scss?v=1.9.0";
 import "assets/scss/material-dashboard-pro-react.scss?v=1.9.0";
 

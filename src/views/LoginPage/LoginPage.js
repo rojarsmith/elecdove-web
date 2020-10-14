@@ -75,7 +75,7 @@ export default function LoginPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-  });
+  }, []);
 
   useEffect(() => {
     dispatch(creatorAuthentications.initial());

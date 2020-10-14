@@ -59,7 +59,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
-    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    if (process.env.REACT_APP_DEV) {
       console.log("App/componentDidMount");
     }
 

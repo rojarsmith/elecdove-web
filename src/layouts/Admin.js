@@ -1,20 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import cx from "classnames";
 import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { creatorAccounts } from "redux/creator";
+import { useParams } from "react-router";
 import routes from "routes.js";
-
 import styles from "assets/jss/material-dashboard-pro-react/layouts/adminStyle.js";
 
 var ps;
@@ -23,6 +23,7 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard(props) {
   const { ...rest } = props;
+
   // states and functions
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [miniActive, setMiniActive] = React.useState(false);
@@ -34,6 +35,9 @@ export default function Dashboard(props) {
   const [logo, setLogo] = React.useState(require("assets/img/logo-white.svg"));
   // styles
   const classes = useStyles();
+  const authe = useSelector(state => state.authentication);
+  const dispatch = useDispatch();
+
   const mainPanelClasses =
     classes.mainPanel +
     " " +
@@ -42,10 +46,24 @@ export default function Dashboard(props) {
       [classes.mainPanelWithPerfectScrollbar]:
         navigator.platform.indexOf("Win") > -1
     });
+
+  useEffect(() => {
+    if(process.env.REACT_APP_DEV){
+      console.log("Admin/useEffect()@props");
+    }
+    let user = JSON.parse(localStorage.getItem('user'));
+    dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
+  }, [props]);
+
+  // useEffect(() => {
+  //   let user = JSON.parse(localStorage.getItem('user'));
+  //   dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
+  // }, []);
+
   // ref for main panel div
   const mainPanel = React.createRef();
   // effect instead of componentDidMount, componentDidUpdate and componentWillUnmount
-  React.useEffect(() => {
+  useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
@@ -63,31 +81,8 @@ export default function Dashboard(props) {
       window.removeEventListener("resize", resizeFunction);
     };
   });
-  // functions for changeing the states from components
-  const handleImageClick = image => {
-    setImage(image);
-  };
-  const handleColorClick = color => {
-    setColor(color);
-  };
-  const handleBgColorClick = bgColor => {
-    switch (bgColor) {
-      case "white":
-        setLogo(require("assets/img/logo.svg"));
-        break;
-      default:
-        setLogo(require("assets/img/logo-white.svg"));
-        break;
-    }
-    setBgColor(bgColor);
-  };
-  const handleFixedClick = () => {
-    if (fixedClasses === "dropdown") {
-      setFixedClasses("dropdown show");
-    } else {
-      setFixedClasses("dropdown");
-    }
-  };
+
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -112,12 +107,27 @@ export default function Dashboard(props) {
     }
     return activeRoute;
   };
+
+  const getUser = () => {
+    let user = JSON.parse(localStorage.getItem('user'));
+    dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
+  }
+
   const getRoutes = routes => {
+    if (process.env.REACT_APP_DEV) {
+      console.log("Admin/getRoutes(routes)");
+    }
+
+    // getUser();
+
     return routes.map((prop, key) => {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
       if (prop.layout === "/contol-panel") {
+
+        // getUser();
+
         return (
           <Route
             path={prop.layout + prop.path}
@@ -172,13 +182,13 @@ export default function Dashboard(props) {
             </div>
           </div>
         ) : (
-          <div className={classes.map}>
-            <Switch>
-              {getRoutes(routes)}
-              <Redirect from="/contol-panel" to="/contol-panel/dashboard" />
-            </Switch>
-          </div>
-        )}
+            <div className={classes.map}>
+              <Switch>
+                {getRoutes(routes)}
+                <Redirect from="/contol-panel" to="/contol-panel/dashboard" />
+              </Switch>
+            </div>
+          )}
         {getRoute() ? <Footer fluid /> : null}
       </div>
     </div>

@@ -55,6 +55,8 @@ export const apiUserConfirmMail = token => normalGetRequest.get("/auth/confirm-a
 export const apiUserAskResetPassword = email => jsonRequest.post("/auth/ask-reset-password", { email: email });
 export const apiUserResetPassword = data => jsonRequest.post("/auth/reset-password", data);
 
+// export const apiGetAccount = data => xformRequest.post("/oauth/check_token", data);
+
 export function authHeader() {
     const user = JSON.parse(localStorage.getItem('user'));
     console(user);
