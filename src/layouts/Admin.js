@@ -14,6 +14,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import { useDispatch, useSelector } from "react-redux";
 import { creatorAccounts } from "redux/creator";
 import { useParams } from "react-router";
+import { useHistory } from 'react-router-dom';
 import routes from "routes.js";
 import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import styles from "assets/jss/material-dashboard-pro-react/layouts/adminStyle.js";
@@ -39,6 +40,7 @@ export default function Dashboard(props) {
   const authe = useSelector(state => state.authentication);
   const accou = useSelector(state => state.account);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const mainPanelClasses =
     classes.mainPanel +
@@ -53,7 +55,17 @@ export default function Dashboard(props) {
     if (process.env.REACT_APP_DEV) {
       console.log("Admin/useEffect()@props");
     }
-    dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
+    // if(authe.user){
+    //   dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
+    // }else{
+    //   history.push('/');
+    // }
+
+    try {
+      dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
+    } catch (e) {
+      history.push('/');
+    }
   }, []);
 
   // ref for main panel div
@@ -153,7 +165,7 @@ export default function Dashboard(props) {
         {...rest}
       />
       <div className={mainPanelClasses} ref={mainPanel}>
-      {accou.loading && <LoadingIndicator />}
+        {accou.loading && <LoadingIndicator />}
         <AdminNavbar
           sidebarMinimize={sidebarMinimize.bind(this)}
           miniActive={miniActive}

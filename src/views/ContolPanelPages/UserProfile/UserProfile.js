@@ -14,6 +14,7 @@ import Card from "components/CardDash/Card.js";
 import CardBody from "components/CardDash/CardBody.js";
 import CardHeader from "components/CardDash/CardHeader.js";
 import CardIcon from "components/CardDash/CardIcon.js";
+import { useHistory } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { actionModals, actionAuthentications, actionMessages } from "redux/action";
@@ -23,22 +24,26 @@ import styles from "assets/jss/material-dashboard-pro-react/views/userProfileSty
 
 const useStyles = makeStyles(styles);
 
+
 export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
-  const account = useSelector((state) => {
-    if (state.account.responseData) {
-      return state.account.responseData;
-    } else {
-      return { user_name: 'Reading...' }
-    }
-  });
-  // const [account, setAccount] = useState(()=> { 
-  //   if(props.account && props.account != ''){
-  //     return props.account;
-  //   }else{
-  //     return     { user_name: 'Reading...'   }
+  // const accou = useSelector((state) => {
+  //   if (state.account.responseData) {
+  //     return state.account.responseData;
+  //   } else {
+  //     return { user_name: 'Reading...' }
   //   }
   // });
+  const [acc, setAcc] = useState(()=> { 
+    if(props.account && props.account != ''){
+      if(props.account.authorities.length <= 0){
+        history.push('/');
+      }
+      return props.account;
+    }else{
+      return     { user_name: 'Reading...'   }
+    }
+  });
   const [inputs, setInputs] = useState({
     realname: '',
     realnameError: false,
@@ -61,6 +66,7 @@ export default function UserProfile(props) {
     updateProfileButton: false
   });
   const classes = useStyles();
+  const history = useHistory();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -88,7 +94,7 @@ export default function UserProfile(props) {
             <CardBody>
               <GridContainer>
                 <GridItem xs={12} sm={12} md={6}>
-                  User Name: {account.user_name}
+                  User Name: {acc.user_name}
                 </GridItem>
                 <GridItem xs={12} sm={12} md={6}>
                   Email: aaa@aaa.com
