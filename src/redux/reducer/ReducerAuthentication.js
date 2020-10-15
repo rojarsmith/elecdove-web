@@ -32,6 +32,7 @@ export function reducerAuthentication(state = initialState, action) {
             state.loading = false;
             state.loggedIn = true;
             state.preAction = action.type;
+            state.user = action.user;
             return state;
         case actionAuthentications.LOGIN_FAILURE:
             state.loginSuccess = false;

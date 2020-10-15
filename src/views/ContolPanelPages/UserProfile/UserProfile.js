@@ -18,7 +18,7 @@ import { useHistory } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { actionModals, actionAuthentications, actionMessages } from "redux/action";
-import { creatorAuthentications } from "redux/creator";
+import { creatorAuthentications, creatorAccounts } from "redux/creator";
 // import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import styles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.js";
 
@@ -29,7 +29,7 @@ export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
   const [acc, setAcc] = useState(() => {
     if (props.account && props.account != '') {
-      if (props.account.authorities.length <= 0) {
+      if (props.account.authorities && props.account.authorities.length <= 0) {
         history.push('/');
       }
       return props.account;
@@ -59,14 +59,24 @@ export default function UserProfile(props) {
     phoneErrorMessage: '',
     updateProfileButton: false
   });
-  const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
+  const classes = useStyles();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
 
-
+    // if (props.account && props.account != '') 
+    // {
+    //   dispatch(creatorAccounts.getAccountDetail({
+    //     // user: authe.user.access_token,
+    //     // account: props.account.user_name,
+    //     user: authe.user,
+    //     account: props.account,
+    //     hitory: history
+    //   }));
+    // }
     // if (typeConfirmMail) {
     //   dispatch(creatorAuthentications.confirmMail(token));
     // }

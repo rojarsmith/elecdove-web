@@ -1,5 +1,6 @@
 import {
-  apiUserCheck
+  apiUserCheck,
+  apiAccountDetail
 } from "../util/APIUtils";
 const querystring = require('querystring');
 
@@ -21,12 +22,12 @@ class AccountService {
       });
   }
 
-  getAccount(data) {
+  getAccountDetail(data) {
     let payload = querystring.stringify({
       token: data.access_token,
     });
 
-    return apiUserCheck(payload)
+    return apiAccountDetail(payload)
       .then((response) => {
         return response.data;
       })

@@ -20,13 +20,15 @@ const configNormalGet = {
 const configNormalGetWithToken = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
     withCredentials: true,
-    headers: {
-        // Authorization: `Bearer ${authe.user.access_token}`
-    },
-    auth: {
-        username: process.env.REACT_APP_API_BAUTH_USERNAME,
-        password: process.env.REACT_APP_API_BAUTH_PASSWORD
-    },
+    headers:  { ...authHeader() } ,
+    // headers: {
+    //     authHeader()
+    //     // Authorization: `Bearer ${authe.user.access_token}`
+    // },
+    // auth: {
+    //     username: process.env.REACT_APP_API_BAUTH_USERNAME,
+    //     password: process.env.REACT_APP_API_BAUTH_PASSWORD
+    // },
     validateStatus: function (status) {
         return status >= 200 && status < 300; // default
     },
@@ -65,6 +67,7 @@ const configJson = {
 };
 
 const normalGetRequest = axios.create(configNormalGet);
+const normalGetWithTokenRequest = axios.create(configNormalGetWithToken);
 const xformRequest = axios.create(configXForm);
 const jsonRequest = axios.create(configJson);
 
@@ -75,14 +78,14 @@ export const apiUserConfirmMail = token => normalGetRequest.get("/auth/confirm-a
 export const apiUserAskResetPassword = email => jsonRequest.post("/auth/ask-reset-password", { email: email });
 export const apiUserResetPassword = data => jsonRequest.post("/auth/reset-password", data);
 
-export const apiAccountDetail = data => configNormalGetWithToken.get("/account/detail/" + data);
+export const apiAccountDetail = data => normalGetWithTokenRequest.get("/account/detail/" + data);
 
 export function authHeader() {
     const user = JSON.parse(localStorage.getItem('user'));
-    console(user);
+    console.log(user);
 
-    if (user && user.accessToken) {
-        return { Authorization: 'Bearer ' + user.accessToken };
+    if (user && user.access_token) {
+        return { Authorization: 'Bearer ' + user.access_token };
         // for Node.js Express back-end
         // return { 'x-access-token': user.accessToken };
     } else {
