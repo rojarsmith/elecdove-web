@@ -60,7 +60,7 @@ export default function Dashboard(props) {
     }
 
     try {
-      dispatch(creatorAccounts.getAccount({ history: history }));
+      dispatch(creatorAccounts.getUser({ history: history }));
     } catch (e) {
       history.push('/');
     }

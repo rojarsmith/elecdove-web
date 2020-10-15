@@ -1,8 +1,28 @@
 import axios from 'axios';
+import { useSelector } from "react-redux";
+
+// const authe = useSelector(state => state.authentication);
 
 const configNormalGet = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
     withCredentials: true,
+    auth: {
+        username: process.env.REACT_APP_API_BAUTH_USERNAME,
+        password: process.env.REACT_APP_API_BAUTH_PASSWORD
+    },
+    validateStatus: function (status) {
+        return status >= 200 && status < 300; // default
+    },
+    xsrfCookieName: 'XSRF-TOKEN', // default
+    xsrfHeaderName: 'X-XSRF-TOKEN', // default
+};
+
+const configNormalGetWithToken = {
+    baseURL: process.env.REACT_APP_API_BASE_URL,
+    withCredentials: true,
+    headers: {
+        // Authorization: `Bearer ${authe.user.access_token}`
+    },
     auth: {
         username: process.env.REACT_APP_API_BAUTH_USERNAME,
         password: process.env.REACT_APP_API_BAUTH_PASSWORD
@@ -55,7 +75,7 @@ export const apiUserConfirmMail = token => normalGetRequest.get("/auth/confirm-a
 export const apiUserAskResetPassword = email => jsonRequest.post("/auth/ask-reset-password", { email: email });
 export const apiUserResetPassword = data => jsonRequest.post("/auth/reset-password", data);
 
-// export const apiGetAccount = data => xformRequest.post("/oauth/check_token", data);
+export const apiAccountDetail = data => configNormalGetWithToken.get("/account/detail/" + data);
 
 export function authHeader() {
     const user = JSON.parse(localStorage.getItem('user'));

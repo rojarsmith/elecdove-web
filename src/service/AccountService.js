@@ -4,11 +4,26 @@ import {
 const querystring = require('querystring');
 
 class AccountService {
-  getAccount(data) {
+  getUser(data) {
     let user = JSON.parse(localStorage.getItem('user'));
 
     let payload = querystring.stringify({
       token: user.access_token,
+    });
+
+    return apiUserCheck(payload)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
+  getAccount(data) {
+    let payload = querystring.stringify({
+      token: data.access_token,
     });
 
     return apiUserCheck(payload)

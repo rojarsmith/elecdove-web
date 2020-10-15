@@ -27,23 +27,17 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
-  // const accou = useSelector((state) => {
-  //   if (state.account.responseData) {
-  //     return state.account.responseData;
-  //   } else {
-  //     return { user_name: 'Reading...' }
-  //   }
-  // });
-  const [acc, setAcc] = useState(()=> { 
-    if(props.account && props.account != ''){
-      if(props.account.authorities.length <= 0){
+  const [acc, setAcc] = useState(() => {
+    if (props.account && props.account != '') {
+      if (props.account.authorities.length <= 0) {
         history.push('/');
       }
       return props.account;
-    }else{
-      return     { user_name: 'Reading...'   }
+    } else {
+      return { user_name: 'Reading...' }
     }
   });
+  const [email, setEmail] = useState('');
   const [inputs, setInputs] = useState({
     realname: '',
     realnameError: false,
@@ -71,6 +65,8 @@ export default function UserProfile(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
+
+
     // if (typeConfirmMail) {
     //   dispatch(creatorAuthentications.confirmMail(token));
     // }
@@ -80,92 +76,92 @@ export default function UserProfile(props) {
     <div>
       {/* {account.loading && <LoadingIndicator />} */}
       <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color="rose" icon>
-              <CardIcon color="rose">
-                <PermIdentity />
-              </CardIcon>
-              <h4 className={classes.cardIconTitle}>
-                Edit Profile - <small>Complete your profile</small>
-              </h4>
-            </CardHeader>
-            <CardBody>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  User Name: {acc.user_name}
+        <GridContainer>
+          <GridItem xs={12} sm={12} md={12}>
+            <Card>
+              <CardHeader color="rose" icon>
+                <CardIcon color="rose">
+                  <PermIdentity />
+                </CardIcon>
+                <h4 className={classes.cardIconTitle}>
+                  Edit Profile - <small>Complete your profile</small>
+                </h4>
+              </CardHeader>
+              <CardBody>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    User Name: {acc.user_name}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    Email: aaa@aaa.com
                 </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  Email: aaa@aaa.com
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Real Name"
-                    id="realname"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Company"
-                    id="company"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Job"
-                    id="job"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Phone"
-                    id="phone"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                  <CustomInput
-                    labelText="Address"
-                    id="address"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-                <GridItem xs={12} sm={12} md={6}>
-                  <CustomInput
-                    labelText="Tax Code"
-                    id="taxcode"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                  />
-                </GridItem>
-              </GridContainer>
-              <Button id="update-profile-button" color="rose" className={classes.updateProfileButton}>
-                Update Profile
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Real Name"
+                      id="realname"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Company"
+                      id="company"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Job"
+                      id="job"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Phone"
+                      id="phone"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <CustomInput
+                      labelText="Address"
+                      id="address"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    <CustomInput
+                      labelText="Tax Code"
+                      id="taxcode"
+                      formControlProps={{
+                        fullWidth: true
+                      }}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <Button id="update-profile-button" color="rose" className={classes.updateProfileButton}>
+                  Update Profile
               </Button>
-              <Clearfix />
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
+                <Clearfix />
+              </CardBody>
+            </Card>
+          </GridItem>
+        </GridContainer>
       </div>
     </div>
   );

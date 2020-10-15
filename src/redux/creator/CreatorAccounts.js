@@ -3,14 +3,14 @@ import AccountService from "service/AccountService";
 import { creatorAuthentications } from "redux/creator";
 
 export const creatorAccounts = {
-    getAccount
+    getUser
 };
 
-function getAccount(data) {
+function getUser(data) {
     return dispatch => {
         dispatch(request(data));
 
-        AccountService.getAccount(data)
+        AccountService.getUser(data)
             .then(
                 payload => {
                     dispatch(success(payload));
