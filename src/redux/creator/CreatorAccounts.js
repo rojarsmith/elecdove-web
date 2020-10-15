@@ -20,12 +20,14 @@ function getAccount(data) {
                         type: actionModals.OPEN_ERROR, action:
                             () => {
                                 try {
-                                    return error.response.data.message;
+                                    return error.response.data.error_description;
                                 } catch (e) {
                                     return 'Service in maintenance.'
                                 }
                             }
                     });
+
+                    data.history.push('/');
                 }
             );
     };
@@ -45,5 +47,3 @@ function getAccount(data) {
         }
     }
 }
-
-

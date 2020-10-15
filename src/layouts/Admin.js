@@ -62,11 +62,11 @@ export default function Dashboard(props) {
     // }
 
     try {
-      dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
+      dispatch(creatorAccounts.getAccount({ token: authe.user.access_token, history: history}));
     } catch (e) {
       history.push('/');
     }
-  }, []);
+  }, [authe.user.access_token, dispatch, history]);
 
   // ref for main panel div
   const mainPanel = React.createRef();
