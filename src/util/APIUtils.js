@@ -20,7 +20,7 @@ const configNormalGet = {
 const configNormalGetWithToken = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
     withCredentials: true,
-    headers:  { ...authHeader() } ,
+    headers: { ...authHeader() },
     // headers: {
     //     authHeader()
     //     // Authorization: `Bearer ${authe.user.access_token}`
@@ -78,6 +78,7 @@ export const apiUserConfirmMail = token => normalGetRequest.get("/auth/confirm-a
 export const apiUserAskResetPassword = email => jsonRequest.post("/auth/ask-reset-password", { email: email });
 export const apiUserResetPassword = data => jsonRequest.post("/auth/reset-password", data);
 
+export const apiAccountCurrent = () => normalGetWithTokenRequest.get("/account/current");
 export const apiAccountDetail = data => normalGetWithTokenRequest.get("/account/detail/" + data);
 
 export function authHeader() {

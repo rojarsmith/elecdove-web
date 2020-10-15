@@ -67,6 +67,7 @@ export default function UserProfile(props) {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
 
+    dispatch(creatorAccounts.current());
     // if (props.account && props.account != '') 
     // {
     //   dispatch(creatorAccounts.getAccountDetail({
