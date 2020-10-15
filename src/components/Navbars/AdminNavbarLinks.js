@@ -22,7 +22,7 @@ import Search from "@material-ui/icons/Search";
 
 // core components
 import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
+import Button from "components/CustomButtons/ButtonDash.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
 

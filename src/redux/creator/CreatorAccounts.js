@@ -1,5 +1,6 @@
 import { actionModals, actionAccounts } from "../action";
 import AccountService from "service/AccountService";
+import { creatorAuthentications } from "redux/creator";
 
 export const creatorAccounts = {
     getAccount
@@ -27,6 +28,8 @@ function getAccount(data) {
                             }
                     });
 
+                    dispatch(creatorAuthentications.logout());
+                    localStorage.removeItem('user');
                     data.history.push('/');
                 }
             );

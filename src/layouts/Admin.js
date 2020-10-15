@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
+import FooterStyleA from "components/Footer/FooterStyleA.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -27,11 +28,11 @@ export default function Dashboard(props) {
   const { ...rest } = props;
 
   // states and functions
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [miniActive, setMiniActive] = React.useState(false);
-  const [image, setImage] = React.useState(require("assets/img/sidebar-2.jpg"));
-  const [color, setColor] = React.useState("blue");
-  const [bgColor, setBgColor] = React.useState("black");
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [miniActive, setMiniActive] = useState(false);
+  const [image, setImage] = useState(require("assets/img/sidebar-2.jpg"));
+  const [color, setColor] = useState("blue");
+  const [bgColor, setBgColor] = useState("black");
   // const [hasImage, setHasImage] = React.useState(true);
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [logo, setLogo] = React.useState(require("assets/img/logo-white.svg"));
@@ -41,6 +42,8 @@ export default function Dashboard(props) {
   const accou = useSelector(state => state.account);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  // const[token, setToken] = useState(authe.user.access_token ? authe.user.access_token: '');
 
   const mainPanelClasses =
     classes.mainPanel +
@@ -55,18 +58,13 @@ export default function Dashboard(props) {
     if (process.env.REACT_APP_DEV) {
       console.log("Admin/useEffect()@props");
     }
-    // if(authe.user){
-    //   dispatch(creatorAccounts.getAccount({ token: authe.user.access_token }));
-    // }else{
-    //   history.push('/');
-    // }
 
     try {
-      dispatch(creatorAccounts.getAccount({ token: authe.user.access_token, history: history}));
+      dispatch(creatorAccounts.getAccount({ history: history }));
     } catch (e) {
       history.push('/');
     }
-  }, [authe.user.access_token, dispatch, history]);
+  }, [dispatch, history]);
 
   // ref for main panel div
   const mainPanel = React.createRef();
@@ -191,7 +189,7 @@ export default function Dashboard(props) {
               </Switch>
             </div>
           )}
-        {getRoute() ? <Footer fluid /> : null}
+        {getRoute() ? <Footer content={<FooterStyleA />} fluid /> : null}
       </div>
     </div>
   );

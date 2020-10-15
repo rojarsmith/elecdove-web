@@ -16,7 +16,7 @@ import ViewList from "@material-ui/icons/ViewList";
 
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks";
-import Button from "components/CustomButtons/Button.js";
+import Button from "components/CustomButtons/ButtonDash.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarStyle.js";
 
@@ -49,15 +49,15 @@ export default function AdminNavbar(props) {
                 <ViewList className={classes.sidebarMiniIcon} />
               </Button>
             ) : (
-              <Button
-                justIcon
-                round
-                color="white"
-                onClick={props.sidebarMinimize}
-              >
-                <MoreVert className={classes.sidebarMiniIcon} />
-              </Button>
-            )}
+                <Button
+                  justIcon
+                  round
+                  color="white"
+                  onClick={props.sidebarMinimize}
+                >
+                  <MoreVert className={classes.sidebarMiniIcon} />
+                </Button>
+              )}
           </div>
         </Hidden>
         <div className={classes.flex}>
