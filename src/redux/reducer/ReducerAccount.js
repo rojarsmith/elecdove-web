@@ -28,22 +28,24 @@ export function reducerAccount(state = initialState, action) {
             return state;
         case actionAccounts.GET_CURRENT_REQUEST:
             state.response = false;
-            state.responseSuccess = false;
+            state.responseOK = false;
             state.responseData = '';
             state.loading = true;
+            delete state.account;
             return state;
         case actionAccounts.GET_CURRENT_SUCCESS:
             state.response = true;
-            state.responseSuccess = true;
+            state.responseOK = true;
             state.responseData = action.data;
             state.loading = false;
             state.account = action.data;
             return state;
         case actionAccounts.GET_CURRENT_FAILURE:
             state.response = true;
-            state.responseSuccess = false;
-            state.responseData = action.body.message;
+            state.responseOK = false;
+            state.responseData = action.data.message;
             state.loading = false;
+            delete state.account;
             return state;
 
         case actionAccounts.GET_ACCOUNT_REQUEST:

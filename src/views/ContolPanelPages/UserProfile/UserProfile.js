@@ -38,6 +38,7 @@ export default function UserProfile(props) {
   //     return { user_name: 'Reading...' }
   //   }
   // });
+  const [accountID, setAccountID] = useState(0);
   const [email, setEmail] = useState('');
   const [inputs, setInputs] = useState({
     realname: '',
@@ -73,8 +74,11 @@ export default function UserProfile(props) {
     document.body.scrollTop = 0;
     //dispatch({ type: actionAccounts.GET_CURRENT_INITIAL, action: '' });
 
-    dispatch(creatorAccounts.current());
+    dispatch(creatorAccounts.current({history: history}));
 
+    
+    
+    // fillDefaultValue();
     // if(init){
     //   setInit(false);
     // //  fetchItems();
@@ -94,6 +98,40 @@ export default function UserProfile(props) {
     //   dispatch(creatorAuthentications.confirmMail(token));
     // }
   }, [dispatch]);
+
+  useEffect(() => {
+    if(accou.responseOK){
+      fillDefaultValue()
+      // handleChange({target:{id: 'realname', value: accou.account.personInformation.realName}})
+    // setInputs({realname: accou.account.personInformation.realName});
+    }
+  }, [accou.responseOK]);
+
+  function fillDefaultValue() {
+    setAccountID(accou.account.personInformation.id);
+    handleChange({target:{id: 'realname', value: accou.account.personInformation.realName}})
+    handleChange({target:{id: 'company', value: accou.account.personInformation.company}})
+    handleChange({target:{id: 'job', value: accou.account.personInformation.job}})
+    handleChange({target:{id: 'phone', value: accou.account.personInformation.phone}})
+    handleChange({target:{id: 'address', value: accou.account.personInformation.address}})
+    handleChange({target:{id: 'taxcode', value: accou.account.personInformation.taxcode}})
+    // for(var input in inputs) {
+    //   if(input.indexOf("Error") === -1){
+
+    //     setInputs(inputs => ({[input]: inputs[input] }));
+    //   }
+    // }
+    // for (let i = 0; i < inputs.length; i++) {
+    //   if(inputs[i].indexOf("Error") === -1){
+    //     setInputs(inputs => ({[inputs[i]]: inputs[i] }));
+    //   }
+    // }
+  }
+
+  function handleChange(event) {
+    const { id, value } = event.target;
+    setInputs(inputs => ({ ...inputs, [id]: value }));
+  }
 
   return (
     <div>
@@ -122,12 +160,14 @@ export default function UserProfile(props) {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Real Name"
+                      labelText="Real Name *"
                       id="realname"
                       formControlProps={{
                         fullWidth: true
                       }}
                       inputProps={{
+                        value: inputs.realname,
+                        onChange: (event) => handleChange(event)
                         // defaultValue only gets set on initial load for a form. 
                         // After that, it won't get "naturally" updated because the intent was only to set an initial default value.
                         //  defaultValue: (accou.account?.personInformation?.realName),
@@ -145,6 +185,10 @@ export default function UserProfile(props) {
                       formControlProps={{
                         fullWidth: true
                       }}
+                      inputProps={{
+                        value: inputs.company,
+                        onChange: (event) => handleChange(event)
+                      }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
@@ -154,14 +198,22 @@ export default function UserProfile(props) {
                       formControlProps={{
                         fullWidth: true
                       }}
+                      inputProps={{
+                        value: inputs.job,
+                        onChange: (event) => handleChange(event)
+                      }}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
-                      labelText="Phone"
+                      labelText="Phone *"
                       id="phone"
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        value: inputs.phone,
+                        onChange: (event) => handleChange(event)
                       }}
                     />
                   </GridItem>
@@ -169,10 +221,14 @@ export default function UserProfile(props) {
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Address"
+                      labelText="Address *"
                       id="address"
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        value: inputs.address,
+                        onChange: (event) => handleChange(event)
                       }}
                     />
                   </GridItem>
@@ -182,6 +238,10 @@ export default function UserProfile(props) {
                       id="taxcode"
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        value: inputs.taxcode,
+                        onChange: (event) => handleChange(event)
                       }}
                     />
                   </GridItem>

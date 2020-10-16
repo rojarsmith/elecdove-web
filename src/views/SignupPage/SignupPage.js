@@ -75,6 +75,7 @@ export default function SignUpPage({ ...rest }) {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const classes = useStyles();
 
   const handleToggle = (event) => {
     let { event: e, payload: value } = event;
@@ -102,8 +103,6 @@ export default function SignUpPage({ ...rest }) {
       history.replace("/message-page");
     }
   });
-
-  const classes = useStyles();
 
   function handleChange(event) {
     const { id, value } = event.target;

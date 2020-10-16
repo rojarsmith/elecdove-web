@@ -42,9 +42,14 @@ function getUser(data) {
     function failure(error) {
         let emsg = '';
         try {
-            emsg = error.response.data.message
+            if (!error.response) {
+                emsg = error.message;
+            } else {
+
+                emsg = error.response.data.message;
+            }
         } catch (e) {
-            emsg = 'Service in maintenance.'
+            emsg = 'Service in maintenance.';
         }
 
         return {
@@ -54,10 +59,10 @@ function getUser(data) {
 }
 
 function current(data) {
-    return dispatch => {
+    return async dispatch => {
         dispatch(request());
 
-        AccountService.current()
+        await AccountService.current()
             .then(
                 body => {
                     dispatch(success(body));
@@ -92,7 +97,7 @@ function current(data) {
         }
 
         return {
-            type: actionAccounts.GET_CURRENT_FAILURE, payload: { message: emsg }
+            type: actionAccounts.GET_CURRENT_FAILURE, data: { message: emsg }
         }
     }
 }
