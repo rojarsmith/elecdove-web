@@ -130,9 +130,13 @@ export default function Dashboard(props) {
         return (
           <Route
             path={prop.layout + prop.path}
-            component={(props) => <ComponentPar {...props} account={accou.responseData} />}
+            // Make infinite render
+            // component={(props) => <ComponentPar {...props} account={accou.responseData} />}
+            // component={(props) => <ComponentPar {...props} />}
             key={key}
-          />
+          >
+            <ComponentPar {...props} />
+          </Route>
         );
       } else {
         return null;

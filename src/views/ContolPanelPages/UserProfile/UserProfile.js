@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -17,7 +17,7 @@ import CardIcon from "components/CardDash/CardIcon.js";
 import { useHistory } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { actionModals, actionAuthentications, actionMessages } from "redux/action";
+import { actionModals, actionAuthentications, actionMessages, actionAccounts } from "redux/action";
 import { creatorAuthentications, creatorAccounts } from "redux/creator";
 // import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import styles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.js";
@@ -27,16 +27,17 @@ const useStyles = makeStyles(styles);
 
 export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
-  const [acc, setAcc] = useState(() => {
-    if (props.account && props.account != '') {
-      if (props.account.authorities && props.account.authorities.length <= 0) {
-        history.push('/');
-      }
-      return props.account;
-    } else {
-      return { user_name: 'Reading...' }
-    }
-  });
+  const accou = useSelector(state => state.account);
+  // const [acc, setAcc] = useState(() => {
+  //   if (props.account && props.account != '') {
+  //     if (props.account.authorities && props.account.authorities.length <= 0) {
+  //       history.push('/');
+  //     }
+  //     return props.account;
+  //   } else {
+  //     return { user_name: 'Reading...' }
+  //   }
+  // });
   const [email, setEmail] = useState('');
   const [inputs, setInputs] = useState({
     realname: '',
@@ -63,11 +64,22 @@ export default function UserProfile(props) {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  const fetchItems = useCallback(() => {
+    dispatch(creatorAccounts.current());
+  }, [dispatch]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
+    //dispatch({ type: actionAccounts.GET_CURRENT_INITIAL, action: '' });
 
     dispatch(creatorAccounts.current());
+
+    // if(init){
+    //   setInit(false);
+    // //  fetchItems();
+    // }
+    // dispatch(creatorAccounts.current());
     // if (props.account && props.account != '') 
     // {
     //   dispatch(creatorAccounts.getAccountDetail({
@@ -81,7 +93,7 @@ export default function UserProfile(props) {
     // if (typeConfirmMail) {
     //   dispatch(creatorAuthentications.confirmMail(token));
     // }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
@@ -101,10 +113,10 @@ export default function UserProfile(props) {
               <CardBody>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
-                    User Name: {acc.user_name}
+                    User Name: {accou.account?.name}
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
-                    Email: aaa@aaa.com
+                    Email: {accou.account?.email}
                 </GridItem>
                 </GridContainer>
                 <GridContainer>
@@ -114,6 +126,15 @@ export default function UserProfile(props) {
                       id="realname"
                       formControlProps={{
                         fullWidth: true
+                      }}
+                      inputProps={{
+                        // defaultValue only gets set on initial load for a form. 
+                        // After that, it won't get "naturally" updated because the intent was only to set an initial default value.
+                        //  defaultValue: (accou.account?.personInformation?.realName),
+
+                        // Lock input can not control.
+                        //  value: (accou.account?.personInformation?.realName)
+                        // defaultValue:"aaaa"
                       }}
                     />
                   </GridItem>

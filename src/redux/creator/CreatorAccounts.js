@@ -59,8 +59,8 @@ function current(data) {
 
         AccountService.current()
             .then(
-                data => {
-                    dispatch(success(data));
+                body => {
+                    dispatch(success(body));
                 },
                 error => {
                     dispatch(failure(error));

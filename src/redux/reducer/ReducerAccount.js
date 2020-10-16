@@ -24,6 +24,8 @@ export function reducerAccount(state = initialState, action) {
             state.loading = false;
             return state;
 
+        case actionAccounts.GET_CURRENT_INITIAL:
+            return state;
         case actionAccounts.GET_CURRENT_REQUEST:
             state.response = false;
             state.responseSuccess = false;
@@ -33,13 +35,14 @@ export function reducerAccount(state = initialState, action) {
         case actionAccounts.GET_CURRENT_SUCCESS:
             state.response = true;
             state.responseSuccess = true;
-            state.responseData = action.payload;
+            state.responseData = action.data;
             state.loading = false;
+            state.account = action.data;
             return state;
         case actionAccounts.GET_CURRENT_FAILURE:
             state.response = true;
             state.responseSuccess = false;
-            state.responseData = action.payload.message;
+            state.responseData = action.body.message;
             state.loading = false;
             return state;
 
