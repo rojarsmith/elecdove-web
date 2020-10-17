@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import React from "react";
 import PropTypes from "prop-types";
+
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 import { NavLink } from "react-router-dom";
@@ -19,8 +20,12 @@ import Icon from "@material-ui/core/Icon";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 
-import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
+// Redux
+import { creatorAuthentications } from "redux/creator";
+import { actionModals } from "redux/action";
 
+// Assets
+import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
 import avatar from "assets/img/faces/avatar.jpg";
 
 var ps;
@@ -296,6 +301,14 @@ class Sidebar extends React.Component {
       );
     });
   };
+
+  handleClickLogOutButton = (event) => {
+    event.preventDefault();
+
+    this.props.store.dispatch(creatorAuthentications.logout());
+    this.props.store.dispatch({ type: actionModals.OPEN_LOGOUT });
+  }
+
   render() {
     const {
       classes,
@@ -356,7 +369,53 @@ class Sidebar extends React.Component {
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
-            <ListItemText style={{ marginLeft: 5, marginTop: 5 }}
+            <NavLink
+              to={"#"}
+              className={classes.itemLink + " " + classes.userCollapseButton}
+              onClick={() => this.openCollapse("openAvatar")}
+            >
+              <ListItemText
+                primary={rtlActive ? "تانيا أندرو" : this.props.store?.getState()?.account?.user?.user_name}
+                secondary={
+                  <b
+                    className={
+                      caret +
+                      " " +
+                      classes.userCaret +
+                      " " +
+                      (this.state.openAvatar ? classes.caretActive : "")
+                    }
+                  />
+                }
+                disableTypography={true}
+                className={itemText + " " + classes.userItemText}
+              />
+            </NavLink>
+            <Collapse in={this.state.openAvatar} unmountOnExit>
+              <List className={classes.list + " " + classes.collapseList}>
+                <ListItem className={classes.collapseItem}>
+                  <NavLink
+                    to="#"
+                    className={
+                      classes.itemLink + " " + classes.userCollapseLinks
+                    }
+                    onClick={(event) => this.handleClickLogOutButton(event)}
+                  >
+                    <span className={collapseItemMini}>
+                      {rtlActive ? "و" : "LO"}
+                    </span>
+                    <ListItemText
+                      primary={rtlActive ? "إعدادات" : "Log out"}
+                      disableTypography={true}
+                      className={collapseItemText}
+                    />
+                  </NavLink>
+                </ListItem>
+              </List>
+            </Collapse>
+          </ListItem>
+          <ListItem className={classes.item + " " + classes.userItem}>
+            {/* <ListItemText style={{ marginLeft: 5, marginTop: 5 }}
               primary={rtlActive ? "تانيا أندرو" : this.props.store?.getState()?.account?.user?.user_name}
               // secondary={
               //   <b
@@ -371,7 +430,7 @@ class Sidebar extends React.Component {
               // }
               disableTypography={true}
               className={itemText + " " + classes.userItemText}
-            />
+            /> */}
             {/* <NavLink
               to={"#"}
               className={classes.itemLink + " " + classes.userCollapseButton}
