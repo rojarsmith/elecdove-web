@@ -138,10 +138,10 @@ class App extends Component {
       <div>
         {
           <div>
-            <ModalLogout open={this.props.store.getState().reducer.logoutOpen} afterclose={this.signout} />
-            <ModalSimple open={this.props.store.getState().reducer.simpleOpen} afterclose={this.afterModalSimple} message={this.props.store.getState().reducer.message} />
-            <ModalTerms open={this.props.store.getState().reducer.termsOpen} afterclose={this.afterModalTerms} />
-            <ModalError open={this.props.store.getState().reducer.errorOpen} afterclose={this.afterModalError} message={this.props.store.getState().reducer.message} />
+            <ModalLogout open={this.props.store.getState().modal.logoutOpen} afterclose={this.signout} />
+            <ModalSimple open={this.props.store.getState().modal.simpleOpen} afterclose={this.afterModalSimple} message={this.props.store.getState().modal.message} />
+            <ModalTerms open={this.props.store.getState().modal.termsOpen} afterclose={this.afterModalTerms} />
+            <ModalError open={this.props.store.getState().modal.errorOpen} afterclose={this.afterModalError} message={this.props.store.getState().modal.message} />
           </div>
         }
         <Switch>
@@ -155,7 +155,7 @@ class App extends Component {
           <Route path="/confirm-account/:token" render={(props) => <MessagePage type="confirmmail" {...props} />} />
           <Route path="/reset-password/:token" render={(props) => <NewPasswordPage {...props} />} />
           <Route path="/reset-password" render={(props) => <ResetPasswordPage {...props} />} />
-          <Route path="/contol-panel" component={AdminLayout} />
+          <Route path="/contol-panel"><AdminLayout {...this.props} /></Route>
           {/* <Route path="/control-panel" component={AdminLayout} /> */}
           {/* <Route path="/" component={LandingPage} /> */}
           <Route path="/" component={EcommercePage} />

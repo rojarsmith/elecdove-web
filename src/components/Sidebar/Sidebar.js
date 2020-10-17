@@ -180,13 +180,13 @@ class Sidebar extends React.Component {
                 typeof prop.icon === "string" ? (
                   <Icon className={itemIcon}>{prop.icon}</Icon>
                 ) : (
-                  <prop.icon className={itemIcon} />
-                )
+                    <prop.icon className={itemIcon} />
+                  )
               ) : (
-                <span className={collapseItemMini}>
-                  {rtlActive ? prop.rtlMini : prop.mini}
-                </span>
-              )}
+                  <span className={collapseItemMini}>
+                    {rtlActive ? prop.rtlMini : prop.mini}
+                  </span>
+                )}
               <ListItemText
                 primary={rtlActive ? prop.rtlName : prop.name}
                 secondary={
@@ -276,13 +276,13 @@ class Sidebar extends React.Component {
               typeof prop.icon === "string" ? (
                 <Icon className={itemIcon}>{prop.icon}</Icon>
               ) : (
-                <prop.icon className={itemIcon} />
-              )
+                  <prop.icon className={itemIcon} />
+                )
             ) : (
-              <span className={collapseItemMini}>
-                {rtlActive ? prop.rtlMini : prop.mini}
-              </span>
-            )}
+                <span className={collapseItemMini}>
+                  {rtlActive ? prop.rtlMini : prop.mini}
+                </span>
+              )}
             <ListItemText
               primary={rtlActive ? prop.rtlName : prop.name}
               disableTypography={true}
@@ -356,22 +356,22 @@ class Sidebar extends React.Component {
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
-          <ListItemText style={{ marginLeft: 5, marginTop: 5 }}
-                primary={rtlActive ? "تانيا أندرو" : "Tania Andrew"}
-                // secondary={
-                //   <b
-                //     className={
-                //       caret +
-                //       " " +
-                //       classes.userCaret +
-                //       " " +
-                //       (this.state.openAvatar ? classes.caretActive : "")
-                //     }
-                //   />
-                // }
-                disableTypography={true}
-                className={itemText + " " + classes.userItemText}
-              />
+            <ListItemText style={{ marginLeft: 5, marginTop: 5 }}
+              primary={rtlActive ? "تانيا أندرو" : this.props.store?.getState()?.account?.user?.user_name}
+              // secondary={
+              //   <b
+              //     className={
+              //       caret +
+              //       " " +
+              //       classes.userCaret +
+              //       " " +
+              //       (this.state.openAvatar ? classes.caretActive : "")
+              //     }
+              //   />
+              // }
+              disableTypography={true}
+              className={itemText + " " + classes.userItemText}
+            />
             {/* <NavLink
               to={"#"}
               className={classes.itemLink + " " + classes.userCollapseButton}
@@ -394,7 +394,7 @@ class Sidebar extends React.Component {
                 className={itemText + " " + classes.userItemText}
               />
             </NavLink> */}
-            
+
           </ListItem>
         </List>
       </div>
@@ -428,14 +428,14 @@ class Sidebar extends React.Component {
     var brand = (
       <div className={logoClasses}>
         <a
-          href="https://elecdove.com"
+          href={location.origin}
           target="_blank"
           className={logoMini}
         >
           <img src={logo} alt="logo" className={classes.img} />
         </a>
         <a
-          href="https://elecdove.com"
+          href={location.origin}
           target="_blank"
           className={logoNormal}
         >

@@ -43,8 +43,6 @@ export default function Dashboard(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  // const[token, setToken] = useState(authe.user.access_token ? authe.user.access_token: '');
-
   const mainPanelClasses =
     classes.mainPanel +
     " " +

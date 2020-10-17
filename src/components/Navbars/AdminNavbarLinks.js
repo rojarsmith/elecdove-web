@@ -67,7 +67,7 @@ export default function HeaderLinks(props) {
   return (
     <div className={wrapper}>
       <div className={managerClasses}>
-        <Button
+        {/* <Button
           color="transparent"
           justIcon
           aria-label="Notifications"
@@ -97,7 +97,7 @@ export default function HeaderLinks(props) {
               {rtlActive ? "إعلام" : "Notification"}
             </span>
           </Hidden>
-        </Button>
+        </Button> */}
         <Popper
           open={Boolean(openNotification)}
           anchorEl={openNotification}

@@ -8,7 +8,7 @@ const allReducer = combineReducers({
     account: reducerAccount,
     authentication: reducerAuthentication,
     message: reducerMessage,
-    reducer: reducerModal
+    modal: reducerModal
 });
 
 export default allReducer;
