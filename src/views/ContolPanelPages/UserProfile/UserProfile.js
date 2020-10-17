@@ -20,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionModals, actionAuthentications, actionMessages, actionAccounts } from "redux/action";
 import { creatorAuthentications, creatorAccounts } from "redux/creator";
 // import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
+import ValidationUtils from "util/ValidationUtils";
 import styles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.js";
 
 const useStyles = makeStyles(styles);
@@ -42,23 +43,23 @@ export default function UserProfile(props) {
   const [email, setEmail] = useState('');
   const [inputs, setInputs] = useState({
     realname: '',
-    realnameError: false,
-    realnameErrorMessage: '',
+    realnameState: '',
+    realnameStateMessage: '',
     company: '',
-    companyError: false,
-    companyErrorMessage: '',
+    companyState: false,
+    companyStateMessage: '',
     job: '',
-    jobError: false,
-    jobErrorMessage: '',
+    jobState: false,
+    jobStateMessage: '',
     taxcode: '',
-    taxcodeError: false,
-    taxcodeErrorMessage: '',
+    taxcodeState: false,
+    taxcodeStateMessage: '',
     address: '',
-    addressError: false,
-    addressErrorMessage: '',
+    addressState: false,
+    addressStateMessage: '',
     phone: '',
-    phoneError: false,
-    phoneErrorMessage: '',
+    phoneState: false,
+    phoneStateMessage: '',
     updateProfileButton: false
   });
   const history = useHistory();
@@ -74,10 +75,10 @@ export default function UserProfile(props) {
     document.body.scrollTop = 0;
     //dispatch({ type: actionAccounts.GET_CURRENT_INITIAL, action: '' });
 
-    dispatch(creatorAccounts.current({history: history}));
+    dispatch(creatorAccounts.current({ history: history }));
 
-    
-    
+
+
     // fillDefaultValue();
     // if(init){
     //   setInit(false);
@@ -100,32 +101,21 @@ export default function UserProfile(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if(accou.responseOK){
+    if (accou.responseOK) {
       fillDefaultValue()
       // handleChange({target:{id: 'realname', value: accou.account.personInformation.realName}})
-    // setInputs({realname: accou.account.personInformation.realName});
+      // setInputs({realname: accou.account.personInformation.realName});
     }
   }, [accou.responseOK]);
 
   function fillDefaultValue() {
     setAccountID(accou.account.personInformation.id);
-    handleChange({target:{id: 'realname', value: accou.account.personInformation.realName}})
-    handleChange({target:{id: 'company', value: accou.account.personInformation.company}})
-    handleChange({target:{id: 'job', value: accou.account.personInformation.job}})
-    handleChange({target:{id: 'phone', value: accou.account.personInformation.phone}})
-    handleChange({target:{id: 'address', value: accou.account.personInformation.address}})
-    handleChange({target:{id: 'taxcode', value: accou.account.personInformation.taxcode}})
-    // for(var input in inputs) {
-    //   if(input.indexOf("Error") === -1){
-
-    //     setInputs(inputs => ({[input]: inputs[input] }));
-    //   }
-    // }
-    // for (let i = 0; i < inputs.length; i++) {
-    //   if(inputs[i].indexOf("Error") === -1){
-    //     setInputs(inputs => ({[inputs[i]]: inputs[i] }));
-    //   }
-    // }
+    handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
+    handleChange({ target: { id: 'company', value: accou.account.personInformation.company } })
+    handleChange({ target: { id: 'job', value: accou.account.personInformation.job } })
+    handleChange({ target: { id: 'phone', value: accou.account.personInformation.phone } })
+    handleChange({ target: { id: 'address', value: accou.account.personInformation.address } })
+    handleChange({ target: { id: 'taxcode', value: accou.account.personInformation.taxcode } })
   }
 
   function handleChange(event) {
@@ -133,6 +123,145 @@ export default function UserProfile(props) {
     setInputs(inputs => ({ ...inputs, [id]: value }));
   }
 
+  function handleInputValidate(event) {
+    if (process.env.REACT_APP_DEV) console.log()
+    handleInputValidateLogic(event.target.id);
+  }
+
+  function handleInputValidateLogic(itemname) {
+
+    // if(inputs[itemname] === ''){
+    //   setInputs(inputs => ({
+    //     ...inputs,
+    //     [itemname + 'State']: "error",
+    //     [itemname + 'StateMessage']: "Required."
+    //   }));
+    //   return false;
+    // }
+
+    switch (itemname) {
+      case 'realname':
+        if (inputs.realname === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + 'State']: 'error',
+            [itemname + 'StateMessage']: 'Please input user name.'
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validateRealName(inputs.realname) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + 'State']: 'error',
+            [itemname + 'StateMessage']: 'Invalid real name.'
+          }));
+          return false;
+        }
+        break;
+      case 'company':
+        if (ValidationUtils.validateCompany(inputs.company) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + 'State']: 'error',
+            [itemname + 'StateMessage']: 'Invalid company.'
+          }));
+          return false;
+        }
+        break;
+      case 'job':
+        if (ValidationUtils.validateJob(inputs.job) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + 'State']: 'error',
+            [itemname + 'StateMessage']: 'Invalid job.'
+          }));
+          return false;
+        }
+        break;
+      case 'phone':
+        if (inputs.phone === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "State"]: 'error',
+            [itemname + 'StateMessage']: "Required."
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validatePhone(inputs.phone) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + 'State']: 'error',
+            [itemname + 'StateMessage']: 'Invalid phone.'
+          }));
+          return false;
+        }
+        break;
+      case 'address':
+        if (inputs.address === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "State"]: 'error',
+            [itemname + 'StateMessage']: "Required."
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validateAddress(inputs.address) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + 'State']: 'error',
+            [itemname + 'StateMessage']: 'Invalid phone.'
+          }));
+          return false;
+        }
+        break;
+      case 'taxcode':
+        if (ValidationUtils.validateTaxCode(inputs.taxcode) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + 'State']: 'error',
+            [itemname + 'StateMessage']: 'Invalid phone.'
+          }));
+          return false;
+        }
+        break;
+      default:
+        return false;
+    }
+
+    setInputs(inputs => ({
+      ...inputs,
+      [itemname + 'State']: 'success',
+      [itemname + 'StateMessage']: ''
+    }));
+    return true;
+  }
+
+  const handleClickUpdateProfileButton = (event) => {
+    event.preventDefault();
+
+    if (checkInputComplete(['realname', 'company', 'job', 'phone', 'address', 'taxcode']) === false) {
+      return false;
+    }
+
+
+  }
+
+  function checkInputComplete(inputs) {
+    var validates = [];
+
+    for (let i = 0; i < inputs.length; i++) {
+      validates[i] = handleInputValidateLogic(inputs[i]);
+    }
+
+    var result = true;
+
+    for (let i = 0; i < validates.length; i++) {
+      result = result && validates[i];
+    }
+
+    return result;
+  }
+  
   return (
     <div>
       {/* {account.loading && <LoadingIndicator />} */}
@@ -155,7 +284,7 @@ export default function UserProfile(props) {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
                     Email: {accou.account?.email}
-                </GridItem>
+                  </GridItem>
                 </GridContainer>
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
@@ -167,7 +296,8 @@ export default function UserProfile(props) {
                       }}
                       inputProps={{
                         value: inputs.realname,
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                         // defaultValue only gets set on initial load for a form. 
                         // After that, it won't get "naturally" updated because the intent was only to set an initial default value.
                         //  defaultValue: (accou.account?.personInformation?.realName),
@@ -176,6 +306,8 @@ export default function UserProfile(props) {
                         //  value: (accou.account?.personInformation?.realName)
                         // defaultValue:"aaaa"
                       }}
+                      success={inputs.realnameState === "success"}
+                      error={inputs.realnameState === "error"}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
@@ -187,8 +319,11 @@ export default function UserProfile(props) {
                       }}
                       inputProps={{
                         value: inputs.company,
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                       }}
+                      success={inputs.companyState === "success"}
+                      error={inputs.companyState === "error"}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
@@ -200,8 +335,11 @@ export default function UserProfile(props) {
                       }}
                       inputProps={{
                         value: inputs.job,
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                       }}
+                      success={inputs.jobState === "success"}
+                      error={inputs.jobState === "error"}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
@@ -213,8 +351,11 @@ export default function UserProfile(props) {
                       }}
                       inputProps={{
                         value: inputs.phone,
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                       }}
+                      success={inputs.phoneState === "success"}
+                      error={inputs.phoneState === "error"}
                     />
                   </GridItem>
                 </GridContainer>
@@ -228,8 +369,11 @@ export default function UserProfile(props) {
                       }}
                       inputProps={{
                         value: inputs.address,
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                       }}
+                      success={inputs.addressState === "success"}
+                      error={inputs.addressState === "error"}
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={6}>
@@ -241,12 +385,19 @@ export default function UserProfile(props) {
                       }}
                       inputProps={{
                         value: inputs.taxcode,
-                        onChange: (event) => handleChange(event)
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event)
                       }}
+                      success={inputs.taxcodeState === "success"}
+                      error={inputs.taxcodeState === "error"}
                     />
+                    <div className={classes.formCategory}>
+                      <small>*</small> Required fields
+              </div>
                   </GridItem>
                 </GridContainer>
-                <Button id="update-profile-button" color="rose" className={classes.updateProfileButton}>
+                <Button id="update-profile-button" color="rose" className={classes.updateProfileButton}
+                  onClick={(event) => handleClickUpdateProfileButton(event)}>
                   Update Profile
               </Button>
                 <Clearfix />

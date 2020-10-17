@@ -23,6 +23,7 @@ class AuthService {
       .then((response) => {
         const payload = response.data;
         if (payload.access_token) {
+          localStorage.removeItem("user");
           localStorage.setItem("user", JSON.stringify(payload));
         }
 

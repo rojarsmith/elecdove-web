@@ -18,6 +18,45 @@ class ValidationUtils {
     validateCaptcha(value, captcha) {
         return value.toUpperCase() !== captcha.toUpperCase();
     }
+
+    validateRealName(value) {
+        let res = true;
+        if (value.indexOf('@') !== -1) {
+            return false;
+        }
+        return res;
+    }
+
+    validateCompany(value) {
+        let res = true;
+        if (value.match(/(\@|\%|\{|\})/g)) {
+            return false;
+        }
+        return res;
+    }
+
+    validateJob(value) {
+        let res = true;
+        if (value.match(/(\@|\%|\{|\})/g)) {
+            return false;
+        }
+        return res;
+    }
+
+    validatePhone(value) {
+        let res = true;
+        return res;
+    }
+
+    validateAddress(value) {
+        let res = true;
+        return res;
+    }
+
+    validateTaxCode(value) {
+        let res = true;
+        return res;
+    }
 }
 
 export default new ValidationUtils();
