@@ -13,4 +13,5 @@ export * from "./ModalLogout";
  */
 export { default as ModalError } from "./ModalError";
 export { default as ModalLogout } from "./ModalLogout";
+export { default as ModalSimple } from "./ModalSimple";
 export { default as ModalTerms } from "./ModalTerms";

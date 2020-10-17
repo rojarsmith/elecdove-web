@@ -1,6 +1,11 @@
 import { actionModals } from "../action";
 
-const initialState = { logoutOpen: false, termsOpen: false, errorOpen: false };
+const initialState = {
+    logoutOpen: false,
+    termsOpen: false,
+    simpleOpen: false,
+    errorOpen: false
+};
 
 export function reducerModal(state = initialState, action) {
     switch (action.type) {
@@ -16,6 +21,13 @@ export function reducerModal(state = initialState, action) {
             return state;
         case actionModals.CLOSE_LOGOUT:
             state.logoutOpen = false;
+            return state;
+        case actionModals.OPEN_SIMPLE:
+            state.simpleOpen = true;
+            state.message = action.action;
+            return state;
+        case actionModals.CLOSE_SIMPLE:
+            state.simpleOpen = false;
             return state;
         case actionModals.OPEN_TERMS:
             state.termsOpen = true;

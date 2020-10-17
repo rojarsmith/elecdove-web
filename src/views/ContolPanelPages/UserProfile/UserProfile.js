@@ -198,7 +198,11 @@ export default function UserProfile(props) {
       return false;
     }
 
-
+    dispatch(creatorAccounts.updateDetail({
+      ...inputs,
+      realName: inputs.realname,
+      id: accountID
+    }));
   }
 
   const handleClickResetProfileButton = (event) => {
@@ -236,15 +240,24 @@ export default function UserProfile(props) {
                   <PermIdentity />
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>
-                  Edit Profile - <small>Complete your profile</small>
+                  Profile
                 </h4>
               </CardHeader>
               <CardBody>
                 <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.textCenter} style={{ marginTop: "3vh", marginBottom: "3vh" }}>
+                      <div className={classes.typo}>
+                        The Minimal requirement for ordering product. You must fill all of required field.
+                        {' '}
+                        All of information will be used to send goods and after-sales service.
+                      </div>
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6} style={{ marginBottom: "2vh" }}>
                     User Name: {accou.account?.name}
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
+                  <GridItem xs={12} sm={12} md={6} style={{ marginBottom: "2vh" }}>
                     Email: {accou.account?.email}
                   </GridItem>
                 </GridContainer>
@@ -357,7 +370,7 @@ export default function UserProfile(props) {
                   Update
               </Button>
                 <Button id="reset-profile-button" color="rose" className={classes.updateProfileButton}
-                style={{ marginTop: 50 }}
+                  style={{ marginTop: 50 }}
                   onClick={(event) => handleClickResetProfileButton(event)}>
                   Reset
               </Button>

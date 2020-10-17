@@ -18,7 +18,7 @@ import NewPasswordPage from "views/NewPasswordPage/NewPasswordPage"
 import ResetPasswordPage from "views/ResetPasswordPage/ResetPasswordPage";
 // Component
 import Button from "components/CustomButtons/Button.js";
-import { ModalLogout, ModalTerms, ModalError } from "components/Modal";
+import { ModalLogout, ModalTerms, ModalSimple, ModalError } from "components/Modal";
 //Layout
 import AdminLayout from "layouts/Admin.js";
 
@@ -102,12 +102,16 @@ class App extends Component {
     this.props.history.replace("/");
   }
 
-  afterModalTerms = () => {
-    this.props.store.dispatch({ type: actionModals.CLOSE_TERMS });
-  }
-
   afterModalError = () => {
     this.props.store.dispatch({ type: actionModals.CLOSE_ERROR });
+  }
+
+  afterModalSimple = () => {
+    this.props.store.dispatch({ type: actionModals.CLOSE_SIMPLE });
+  }
+
+  afterModalTerms = () => {
+    this.props.store.dispatch({ type: actionModals.CLOSE_TERMS });
   }
 
   emptyfunc = () => {
@@ -135,6 +139,7 @@ class App extends Component {
         {
           <div>
             <ModalLogout open={this.props.store.getState().reducer.logoutOpen} afterclose={this.signout} />
+            <ModalSimple open={this.props.store.getState().reducer.simpleOpen} afterclose={this.afterModalSimple} message={this.props.store.getState().reducer.message} />
             <ModalTerms open={this.props.store.getState().reducer.termsOpen} afterclose={this.afterModalTerms} />
             <ModalError open={this.props.store.getState().reducer.errorOpen} afterclose={this.afterModalError} message={this.props.store.getState().reducer.message} />
           </div>

@@ -48,6 +48,25 @@ export function reducerAccount(state = initialState, action) {
             delete state.account;
             return state;
 
+        case actionAccounts.UPDATE_ACCOUNT_DETAIL_REQUEST:
+            state.response = false;
+            state.responseOK = false;
+            state.responseData = '';
+            state.loading = true;
+            return state;
+        case actionAccounts.UPDATE_ACCOUNT_DETAIL_SUCCESS:
+            state.response = true;
+            state.responseOK = true;
+            state.responseData = action.data;
+            state.loading = false;
+            return state;
+        case actionAccounts.UPDATE_ACCOUNT_DETAIL_FAILURE:
+            state.response = true;
+            state.responseOK = false;
+            state.responseData = action.data.message;
+            state.loading = false;
+            return state;
+
         case actionAccounts.GET_ACCOUNT_REQUEST:
             state.response = false;
             state.responseSuccess = false;
