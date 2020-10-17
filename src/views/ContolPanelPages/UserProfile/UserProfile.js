@@ -19,7 +19,6 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { actionModals, actionAuthentications, actionMessages, actionAccounts } from "redux/action";
 import { creatorAuthentications, creatorAccounts } from "redux/creator";
-// import LoadingIndicator from "components/LoadingIndicator/LoadingIndicator";
 import ValidationUtils from "util/ValidationUtils";
 import styles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.js";
 
@@ -29,19 +28,9 @@ const useStyles = makeStyles(styles);
 export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
   const accou = useSelector(state => state.account);
-  // const [acc, setAcc] = useState(() => {
-  //   if (props.account && props.account != '') {
-  //     if (props.account.authorities && props.account.authorities.length <= 0) {
-  //       history.push('/');
-  //     }
-  //     return props.account;
-  //   } else {
-  //     return { user_name: 'Reading...' }
-  //   }
-  // });
   const [accountID, setAccountID] = useState(0);
   const [email, setEmail] = useState('');
-  const [inputs, setInputs] = useState({
+  const defaultInputs = {
     realname: '',
     realnameState: '',
     realnameStateMessage: '',
@@ -61,7 +50,8 @@ export default function UserProfile(props) {
     phoneState: false,
     phoneStateMessage: '',
     updateProfileButton: false
-  });
+  }
+  const [inputs, setInputs] = useState(defaultInputs);
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
@@ -73,38 +63,13 @@ export default function UserProfile(props) {
   useEffect(() => {
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
-    //dispatch({ type: actionAccounts.GET_CURRENT_INITIAL, action: '' });
 
     dispatch(creatorAccounts.current({ history: history }));
-
-
-
-    // fillDefaultValue();
-    // if(init){
-    //   setInit(false);
-    // //  fetchItems();
-    // }
-    // dispatch(creatorAccounts.current());
-    // if (props.account && props.account != '') 
-    // {
-    //   dispatch(creatorAccounts.getAccountDetail({
-    //     // user: authe.user.access_token,
-    //     // account: props.account.user_name,
-    //     user: authe.user,
-    //     account: props.account,
-    //     hitory: history
-    //   }));
-    // }
-    // if (typeConfirmMail) {
-    //   dispatch(creatorAuthentications.confirmMail(token));
-    // }
   }, [dispatch]);
 
   useEffect(() => {
     if (accou.responseOK) {
       fillDefaultValue()
-      // handleChange({target:{id: 'realname', value: accou.account.personInformation.realName}})
-      // setInputs({realname: accou.account.personInformation.realName});
     }
   }, [accou.responseOK]);
 
@@ -129,16 +94,6 @@ export default function UserProfile(props) {
   }
 
   function handleInputValidateLogic(itemname) {
-
-    // if(inputs[itemname] === ''){
-    //   setInputs(inputs => ({
-    //     ...inputs,
-    //     [itemname + 'State']: "error",
-    //     [itemname + 'StateMessage']: "Required."
-    //   }));
-    //   return false;
-    // }
-
     switch (itemname) {
       case 'realname':
         if (inputs.realname === '') {
@@ -246,6 +201,14 @@ export default function UserProfile(props) {
 
   }
 
+  const handleClickResetProfileButton = (event) => {
+    event.preventDefault();
+
+    setInputs({ ...defaultInputs });
+
+    fillDefaultValue();
+  }
+
   function checkInputComplete(inputs) {
     var validates = [];
 
@@ -261,10 +224,9 @@ export default function UserProfile(props) {
 
     return result;
   }
-  
+
   return (
     <div>
-      {/* {account.loading && <LoadingIndicator />} */}
       <div>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
@@ -298,13 +260,6 @@ export default function UserProfile(props) {
                         value: inputs.realname,
                         onChange: (event) => handleChange(event),
                         onBlur: (event) => handleInputValidate(event)
-                        // defaultValue only gets set on initial load for a form. 
-                        // After that, it won't get "naturally" updated because the intent was only to set an initial default value.
-                        //  defaultValue: (accou.account?.personInformation?.realName),
-
-                        // Lock input can not control.
-                        //  value: (accou.account?.personInformation?.realName)
-                        // defaultValue:"aaaa"
                       }}
                       success={inputs.realnameState === "success"}
                       error={inputs.realnameState === "error"}
@@ -397,8 +352,14 @@ export default function UserProfile(props) {
                   </GridItem>
                 </GridContainer>
                 <Button id="update-profile-button" color="rose" className={classes.updateProfileButton}
+                  style={{ marginRight: 50, marginTop: 50 }}
                   onClick={(event) => handleClickUpdateProfileButton(event)}>
-                  Update Profile
+                  Update
+              </Button>
+                <Button id="reset-profile-button" color="rose" className={classes.updateProfileButton}
+                style={{ marginTop: 50 }}
+                  onClick={(event) => handleClickResetProfileButton(event)}>
+                  Reset
               </Button>
                 <Clearfix />
               </CardBody>
