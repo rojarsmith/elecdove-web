@@ -24,10 +24,8 @@ class AccountService {
       });
   }
 
-  current() {
-    
-
-    return apiAccountCurrent()
+  async current() {
+    return await apiAccountCurrent()
       .then((response) => {
         return response.data;
       })
