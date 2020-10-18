@@ -179,7 +179,7 @@ export default function Dashboard(props) {
             <div className={classes.container}>
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from="/contol-panel" to="/contol-panel/dashboard" />
+                <Redirect from="/contol-panel" to="/contol-panel/user-page" />
               </Switch>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function Dashboard(props) {
             <div className={classes.map}>
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from="/contol-panel" to="/contol-panel/dashboard" />
+                <Redirect from="/contol-panel" to="/contol-panel/user-page" />
               </Switch>
             </div>
           )}
