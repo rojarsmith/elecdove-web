@@ -1,18 +1,18 @@
 import React from "react";
 // nodejs library that concatenates classes
-import classNames from "classnames";
+// import classNames from "classnames";
 // core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+// import GridContainer from "components/Grid/GridContainer.js";
+// import GridItem from "components/Grid/GridItem.js";
+// import Card from "components/Card/Card.js";
+// import CardHeader from "components/Card/CardHeader.js";
+// import CardBody from "components/Card/CardBody.js";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
-import dg6 from "assets/img/dg6.jpg";
-import dg10 from "assets/img/dg10.jpg";
-import dg9 from "assets/img/dg9.jpg";
+// import dg6 from "assets/img/dg6.jpg";
+// import dg10 from "assets/img/dg10.jpg";
+// import dg9 from "assets/img/dg9.jpg";
 
 import styles from "assets/jss/material-kit-pro-react/views/ecommerceSections/blogStyle.js";
 
@@ -23,7 +23,7 @@ export default function SectionBlog() {
   return (
     <div className={classes.section}>
       <div className={classes.container}>
-        <h2 className={classes.sectionTitle}>Latest Articles</h2>
+        {/* <h2 className={classes.sectionTitle}>Latest Articles</h2>
         <GridContainer>
           <GridItem md={4} sm={4}>
             <Card blog>
@@ -115,7 +115,7 @@ export default function SectionBlog() {
               </CardBody>
             </Card>
           </GridItem>
-        </GridContainer>
+        </GridContainer> */}
       </div>
     </div>
   );

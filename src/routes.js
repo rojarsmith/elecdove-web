@@ -1,10 +1,12 @@
 // views
+import UserManagement from "views/ContolPanelPages/UserManagement/UserManagement";
 import UserProfile from "views/ContolPanelPages/UserProfile/UserProfile";
 import Dashboard from "views/Dashboard/Dashboard.js";
 
 // @material-ui/icons
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import AssignmentInd from "@material-ui/icons/AssignmentInd";
+import IconsBuild from "@material-ui/icons/Build";
+import IconDashboard from "@material-ui/icons/Dashboard";
+import IconAssignmentInd from "@material-ui/icons/AssignmentInd";
 
 var dashRoutes = [
   {
@@ -15,10 +17,25 @@ var dashRoutes = [
     path: "/user-page",
     name: "User Profile",
     rtlName: "الحاجيات",
-    icon: AssignmentInd,
+    icon: IconAssignmentInd,
     component: UserProfile,
     layout: "/contol-panel"
-  }
+  },
+  {
+    type: 'spliter',
+  },
+  {
+    type: 'group-title',
+    text: 'Admin'
+  },
+  {
+    path: "/user-management",
+    name: "User Management",
+    rtlName: "",
+    icon: IconsBuild,
+    component: UserManagement,
+    layout: "/contol-panel"
+  },
 ];
 
 if (process.env.REACT_APP_DEV) {
@@ -31,7 +48,7 @@ if (process.env.REACT_APP_DEV) {
   dashRoutes.push(
     {
       type: 'group-title',
-      text: 'Admin'
+      text: 'Dev'
     }
   )
   
@@ -40,7 +57,7 @@ if (process.env.REACT_APP_DEV) {
       path: "/dashboard",
       name: "Dashboard",
       rtlName: "لوحة القيادة",
-      icon: DashboardIcon,
+      icon: IconDashboard,
       component: Dashboard,
       layout: "/contol-panel"
     }

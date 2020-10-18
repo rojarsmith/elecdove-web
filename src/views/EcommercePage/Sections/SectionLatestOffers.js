@@ -28,7 +28,7 @@ export default function SectionLatestOffers() {
   return (
     <div className={classes.section}>
       <div className={classes.container}>
-        <h2>Latest Offers</h2>
+        {/* <h2>Latest Offers</h2>
         <GridContainer>
           <GridItem md={4} sm={4}>
             <Card product plain>
@@ -165,7 +165,7 @@ export default function SectionLatestOffers() {
               </CardFooter>
             </Card>
           </GridItem>
-        </GridContainer>
+        </GridContainer> */}
       </div>
     </div>
   );

@@ -76,10 +76,10 @@ export default function EcommercePage({ ...rest }) {
               )}
             >
               <div className={classes.brand}>
-                <h1 className={classes.title}>Ecommerce Page!</h1>
+                <h1 className={classes.title}>Ecommerce</h1>
                 <h4>
-                  Free global delivery for all products. Use coupon{" "}
-                  <b>25summer</b> for an extra 25% Off
+                  The site is developing, do not use. Free global delivery for all products. Use coupon{" "}
+                  <b>GGGGGG</b> for an extra 25% Off
                 </h4>
               </div>
             </GridItem>

@@ -1139,7 +1139,7 @@ export default function SectionProducts() {
           </GridItem>
         </GridContainer>
         <br />
-        <h2>News in fashion</h2>
+        {/* <h2>News in fashion</h2>
         <GridContainer>
           <GridItem md={4} sm={4}>
             <Card background style={{ backgroundImage: `url(${color1})` }}>
@@ -1257,7 +1257,7 @@ export default function SectionProducts() {
               </CardBody>
             </Card>
           </GridItem>
-        </GridContainer>
+        </GridContainer> */}
       </div>
     </div>
   );
