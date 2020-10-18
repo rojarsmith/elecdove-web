@@ -8,6 +8,10 @@ import AssignmentInd from "@material-ui/icons/AssignmentInd";
 
 var dashRoutes = [
   {
+    type: 'group-title',
+    text: 'Member'
+  },
+  {
     path: "/user-page",
     name: "User Profile",
     rtlName: "الحاجيات",
@@ -18,6 +22,19 @@ var dashRoutes = [
 ];
 
 if (process.env.REACT_APP_DEV) {
+  dashRoutes.push(
+    {
+      type: 'spliter',
+    }
+  )
+
+  dashRoutes.push(
+    {
+      type: 'group-title',
+      text: 'Admin'
+    }
+  )
+  
   dashRoutes.push(
     {
       path: "/dashboard",

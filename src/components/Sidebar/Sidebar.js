@@ -25,6 +25,7 @@ import { creatorAuthentications } from "redux/creator";
 import { actionModals } from "redux/action";
 
 // Assets
+import IconsAccountCircle from "@material-ui/icons/AccountCircle";
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
 import avatar from "assets/img/faces/avatar.jpg";
 
@@ -115,6 +116,21 @@ class Sidebar extends React.Component {
     return routes.map((prop, key) => {
       if (prop.redirect) {
         return null;
+      }
+      if (prop.type === 'spliter') {
+        return <hr width="80%" />
+      }
+      if (prop.type === 'group-title') {
+        return <ListItemText
+          style={{ marginLeft: 20, marginTop: 5, marginBottom: 20 }}
+          primary={prop.text}
+          secondary={
+            <b className={classes.userCaret}
+            />
+          }
+          disableTypography={true}
+          className={classes.userItemText}
+        />
       }
       if (prop.collapse) {
         var st = {};
@@ -365,7 +381,8 @@ class Sidebar extends React.Component {
     var user = (
       <div className={userWrapperClass}>
         <div className={photo}>
-          <img src={avatar} className={classes.avatarImg} alt="..." />
+          {/* <img src={avatar} className={classes.avatarImg} alt="..." /> */}
+          <IconsAccountCircle style={{ marginTop: 5 }} />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
