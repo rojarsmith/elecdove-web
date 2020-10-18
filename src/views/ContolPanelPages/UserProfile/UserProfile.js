@@ -29,6 +29,7 @@ const useStyles = makeStyles(styles);
 export default function UserProfile(props) {
   const authe = useSelector(state => state.authentication);
   const accou = useSelector(state => state.account);
+  const [initial, setInitial] = useState(true);
   const [accountID, setAccountID] = useState(0);
   const [email, setEmail] = useState('');
   const defaultInputs = {
@@ -69,19 +70,22 @@ export default function UserProfile(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (accou.responseOK) {
+    if (initial && accou.responseOK) {
       fillDefaultValue()
+      setInitial(false);
     }
   }, [accou.responseOK]);
 
   function fillDefaultValue() {
-    setAccountID(accou.account?.personInformation?.id);
-    handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
-    handleChange({ target: { id: 'company', value: accou.account.personInformation.company } })
-    handleChange({ target: { id: 'job', value: accou.account.personInformation.job } })
-    handleChange({ target: { id: 'phone', value: accou.account.personInformation.phone } })
-    handleChange({ target: { id: 'address', value: accou.account.personInformation.address } })
-    handleChange({ target: { id: 'taxcode', value: accou.account.personInformation.taxcode } })
+    if (accou.account?.personInformation?.id && accou.account?.personInformation?.realName) {
+      setAccountID(accou.account?.personInformation?.id);
+      handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
+      handleChange({ target: { id: 'company', value: accou.account.personInformation.company } })
+      handleChange({ target: { id: 'job', value: accou.account.personInformation.job } })
+      handleChange({ target: { id: 'phone', value: accou.account.personInformation.phone } })
+      handleChange({ target: { id: 'address', value: accou.account.personInformation.address } })
+      handleChange({ target: { id: 'taxcode', value: accou.account.personInformation.taxcode } })
+    }
   }
 
   function handleChange(event) {
