@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const configNormalGet = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
-    // withCredentials: true,
+    withCredentials: true,
     auth: {
         username: process.env.REACT_APP_API_BAUTH_USERNAME,
         password: process.env.REACT_APP_API_BAUTH_PASSWORD
@@ -16,7 +16,7 @@ const configNormalGet = {
 
 const configNormalGetWithToken = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
-    withCredentials: true,
+    // withCredentials: true,
     headers: { ...authHeader() },
     validateStatus: function (status) {
         return status >= 200 && status < 300; // default
