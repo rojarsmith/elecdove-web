@@ -60,10 +60,10 @@ function getUser(data) {
 }
 
 function current(data) {
-    return async dispatch => {
+    return dispatch => {
         dispatch(request());
 
-        await AccountService.current()
+        AccountService.current()
             .then(
                 body => {
                     dispatch(success(body));

@@ -80,6 +80,7 @@ export default function UserProfile(props) {
   }, [accou.responseOK]);
 
   function fillDefaultValue() {
+    console.info(accou)
     // if (accou.account.id && accou.account?.personInformation?.realName) {
       setAccountID(accou.account.id);
       handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
