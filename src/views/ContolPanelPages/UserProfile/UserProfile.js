@@ -75,7 +75,7 @@ export default function UserProfile(props) {
   }, [accou.responseOK]);
 
   function fillDefaultValue() {
-    setAccountID(accou.account.personInformation.id);
+    setAccountID(accou.account?.personInformation?.id);
     handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
     handleChange({ target: { id: 'company', value: accou.account.personInformation.company } })
     handleChange({ target: { id: 'job', value: accou.account.personInformation.job } })
