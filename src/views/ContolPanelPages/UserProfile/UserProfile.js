@@ -70,9 +70,9 @@ export default function UserProfile(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (initial && accou.responseOK) {
+    if (accou.responseOK) {
       fillDefaultValue()
-      setInitial(false);
+      // setInitial(false);
     }
   }, [accou.responseOK]);
 
