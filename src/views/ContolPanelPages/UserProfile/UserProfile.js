@@ -53,6 +53,7 @@ export default function UserProfile(props) {
     phoneStateMessage: '',
     updateProfileButton: false
   }
+  let backupInputs = defaultInputs;
   const [inputs, setInputs] = useState(defaultInputs);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -70,22 +71,24 @@ export default function UserProfile(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    if (accou.responseOK) {
+    if (accou.responseOK && initial) {
       fillDefaultValue()
+
+      // setInputs({...backupInputs});
       // setInitial(false);
     }
   }, [accou.responseOK]);
 
   function fillDefaultValue() {
-    if (accou.account?.personInformation?.id && accou.account?.personInformation?.realName) {
-      setAccountID(accou.account?.personInformation?.id);
+    // if (accou.account.id && accou.account?.personInformation?.realName) {
+      setAccountID(accou.account.id);
       handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
       handleChange({ target: { id: 'company', value: accou.account.personInformation.company } })
       handleChange({ target: { id: 'job', value: accou.account.personInformation.job } })
       handleChange({ target: { id: 'phone', value: accou.account.personInformation.phone } })
       handleChange({ target: { id: 'address', value: accou.account.personInformation.address } })
       handleChange({ target: { id: 'taxcode', value: accou.account.personInformation.taxcode } })
-    }
+    // }
   }
 
   function handleChange(event) {
@@ -203,11 +206,16 @@ export default function UserProfile(props) {
       return false;
     }
 
+    backupInputs = inputs;
+
     dispatch(creatorAccounts.updateDetail({
       ...inputs,
       realName: inputs.realname,
       id: accountID
     }));
+
+    setInitial(false);
+
   }
 
   const handleClickResetProfileButton = (event) => {
