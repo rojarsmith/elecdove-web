@@ -68,7 +68,7 @@ const configJsonWithToken = {
 };
 
 const normalGetRequest = axios.create(configNormalGet);
-const normalGetWithTokenRequest = axios.create(configNormalGetWithToken);
+var normalGetWithTokenRequest = axios.create(configNormalGetWithToken);
 const xformRequest = axios.create(configXForm);
 const jsonRequest = axios.create(configJson);
 const jsonWithTokenRequest = axios.create(configJsonWithToken);
@@ -80,7 +80,11 @@ export const apiUserConfirmMail = token => normalGetRequest.get("/auth/confirm-a
 export const apiUserAskResetPassword = email => jsonRequest.post("/auth/ask-reset-password", { email: email });
 export const apiUserResetPassword = data => jsonRequest.post("/auth/reset-password", data);
 
-export const apiAccountCurrent = () => normalGetWithTokenRequest.get("/account/current");
+export const apiAccountCurrent = () => {
+    configNormalGetWithToken.headers.Authorization = authHeader().Authorization;
+    normalGetWithTokenRequest = axios.create(configNormalGetWithToken);
+    return normalGetWithTokenRequest.get("/account/current")
+};
 export const apiAccountDetail = data => normalGetWithTokenRequest.get("/account/detail/" + data);
 export const apiAccountUpdateDetail = data => jsonWithTokenRequest.post("/account/update-detail", data);
 

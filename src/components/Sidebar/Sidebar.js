@@ -505,14 +505,14 @@ class Sidebar extends React.Component {
       <div className={logoClasses}>
         <a
           href={location.origin}
-          target="_blank"
+          // target="_blank"
           className={logoMini}
         >
           <img src={logo} alt="logo" className={classes.img} />
         </a>
         <a
           href={location.origin}
-          target="_blank"
+          // target="_blank"
           className={logoNormal}
         >
           {logoText}

@@ -42,7 +42,7 @@ if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'development') {
 
 const render = () => {
   ReactDOM.render(
-    <React.StrictMode>
+    // <React.StrictMode>
       <Provider store={store}>
         <Router>
           <AlertProvider template={AlertTemplate} {...options}>
@@ -50,7 +50,8 @@ const render = () => {
           </AlertProvider>
         </Router>
       </Provider>
-    </React.StrictMode>,
+    // </React.StrictMode>
+    ,
     document.getElementById('root')
   );
 };

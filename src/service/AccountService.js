@@ -25,6 +25,8 @@ class AccountService {
   }
 
   current() {
+    
+
     return apiAccountCurrent()
       .then((response) => {
         return response.data;
