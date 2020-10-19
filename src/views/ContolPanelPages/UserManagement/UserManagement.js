@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -16,6 +16,11 @@ import CardBody from "components/CardDash/CardBody.js";
 import CardIcon from "components/CardDash/CardIcon.js";
 import CardHeader from "components/CardDash/CardHeader.js";
 import ReactTable from "components/CustomReactTable/CustomReactTable.js";
+import { useHistory } from 'react-router-dom';
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { actionModals, actionAuthentications, actionMessages, actionAccounts } from "redux/action";
+import { creatorAuthentications, creatorAccounts } from "redux/creator";
 
 import { dataTable } from "variables/general.js";
 
@@ -32,6 +37,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function UserManagement() {
+  const account = useSelector(state => state.account);
   const [data, setData] = React.useState(
     dataTable.dataRows.map((prop, key) => {
       return {
@@ -52,14 +58,14 @@ export default function UserManagement() {
                 let obj = data.find(o => o.id === key);
                 alert(
                   "You've clicked LIKE button on \n{ \nName: " +
-                    obj.name +
-                    ", \nposition: " +
-                    obj.position +
-                    ", \noffice: " +
-                    obj.office +
-                    ", \nage: " +
-                    obj.age +
-                    "\n}."
+                  obj.name +
+                  ", \nposition: " +
+                  obj.position +
+                  ", \noffice: " +
+                  obj.office +
+                  ", \nage: " +
+                  obj.age +
+                  "\n}."
                 );
               }}
               color="info"
@@ -76,14 +82,14 @@ export default function UserManagement() {
                 let obj = data.find(o => o.id === key);
                 alert(
                   "You've clicked EDIT button on \n{ \nName: " +
-                    obj.name +
-                    ", \nposition: " +
-                    obj.position +
-                    ", \noffice: " +
-                    obj.office +
-                    ", \nage: " +
-                    obj.age +
-                    "\n}."
+                  obj.name +
+                  ", \nposition: " +
+                  obj.position +
+                  ", \noffice: " +
+                  obj.office +
+                  ", \nage: " +
+                  obj.age +
+                  "\n}."
                 );
               }}
               color="warning"
@@ -119,7 +125,21 @@ export default function UserManagement() {
       };
     })
   );
+  const history = useHistory();
+  const dispatch = useDispatch();
   const classes = useStyles();
+
+  useEffect(() => {
+    dispatch(creatorAccounts.userAll());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (account.responseOK) {
+      let userAll = account.userAll;
+      let userAll2 = account.userAll;
+    }
+  }, [account.responseOK]);
+
   return (
     <GridContainer>
       <GridItem xs={12}>
@@ -128,7 +148,7 @@ export default function UserManagement() {
             <CardIcon color="primary">
               <Assignment />
             </CardIcon>
-  <h4 className={classes.cardIconTitle}>Update {'&'} Delete</h4>
+            <h4 className={classes.cardIconTitle}>Update {'&'} Delete</h4>
           </CardHeader>
           <CardBody>
             <ReactTable

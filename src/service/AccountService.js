@@ -2,6 +2,7 @@ import {
   apiUserCheck,
   apiAccountCurrent,
   apiAccountUpdateDetail,
+  apiUserAll,
   apiAccountDetail
 } from "../util/APIUtils";
 const querystring = require('querystring');
@@ -48,6 +49,17 @@ class AccountService {
     // });
 
     return apiAccountUpdateDetail(data)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
+  userAll() {
+    return apiUserAll()
       .then((response) => {
         return response.data;
       })

@@ -85,6 +85,27 @@ export function reducerAccount(state = initialState, action) {
             state.responseData = action.payload.message;
             state.loading = false;
             return state;
+
+        case actionAccounts.USER_ALL_REQUEST:
+            state.response = false;
+            state.responseOK = false;
+            state.responseData = '';
+            state.loading = true;
+            return state;
+        case actionAccounts.USER_ALL_SUCCESS:
+            state.response = true;
+            state.responseOK = true;
+            state.responseData = action.body;
+            state.loading = false;
+            state.userAll = action.body;
+            return state;
+        case actionAccounts.USER_ALL_FAILURE:
+            state.response = true;
+            state.responseOK = false;
+            state.responseData = action.data.message;
+            state.loading = false;
+            return state;
+
         default:
             return state
     }

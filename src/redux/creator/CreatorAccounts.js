@@ -6,6 +6,7 @@ export const creatorAccounts = {
     getUser,
     current,
     updateDetail,
+    userAll,
     getAccountDetail
 };
 
@@ -151,6 +152,55 @@ function updateDetail(data) {
 
         return {
             type: actionAccounts.UPDATE_ACCOUNT_DETAIL_FAILURE, data: { message: emsg }
+        }
+    }
+}
+
+function userAll() {
+    return dispatch => {
+        dispatch(request());
+
+        AccountService.userAll()
+            .then(
+                body => {
+                    dispatch(success(body));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch({
+                        type: actionModals.OPEN_SIMPLE, action:
+                            () => {
+                                try {
+                                    if(error.response.data.message){
+                                        console.log(error.response.data.message);
+                                    }
+                                    return 'Update failed';
+                                } catch (e) {
+                                    return 'Service in maintenance.'
+                                }
+                            }
+                    });
+                }
+            );
+    };
+
+    function request(data) { return { type: actionAccounts.USER_ALL_REQUEST, data } }
+    function success(body) { return { type: actionAccounts.USER_ALL_SUCCESS, body } }
+    function failure(error) {
+        let emsg = '';
+        try {
+            if (!error.response) {
+                emsg = error.message;
+            } else {
+
+                emsg = error.response.data.message;
+            }
+        } catch (e) {
+            emsg = 'Service in maintenance.';
+        }
+
+        return {
+            type: actionAccounts.USER_ALL_FAILURE, data: { message: emsg }
         }
     }
 }

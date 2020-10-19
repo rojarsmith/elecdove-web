@@ -87,6 +87,7 @@ export const apiAccountCurrent = () => {
 };
 export const apiAccountDetail = data => normalGetWithTokenRequest.get("/account/detail/" + data);
 export const apiAccountUpdateDetail = data => jsonWithTokenRequest.post("/account/update-detail", data);
+export const apiUserAll = () => normalGetWithTokenRequest.get("/user/all");
 
 export function authHeader() {
     const user = JSON.parse(localStorage.getItem('user'));
