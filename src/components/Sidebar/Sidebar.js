@@ -118,10 +118,11 @@ class Sidebar extends React.Component {
         return null;
       }
       if (prop.type === 'spliter') {
-        return <hr width="80%" />
+        return <ListItemText key={key}><hr width="80%" /></ListItemText>
       }
       if (prop.type === 'group-title') {
         return <ListItemText
+          key={key}
           style={{ marginLeft: 20, marginTop: 5, marginBottom: 20 }}
           primary={prop.text}
           secondary={
@@ -382,7 +383,7 @@ class Sidebar extends React.Component {
       <div className={userWrapperClass}>
         <div className={photo}>
           {/* <img src={avatar} className={classes.avatarImg} alt="..." /> */}
-          <IconsAccountCircle style={{ marginTop: 5 }} />
+          <IconsAccountCircle style={{ marginTop: 5, marginLeft: 5 }} />
         </div>
         <List className={classes.list}>
           <ListItem className={classes.item + " " + classes.userItem}>
