@@ -27,7 +27,13 @@ const options = {
 //Redux
 const logger = createLogger();
 
-const store = createStore(allReducer, applyMiddleware(thunk, logger));
+let middleware = [thunk];
+
+if (process.env.NODE_ENV !== 'production') {
+  middleware = [...middleware, logger];
+}
+
+const store = createStore(allReducer, applyMiddleware(...middleware));
 
 console.info("NODE_ENV=" + process.env.NODE_ENV);
 console.info("REACT_APP_DEV=" + process.env.REACT_APP_DEV);
@@ -42,7 +48,7 @@ if (process.env.NODE_ENV !== 'test' && process.env.NODE_ENV !== 'development') {
 
 const render = () => {
   ReactDOM.render(
-    // <React.StrictMode>
+    <React.StrictMode>
       <Provider store={store}>
         <Router>
           <AlertProvider template={AlertTemplate} {...options}>
@@ -50,7 +56,7 @@ const render = () => {
           </AlertProvider>
         </Router>
       </Provider>
-    // </React.StrictMode>
+    </React.StrictMode>
     ,
     document.getElementById('root')
   );
