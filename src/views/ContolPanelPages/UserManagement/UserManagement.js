@@ -124,7 +124,9 @@ export default function UserManagement() {
   //   };
   // })
 
-  const [dataSource, setDataSource] = useState([]);
+  const [dataSource, setDataSource] = useState(()=>{
+    console.log("aa");
+    return [] });
 
   const refreshDataRows = (dataRows) => {
    return dataRows.map((prop, key) => {
@@ -166,7 +168,8 @@ export default function UserManagement() {
             justIcon
             round
             simple
-            onClick={(event) => clickEdit(event, key)}
+            // onClick={(event) => clickEdit(event, key)}
+            onClick={(event) => clickEdit2(event)}
             color="warning"
             className="edit"
           >
@@ -261,7 +264,7 @@ export default function UserManagement() {
         })
   
         let a = refreshDataRows(dataRows);
-        setDataSource([...a]);
+        setDataSource(()=>{return [...a]});
       }
     });
 
@@ -302,6 +305,23 @@ export default function UserManagement() {
     // );
   }, []);
 
+  const clickEdit2 = (event) => {
+    // event.preventDefault();
+
+    let obj = dataSource;
+    // alert(
+    //   "You've clicked EDIT button on \n{ \nName: " +
+    //   obj.name +
+    //   ", \nposition: " +
+    //   obj.position +
+    //   ", \noffice: " +
+    //   obj.office +
+    //   ", \nage: " +
+    //   obj.age +
+    //   "\n}."
+    // );
+  };
+
   return (
     <GridContainer>
       <GridItem xs={12}>
@@ -313,6 +333,10 @@ export default function UserManagement() {
             <h4 className={classes.cardIconTitle}>Update {'&'} Delete</h4>
           </CardHeader>
           <CardBody>
+          <Button
+           onClick={(event) => clickEdit2(event)}
+             
+          ></Button>
             <ReactTable
               columns={[
                 {
