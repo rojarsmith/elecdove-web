@@ -8,29 +8,37 @@ const initialState = {
 };
 
 export function reducerModal(state = initialState, action) {
+    let atLeastOneOpened = false;
+    for (let [key, value] of Object.entries(state)) {
+        if (key && value === true) {
+            atLeastOneOpened = true;
+            break;
+        }
+    }
+
     switch (action.type) {
         case actionModals.OPEN_ERROR:
-            state.errorOpen = true;
+            if (!atLeastOneOpened) state.errorOpen = true;
             state.message = action.action;
             return state;
         case actionModals.CLOSE_ERROR:
             state.errorOpen = false;
             return state;
         case actionModals.OPEN_LOGOUT:
-            state.logoutOpen = true;
+            if (!atLeastOneOpened) state.logoutOpen = true;
             return state;
         case actionModals.CLOSE_LOGOUT:
             state.logoutOpen = false;
             return state;
         case actionModals.OPEN_SIMPLE:
-            state.simpleOpen = true;
+            if (!atLeastOneOpened) state.simpleOpen = true;
             state.message = action.action;
             return state;
         case actionModals.CLOSE_SIMPLE:
             state.simpleOpen = false;
             return state;
         case actionModals.OPEN_TERMS:
-            state.termsOpen = true;
+            if (!atLeastOneOpened) state.termsOpen = true;
             return state;
         case actionModals.CLOSE_TERMS:
             state.termsOpen = false;

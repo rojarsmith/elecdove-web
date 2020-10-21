@@ -82,15 +82,28 @@ export default function HeaderLinks(props) {
     dispatch({ type: actionModals.OPEN_LOGOUT });
   }
 
+  function debugModal1(event) {
+    event.preventDefault();
+
+    dispatch({ type: actionModals.OPEN_SIMPLE, action: "function debug1 actionModals.OPEN_SIMPLE" });
+    dispatch({ type: actionModals.OPEN_TERMS, action: "function debug1 actionModals.OPEN_TERMS" });
+  }
+
+  function debugModal2(event) {
+    event.preventDefault();
+
+    dispatch({ type: actionModals.OPEN_SIMPLE, action: "function debug1 actionModals.OPEN_SIMPLE" });
+  }
+
   function debug1(event) {
     event.preventDefault();
 
+    dispatch({ type: actionModals.OPEN_SIMPLE, action: "function debug1 actionModals.OPEN_SIMPLE" });
     // dispatch({ type: actionModals.OPEN_LOGOUT });
   }
 
   function debug2(event) {
     event.preventDefault();
-
 
     // dispatch(creatorAuthentications.signup({ username: 'aaa111', password: 'bbbb1111', email: 'rojarsmith@gmail.com'}));
     // dispatch(creatorAuthentications.signup({ username: 'aaa1112', password: 'bbbb1111', email: 'rojarsmith2@gmail.com'}));
@@ -153,25 +166,36 @@ export default function HeaderLinks(props) {
       {
         process.env.REACT_APP_DEV &&
         <ListItem className={classes.listItem}>
-          <Button color="transparent" className={classes.navLink} onClick={debug1}>
-            Debug1
-          </Button>
-        </ListItem>
-      }
-      {
-        process.env.REACT_APP_DEV &&
-        <ListItem className={classes.listItem}>
-          <Button color="transparent" className={classes.navLink} onClick={debug2}>
-            Debug2
-          </Button>
-        </ListItem>
-      }
-      {
-        process.env.REACT_APP_DEV &&
-        <ListItem className={classes.listItem}>
-          <Button color="transparent" className={classes.navLink} onClick={debug1}>
-            Debug3
-          </Button>
+          <CustomDropdown
+            noLiPadding
+            navDropdown
+            hoverColor={dropdownHoverColor}
+            buttonText="DBGG1"
+            buttonProps={{
+              className: classes.navLink,
+              color: "transparent"
+            }}
+            dropdownList={[
+              <Link className={classes.dropdownLink}
+                onClick={debugModal1}>
+                Modal1
+              </Link>,
+              <Link className={classes.dropdownLink}
+                onClick={debugModal2}>
+                Modal2
+              </Link>,
+              <Link
+                className={classes.dropdownLink}
+                onClick={debug1}>
+                Debug1
+              </Link>,
+              <Link
+                className={classes.dropdownLink}
+                onClick={debug2}>
+                Debug2
+              </Link>
+            ]}
+          />
         </ListItem>
       }
     </List>
