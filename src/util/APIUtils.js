@@ -73,6 +73,18 @@ const xformRequest = axios.create(configXForm);
 const jsonRequest = axios.create(configJson);
 const jsonWithTokenRequest = axios.create(configJsonWithToken);
 
+normalGetWithTokenRequest.interceptors.request.use(
+    function (config) {
+        // Do something before request is sent
+        config.headers.Authorization = authHeader().Authorization;
+        return config;
+    },
+    function (error) {
+        // Do something with request error
+        return Promise.reject(error);
+    }
+);
+
 export const apiUserLogin = data => xformRequest.post("/oauth/token", data);
 export const apiUserCheck = data => xformRequest.post("/oauth/check_token", data);
 export const apiUserSignUp = data => jsonRequest.post("/auth/signup", data);
@@ -81,8 +93,8 @@ export const apiUserAskResetPassword = email => jsonRequest.post("/auth/ask-rese
 export const apiUserResetPassword = data => jsonRequest.post("/auth/reset-password", data);
 
 export const apiAccountCurrent = () => {
-    configNormalGetWithToken.headers.Authorization = authHeader().Authorization;
-    normalGetWithTokenRequest = axios.create(configNormalGetWithToken);
+    // configNormalGetWithToken.headers.Authorization = authHeader().Authorization;
+    // normalGetWithTokenRequest = axios.create(configNormalGetWithToken);
     return normalGetWithTokenRequest.get("/account/current")
 };
 export const apiAccountDetail = data => normalGetWithTokenRequest.get("/account/detail/" + data);
@@ -101,3 +113,10 @@ export function authHeader() {
         return {};
     }
 }
+
+
+
+// export function setAuthHeader(request) {
+//     request.headers.Authorization = authHeader().Authorization;
+//     return request;
+// }

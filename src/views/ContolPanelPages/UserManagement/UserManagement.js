@@ -37,108 +37,219 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function UserManagement() {
+
+  var dataSource = dataTable.dataRows.map((prop, key) => {
+    return {
+      actived: prop[0],
+      id: prop[1],
+      name: prop[2],
+      email: prop[3],
+      role: prop[4],
+      actions: (
+        // we've added some custom button actions
+        <div className="actions-right">
+          {/* use this button to add a like kind of action */}
+          <Button
+            justIcon
+            round
+            simple
+            onClick={() => {
+              let obj = data.find(o => o.id === key);
+              alert(
+                "You've clicked LIKE button on \n{ \nName: " +
+                obj.name +
+                ", \nposition: " +
+                obj.position +
+                ", \noffice: " +
+                obj.office +
+                ", \nage: " +
+                obj.age +
+                "\n}."
+              );
+            }}
+            color="info"
+            className="like"
+          >
+            <Favorite />
+          </Button>{" "}
+          {/* use this button to add a edit kind of action */}
+          <Button
+            justIcon
+            round
+            simple
+            onClick={() => {
+              let obj = data.find(o => o.id === key);
+              alert(
+                "You've clicked EDIT button on \n{ \nName: " +
+                obj.name +
+                ", \nposition: " +
+                obj.position +
+                ", \noffice: " +
+                obj.office +
+                ", \nage: " +
+                obj.age +
+                "\n}."
+              );
+            }}
+            color="warning"
+            className="edit"
+          >
+            <Dvr />
+          </Button>{" "}
+          {/* use this button to remove the data row */}
+          <Button
+            justIcon
+            round
+            simple
+            onClick={() => {
+              var newData = data;
+              newData.find((o, i) => {
+                if (o.id === key) {
+                  // here you should add some custom code so you can delete the data
+                  // from this component and from your server as well
+                  newData.splice(i, 1);
+                  return true;
+                }
+                return false;
+              });
+              setData([...newData]);
+            }}
+            color="danger"
+            className="remove"
+          >
+            <Close />
+          </Button>{" "}
+        </div>
+      )
+    };
+  })
+
+  const refreshDataRows = (table) => {
+   table.dataRows.map((prop, key) => {
+    return {
+      actived: prop[0],
+      id: prop[1],
+      name: prop[2],
+      email: prop[3],
+      role: prop[4],
+      actions: (
+        // we've added some custom button actions
+        <div className="actions-right">
+          {/* use this button to add a like kind of action */}
+          <Button
+            justIcon
+            round
+            simple
+            onClick={() => {
+              let obj = data.find(o => o.id === key);
+              alert(
+                "You've clicked LIKE button on \n{ \nName: " +
+                obj.name +
+                ", \nposition: " +
+                obj.position +
+                ", \noffice: " +
+                obj.office +
+                ", \nage: " +
+                obj.age +
+                "\n}."
+              );
+            }}
+            color="info"
+            className="like"
+          >
+            <Favorite />
+          </Button>{" "}
+          {/* use this button to add a edit kind of action */}
+          <Button
+            justIcon
+            round
+            simple
+            onClick={() => {
+              let obj = data.find(o => o.id === key);
+              alert(
+                "You've clicked EDIT button on \n{ \nName: " +
+                obj.name +
+                ", \nposition: " +
+                obj.position +
+                ", \noffice: " +
+                obj.office +
+                ", \nage: " +
+                obj.age +
+                "\n}."
+              );
+            }}
+            color="warning"
+            className="edit"
+          >
+            <Dvr />
+          </Button>{" "}
+          {/* use this button to remove the data row */}
+          <Button
+            justIcon
+            round
+            simple
+            onClick={() => {
+              var newData = data;
+              newData.find((o, i) => {
+                if (o.id === key) {
+                  // here you should add some custom code so you can delete the data
+                  // from this component and from your server as well
+                  newData.splice(i, 1);
+                  return true;
+                }
+                return false;
+              });
+              setData([...newData]);
+            }}
+            color="danger"
+            className="remove"
+          >
+            <Close />
+          </Button>{" "}
+        </div>
+      )
+    };
+  })
+  }
+
   const account = useSelector(state => state.account);
   const [data, setData] = React.useState(
-    dataTable.dataRows.map((prop, key) => {
-      return {
-        id: key,
-        name: prop[0],
-        position: prop[1],
-        office: prop[2],
-        age: prop[3],
-        actions: (
-          // we've added some custom button actions
-          <div className="actions-right">
-            {/* use this button to add a like kind of action */}
-            <Button
-              justIcon
-              round
-              simple
-              onClick={() => {
-                let obj = data.find(o => o.id === key);
-                alert(
-                  "You've clicked LIKE button on \n{ \nName: " +
-                  obj.name +
-                  ", \nposition: " +
-                  obj.position +
-                  ", \noffice: " +
-                  obj.office +
-                  ", \nage: " +
-                  obj.age +
-                  "\n}."
-                );
-              }}
-              color="info"
-              className="like"
-            >
-              <Favorite />
-            </Button>{" "}
-            {/* use this button to add a edit kind of action */}
-            <Button
-              justIcon
-              round
-              simple
-              onClick={() => {
-                let obj = data.find(o => o.id === key);
-                alert(
-                  "You've clicked EDIT button on \n{ \nName: " +
-                  obj.name +
-                  ", \nposition: " +
-                  obj.position +
-                  ", \noffice: " +
-                  obj.office +
-                  ", \nage: " +
-                  obj.age +
-                  "\n}."
-                );
-              }}
-              color="warning"
-              className="edit"
-            >
-              <Dvr />
-            </Button>{" "}
-            {/* use this button to remove the data row */}
-            <Button
-              justIcon
-              round
-              simple
-              onClick={() => {
-                var newData = data;
-                newData.find((o, i) => {
-                  if (o.id === key) {
-                    // here you should add some custom code so you can delete the data
-                    // from this component and from your server as well
-                    newData.splice(i, 1);
-                    return true;
-                  }
-                  return false;
-                });
-                setData([...newData]);
-              }}
-              color="danger"
-              className="remove"
-            >
-              <Close />
-            </Button>{" "}
-          </div>
-        )
-      };
-    })
+    // dataSource
+    []
   );
   const history = useHistory();
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch(creatorAccounts.userAll());
-  }, [dispatch]);
+
+  }, [])
 
   useEffect(() => {
+    // dispatch(creatorAccounts.userAll());
+  }, []);
+
+  useEffect(() => {
+    dispatch(creatorAccounts.userAll());
+
     if (account.responseOK) {
       let userAll = account.userAll;
-      let userAll2 = account.userAll;
+      
+      // dataTable.
+      let dataRows = userAll.map((prop, key) => {
+        let row = [];
+        row.push(prop.actived);
+        row.push(prop.id);
+        row.push(prop.name);
+        row.push(prop.email);
+        return row;
+      })
+
+      dataTable.dataRows = dataRows;
+      let a = refreshDataRows(dataTable);
+      setData(a);
     }
-  }, [account.responseOK]);
+  }, []);
 
   return (
     <GridContainer>
@@ -154,20 +265,24 @@ export default function UserManagement() {
             <ReactTable
               columns={[
                 {
+                  Header: "Actived",
+                  accessor: "actived"
+                },
+                {
+                  Header: "ID",
+                  accessor: "id"
+                },
+                {
                   Header: "Name",
                   accessor: "name"
                 },
                 {
-                  Header: "Position",
-                  accessor: "position"
+                  Header: "Email",
+                  accessor: "email"
                 },
                 {
-                  Header: "Office",
-                  accessor: "office"
-                },
-                {
-                  Header: "Age",
-                  accessor: "age"
+                  Header: "Role",
+                  accessor: "role"
                 },
                 {
                   Header: "Actions",
