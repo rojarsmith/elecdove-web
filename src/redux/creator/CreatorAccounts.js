@@ -157,13 +157,14 @@ function updateDetail(data) {
 }
 
 function userAll() {
-    return dispatch => {
+    return async dispatch => {
         dispatch(request());
 
-        AccountService.userAll()
+        await AccountService.userAll()
             .then(
                 body => {
                     dispatch(success(body));
+                    return Promise.resolve(true);
                 },
                 error => {
                     dispatch(failure(error));
@@ -180,6 +181,7 @@ function userAll() {
                                 }
                             }
                     });
+                    return Promise.reject();
                 }
             );
     };

@@ -58,8 +58,8 @@ class AccountService {
       });
   }
 
-  userAll() {
-    return apiUserAll()
+  async userAll() {
+    return await apiUserAll()
       .then((response) => {
         return response.data;
       })
