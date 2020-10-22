@@ -3,6 +3,7 @@ import {
   apiAccountCurrent,
   apiAccountUpdateDetail,
   apiUserAll,
+  apiUserSingle,
   apiAccountDetail
 } from "../util/APIUtils";
 const querystring = require('querystring');
@@ -60,6 +61,17 @@ class AccountService {
 
   async userAll() {
     return await apiUserAll()
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
+  userSingle(data) {
+    return apiUserSingle(data.state.userId)
       .then((response) => {
         return response.data;
       })

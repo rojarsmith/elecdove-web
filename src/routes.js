@@ -1,5 +1,6 @@
 // views
 import UserManagement from "views/ContolPanelPages/UserManagement/UserManagement";
+import UserManagementEdit from "views/ContolPanelPages/UserManagement/UserManagementEdit";
 import UserProfile from "views/ContolPanelPages/UserProfile/UserProfile";
 import Dashboard from "views/Dashboard/Dashboard.js";
 
@@ -29,11 +30,20 @@ var dashRoutes = [
     text: 'Admin'
   },
   {
-    path: "/user-management",
+    path: "/user-management/index",
     name: "User Management",
     rtlName: "",
     icon: IconsBuild,
     component: UserManagement,
+    layout: "/contol-panel"
+  },
+  {
+    type: 'hidden-page',
+    path: "/user-management/edit",
+    name: "Edit User",
+    rtlName: "",
+    icon: IconsBuild,
+    component: UserManagementEdit,
     layout: "/contol-panel"
   },
 ];

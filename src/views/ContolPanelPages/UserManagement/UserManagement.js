@@ -2,11 +2,13 @@ import React, { useEffect, useState, useCallback, useMemo, useRef } from "react"
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+
 // @material-ui/icons
 import Assignment from "@material-ui/icons/Assignment";
 import Dvr from "@material-ui/icons/Dvr";
 import Favorite from "@material-ui/icons/Favorite";
 import Close from "@material-ui/icons/Close";
+
 // core components
 import GridContainer from "components/Grid/GridContainerDash.js";
 import GridItem from "components/Grid/GridItemDash.js";
@@ -17,6 +19,7 @@ import CardIcon from "components/CardDash/CardIcon.js";
 import CardHeader from "components/CardDash/CardHeader.js";
 import ReactTable from "components/CustomReactTable/CustomReactTable.js";
 import { useHistory } from 'react-router-dom';
+
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { actionModals, actionAuthentications, actionMessages, actionAccounts } from "redux/action";
@@ -138,13 +141,14 @@ export default function UserManagement() {
     event.preventDefault();
 
     let obj = dataSourceRef.current.find(o => o.id === userId);
-    alert(
-      "EDIT button on \n{ \nId: " +
-      userId +
-      ", \nName: " +
-      obj.name +
-      "\n}."
-    );
+
+    if (obj) {
+      history.push({
+        pathname: '/contol-panel/user-management/edit',
+        // search: '?the=search',
+        state: { 'userId': userId }
+      })
+    }
   };
 
   const clickDelete = (event, userId) => {

@@ -57,9 +57,8 @@ const configJson = {
 
 const configJsonWithToken = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeader() },
     withCredentials: true,
-    headers: { ...authHeader() },
     validateStatus: function (status) {
         return status >= 200 && status < 300; // default
     },
@@ -92,14 +91,11 @@ export const apiUserConfirmMail = token => normalGetRequest.get("/auth/confirm-a
 export const apiUserAskResetPassword = email => jsonRequest.post("/auth/ask-reset-password", { email: email });
 export const apiUserResetPassword = data => jsonRequest.post("/auth/reset-password", data);
 
-export const apiAccountCurrent = () => {
-    // configNormalGetWithToken.headers.Authorization = authHeader().Authorization;
-    // normalGetWithTokenRequest = axios.create(configNormalGetWithToken);
-    return normalGetWithTokenRequest.get("/account/current")
-};
+export const apiAccountCurrent = () => normalGetWithTokenRequest.get("/account/current");
 export const apiAccountDetail = data => normalGetWithTokenRequest.get("/account/detail/" + data);
 export const apiAccountUpdateDetail = data => jsonWithTokenRequest.post("/account/update-detail", data);
 export const apiUserAll = () => normalGetWithTokenRequest.get("/user/all");
+export const apiUserSingle = data => normalGetWithTokenRequest.get("/user/single/" + data);
 
 export function authHeader() {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -113,10 +109,3 @@ export function authHeader() {
         return {};
     }
 }
-
-
-
-// export function setAuthHeader(request) {
-//     request.headers.Authorization = authHeader().Authorization;
-//     return request;
-// }

@@ -133,6 +133,9 @@ class Sidebar extends React.Component {
           className={classes.userItemText}
         />
       }
+      if (prop.type === 'hidden-page') {
+        return null;
+      }
       if (prop.collapse) {
         var st = {};
         st[prop["state"]] = !this.state[prop.state];
