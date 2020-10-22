@@ -43,8 +43,6 @@ export default function UserManagementEdit(props) {
   const [checked, setChecked] = useState([-1]);
   const defaultInputs = {
     actived: '',
-    ip: '',
-    name: '',
     email: '',
     emailVerified: '',
     roleList: [],
@@ -98,20 +96,23 @@ export default function UserManagementEdit(props) {
     console.info(accou)
     setUserId(accou.userSingle.id);
     handleChange({ target: { id: 'actived', value: accou.userSingle.actived } })
-    // handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
-    // handleChange({ target: { id: 'company', value: accou.account.personInformation.company } })
-    // handleChange({ target: { id: 'job', value: accou.account.personInformation.job } })
-    // handleChange({ target: { id: 'phone', value: accou.account.personInformation.phone } })
-    // handleChange({ target: { id: 'address', value: accou.account.personInformation.address } })
-    // handleChange({ target: { id: 'taxcode', value: accou.account.personInformation.taxcode } })
+    handleChange({ target: { id: 'email', value: accou.userSingle.email } })
+    handleChange({ target: { id: 'emailVerified', value: accou.userSingle.emailVerified } })
+    handleChange({ target: { id: 'roleList', value: accou.userSingle.roleList } })
+
+    handleChange({ target: { id: 'realname', value: accou.userSingle.personInformation.realName } })
+    handleChange({ target: { id: 'company', value: accou.userSingle.personInformation.company } })
+    handleChange({ target: { id: 'job', value: accou.userSingle.personInformation.job } })
+    handleChange({ target: { id: 'phone', value: accou.userSingle.personInformation.phone } })
+    handleChange({ target: { id: 'address', value: accou.userSingle.personInformation.address } })
+    handleChange({ target: { id: 'taxcode', value: accou.userSingle.personInformation.taxcode } })
   }
 
   function handleChange(event) {
-    
-    if(event.target?.type === 'checkbox'){
+
+    if (event.target?.type === 'checkbox') {
       const { id, checked } = event.target;
       setInputs(inputs => ({ ...inputs, [id]: checked }));
-      // setInputs(inputs => ({ ...inputs, [id]: value }));
       return;
     }
     const { id, value } = event.target;
@@ -264,23 +265,6 @@ export default function UserManagementEdit(props) {
     return result;
   }
 
-  const handleToggle = (event) => {
-    let { event: e, payload: value } = event;
-    e.preventDefault();
-
-    // const { id, value } = event.target;
-    // setInputs(inputs => ({ ...inputs, [id]: value }));
-
-    // const currentIndex = checked.indexOf(value);
-    // const newChecked = [...checked];
-    // if (currentIndex === -1) {
-    //   newChecked.push(value);
-    // } else {
-    //   newChecked.splice(currentIndex, 1);
-    // }
-    // setChecked(newChecked);
-  };
-
   return (
     <div>
       <div>
@@ -292,7 +276,7 @@ export default function UserManagementEdit(props) {
                   <PermIdentity />
                 </CardIcon>
                 <h4 className={classes.cardIconTitle}>
-                  Profile
+                  Editor
                 </h4>
               </CardHeader>
               <CardBody>
@@ -301,46 +285,51 @@ export default function UserManagementEdit(props) {
                     User id:{' '}{accou.userSingle?.id}
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
+                    Name:{' '}{accou.userSingle?.name}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    Regist Time:{' '}{accou.userSingle?.registTime}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
                     <FormControlLabel
                       control={<Checkbox id="actived" checked={inputs.actived} onChange={handleChange} />}
                       label="Actived"
                     />
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
                     <CustomInput
-                      labelText="Actived *"
-                      id="actived"
+                      labelText="Email *"
+                      id="email"
                       formControlProps={{
-                        fullWidth: true
+                        fullWidth: true,
                       }}
                       inputProps={{
-                        value: inputs.actived,
+                        value: inputs.email,
                         onChange: (event) => handleChange(event),
-                        onBlur: (event) => handleInputValidate(event)
+                        onBlur: (event) => handleInputValidate(event),
                       }}
-                      success={inputs.activedState === "success"}
-                      error={inputs.activedState === "error"}
+                      success={inputs.emailState === "success"}
+                      error={inputs.emailState === "error"}
                     />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6} style={{ marginBottom: "2vh" }}>
-                    Email: {accou.account?.email}
-                  </GridItem>
-                </GridContainer>
-                <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-                    <div className={classes.textCenter} style={{ marginTop: "3vh", marginBottom: "3vh" }}>
-                      <div className={classes.typo}>
-                        The Minimal requirement for ordering product. You must fill all of required field.
-                        {' '}
-                        All of information will be used to send goods and after-sales service.
-                      </div>
-                    </div>
+                    <FormControlLabel
+                      control={<Checkbox id="emailVerified" checked={inputs.emailVerified} onChange={handleChange} />}
+                      label="Email Verified"
+                    />
                   </GridItem>
-                  <GridItem xs={12} sm={12} md={6} style={{ marginBottom: "2vh" }}>
-                    User Name: {accou.account?.name}
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6} style={{ marginBottom: "2vh" }}>
-                    Email: {accou.account?.email}
+                  <GridItem xs={12} sm={12} md={12}>
+                    <FormControlLabel
+                      control={<Checkbox id="emailVerified" checked={inputs.emailVerified} onChange={handleChange} />}
+                      label="Email Verified"
+                    />
+                    <FormControlLabel
+                      control={<Checkbox id="emailVerified" checked={inputs.emailVerified} onChange={handleChange} />}
+                      label="Email Verified"
+                    />
                   </GridItem>
                 </GridContainer>
+ 
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
