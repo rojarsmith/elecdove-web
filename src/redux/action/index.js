@@ -3,3 +3,4 @@ export * from "./ActionAlert";
 export * from "./ActionAuthentication";
 export * from "./ActionMessage";
 export * from "./ActionModal";
+export * from "./ActionRole";

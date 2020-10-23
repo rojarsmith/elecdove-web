@@ -25,8 +25,8 @@ import { useHistory } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { actionModals, actionAuthentications, actionMessages, actionAccounts } from "redux/action";
-import { creatorAuthentications, creatorAccounts } from "redux/creator";
+import { actionModals, actionAuthentications, actionMessages, actionAccounts, actionRoles } from "redux/action";
+import { creatorAuthentications, creatorAccounts, creatorRoles } from "redux/creator";
 import ValidationUtils from "util/ValidationUtils";
 import { useDebounce } from 'util/CommonUtiles';
 import styles from "assets/jss/material-dashboard-pro-react/views/userProfileStyles.js";
@@ -79,7 +79,9 @@ export default function UserManagementEdit(props) {
       if (key) { setInputs({ ...inputs, [key]: value }); }
     }
 
+    dispatch(creatorRoles.roleMultiAll());
     dispatch(creatorAccounts.userSingle({ state: props.location.state, history: history }));
+    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -90,6 +92,7 @@ export default function UserManagementEdit(props) {
       // setInputs({...backupInputs});
       // setInitial(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accou.responseOK]);
 
   function fillDefaultValue() {
@@ -329,7 +332,7 @@ export default function UserManagementEdit(props) {
                     />
                   </GridItem>
                 </GridContainer>
- 
+
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput

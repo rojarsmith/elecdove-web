@@ -97,6 +97,8 @@ export const apiAccountUpdateDetail = data => jsonWithTokenRequest.post("/accoun
 export const apiUserAll = () => normalGetWithTokenRequest.get("/user/all");
 export const apiUserSingle = data => normalGetWithTokenRequest.get("/user/single/" + data);
 
+export const apiRoleMultiAll = () => normalGetWithTokenRequest.get("/role/multi/all");
+
 export function authHeader() {
     const user = JSON.parse(localStorage.getItem('user'));
     console.log(user);
