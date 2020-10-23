@@ -10,7 +10,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Check from "@material-ui/icons/Check";
 import PermIdentity from "@material-ui/icons/PermIdentity";
 
-
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -22,6 +21,8 @@ import CardBody from "components/CardDash/CardBody.js";
 import CardHeader from "components/CardDash/CardHeader.js";
 import CardIcon from "components/CardDash/CardIcon.js";
 import { useHistory } from 'react-router-dom';
+
+import CustomCheckboxs from 'components/CustomCheckbox/CustomCheckboxs';
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -36,6 +37,7 @@ const useStyles = makeStyles(styles);
 export default function UserManagementEdit(props) {
   const authe = useSelector(state => state.authentication);
   const accou = useSelector(state => state.account);
+  const role = useSelector(state => state.role);
   const [initial, setInitial] = useState(true);
   const [userId, setUserId] = useState(0);
   const [registTime, setRegistTime] = useState('');
@@ -81,7 +83,7 @@ export default function UserManagementEdit(props) {
 
     dispatch(creatorRoles.roleMultiAll());
     dispatch(creatorAccounts.userSingle({ state: props.location.state, history: history }));
-    
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -92,7 +94,7 @@ export default function UserManagementEdit(props) {
       // setInputs({...backupInputs});
       // setInitial(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accou.responseOK]);
 
   function fillDefaultValue() {
@@ -322,17 +324,17 @@ export default function UserManagementEdit(props) {
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
-                    <FormControlLabel
-                      control={<Checkbox id="emailVerified" checked={inputs.emailVerified} onChange={handleChange} />}
-                      label="Email Verified"
-                    />
-                    <FormControlLabel
-                      control={<Checkbox id="emailVerified" checked={inputs.emailVerified} onChange={handleChange} />}
-                      label="Email Verified"
+                    <CustomCheckboxs
+                      id="aaa"
+                      all={role.allRoles}
+                      checkboxsProps={{
+                        value: inputs.roleList,
+                        onChange: (event) => handleChange(event),
+                        onBlur: (event) => handleInputValidate(event),
+                      }}
                     />
                   </GridItem>
                 </GridContainer>
-
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={6}>
                     <CustomInput
