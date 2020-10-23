@@ -327,8 +327,9 @@ export default function UserManagementEdit(props) {
                     <CustomCheckboxs
                       id="aaa"
                       all={role.allRoles}
+                      value= {inputs.roleList}
                       checkboxsProps={{
-                        value: inputs.roleList,
+                        // value: inputs.roleList,
                         onChange: (event) => handleChange(event),
                         onBlur: (event) => handleInputValidate(event),
                       }}
