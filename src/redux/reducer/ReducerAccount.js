@@ -126,6 +126,24 @@ export function reducerAccount(state = initialState, action) {
             state.loading = false;
             return state;
 
+        case actionAccounts.USER_DELETE_REQUEST:
+            state.response = false;
+            state.responseOK = false;
+            state.responseData = '';
+            state.loading = true;
+            return state;
+        case actionAccounts.USER_DELETE_SUCCESS:
+            state.response = true;
+            state.responseOK = true;
+            state.responseData = action.body;
+            state.loading = false;
+            return state;
+        case actionAccounts.USER_DELETE_FAILURE:
+            state.response = true;
+            state.responseOK = false;
+            state.responseData = action.data.message;
+            state.loading = false;
+            return state;
         default:
             return state
     }

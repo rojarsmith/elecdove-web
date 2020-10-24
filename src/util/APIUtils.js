@@ -96,6 +96,7 @@ export const apiAccountDetail = data => normalGetWithTokenRequest.get("/account/
 export const apiAccountUpdateDetail = data => jsonWithTokenRequest.post("/account/update-detail", data);
 export const apiUserAll = () => normalGetWithTokenRequest.get("/user/all");
 export const apiUserSingle = data => normalGetWithTokenRequest.get("/user/single/" + data);
+export const apiUserDelete = data => normalGetWithTokenRequest.get("/user/delete/" + data);
 
 export const apiRoleMultiAll = () => normalGetWithTokenRequest.get("/role/multi/all");
 

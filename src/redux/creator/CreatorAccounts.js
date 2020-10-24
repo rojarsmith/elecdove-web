@@ -8,6 +8,7 @@ export const creatorAccounts = {
     updateDetail,
     userAll,
     userSingle,
+    userDelete,
     getAccountDetail
 };
 
@@ -258,7 +259,54 @@ function userAll() {
     }
 }
 
+function userDelete(data) {
+    return async dispatch => {
+        dispatch(request(data));
 
+        await AccountService.userDelete(data)
+            .then(
+                body => {
+                    dispatch(success(body));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch({
+                        type: actionModals.OPEN_SIMPLE, action:
+                            () => {
+                                try {
+                                    if (error.response.data.message) {
+                                        console.log(error.response.data.message);
+                                    }
+                                    return 'Get single user failed';
+                                } catch (e) {
+                                    return 'Service in maintenance.'
+                                }
+                            }
+                    });
+                }
+            );
+    };
+
+    function request(data) { return { type: actionAccounts.USER_DELETE_REQUEST, data } }
+    function success(body) { return { type: actionAccounts.USER_DELETE_SUCCESS, body } }
+    function failure(error) {
+        let emsg = '';
+        try {
+            if (!error.response) {
+                emsg = error.message;
+            } else {
+
+                emsg = error.response.data.message;
+            }
+        } catch (e) {
+            emsg = 'Service in maintenance.';
+        }
+
+        return {
+            type: actionAccounts.USER_DELETE_FAILURE, data: { message: emsg }
+        }
+    }
+}
 
 // Bugs
 function getAccountDetail(data) {

@@ -39,7 +39,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function UserManagement() {
+export default function UserManagement(props) {
   const [dataSource, _setDataSource] = useState([]);
   const dataSourceRef = useRef(dataSource);
   const setDataSource = (data) => {
@@ -86,7 +86,7 @@ export default function UserManagement() {
           // we've added some custom button actions
           <div className="actions-right">
             {/* use this button to add a like kind of action */}
-            <Button
+            {/* <Button
               justIcon
               round
               simple
@@ -95,7 +95,7 @@ export default function UserManagement() {
               className="like"
             >
               <Favorite />
-            </Button>{" "}
+            </Button>{" "} */}
             {/* use this button to add a edit kind of action */}
             <Button
               justIcon
@@ -125,18 +125,18 @@ export default function UserManagement() {
     })
   }
 
-  const clickActive = (event, userId) => {
-    event.preventDefault();
+  // const clickActive = (event, userId) => {
+  //   event.preventDefault();
 
-    let obj = dataSourceRef.current.find(o => o.id === userId);
-    alert(
-      "Active button on \n{ \nId: " +
-      userId +
-      ", \nName: " +
-      obj.name +
-      "\n}."
-    );
-  };
+  //   let obj = dataSourceRef.current.find(o => o.id === userId);
+  //   alert(
+  //     "Active button on \n{ \nId: " +
+  //     userId +
+  //     ", \nName: " +
+  //     obj.name +
+  //     "\n}."
+  //   );
+  // };
 
   const clickEdit = (event, userId) => {
     event.preventDefault();
@@ -160,7 +160,10 @@ export default function UserManagement() {
       if (o.id === userId) {
         // here you should add some custom code so you can delete the data
         // from this component and from your server as well
-        newData.splice(i, 1);
+        dispatch(creatorAccounts.userDelete({ state: userId })).then(
+          newData.splice(i, 1)
+        )
+
         return true;
       }
       return false;
