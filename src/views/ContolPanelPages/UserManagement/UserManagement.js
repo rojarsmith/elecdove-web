@@ -64,6 +64,7 @@ export default function UserManagement() {
           row.push(prop.id);
           row.push(prop.name);
           row.push(prop.email);
+          row.push(prop.roleList.map((item) => { return item.name }).toString());
           return row;
         })
 
