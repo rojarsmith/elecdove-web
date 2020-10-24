@@ -44,7 +44,7 @@ export default function UserManagementEdit(props) {
   const [updateProfileButton, setUpdateProfileButton] = useState(false);
   const [checked, setChecked] = useState([-1]);
   const defaultInputs = {
-    actived: '',
+    actived: false,
     email: '',
     emailVerified: '',
     roleList: [],
@@ -90,9 +90,6 @@ export default function UserManagementEdit(props) {
   useEffect(() => {
     if (accou.responseOK && initial) {
       fillDefaultValue()
-
-      // setInputs({...backupInputs});
-      // setInitial(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accou.responseOK]);
@@ -122,6 +119,22 @@ export default function UserManagementEdit(props) {
     }
     const { id, value } = event.target;
     setInputs(inputs => ({ ...inputs, [id]: value }));
+  }
+
+  function handleChangeCustomCheckboxs(event) {
+    const { id, checked } = event.target;
+
+    let bbb = role.allRoles.filter((role)=>{return role.code === id});
+
+    const newChecked = [...inputs.roleList];
+    if(checked) {
+      newChecked.push(...bbb);
+      setInputs(inputs => ({...inputs, roleList: newChecked}));
+    }else{
+      let ddd = newChecked.filter((role)=>{return role.code !== id});
+      let ccc = 0;
+      setInputs(inputs => ({...inputs, roleList: ddd}));
+    }
   }
 
   function handleInputValidate(event) {
@@ -325,12 +338,12 @@ export default function UserManagementEdit(props) {
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
                     <CustomCheckboxs
-                      id="aaa"
+                      id="rolelistCustomCheckboxs"
                       all={role.allRoles}
-                      value= {inputs.roleList}
+                      checkedIndexes= {inputs.roleList}
+                      checkboxs={role.allRoles}
                       checkboxsProps={{
-                        // value: inputs.roleList,
-                        onChange: (event) => handleChange(event),
+                        onChange: (event) => handleChangeCustomCheckboxs(event),
                         onBlur: (event) => handleInputValidate(event),
                       }}
                     />
