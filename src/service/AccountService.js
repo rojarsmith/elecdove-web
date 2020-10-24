@@ -5,6 +5,7 @@ import {
   apiUserAll,
   apiUserSingle,
   apiUserDelete,
+  apiUserUpdateEntire,
   apiAccountDetail
 } from "../util/APIUtils";
 const querystring = require('querystring');
@@ -84,6 +85,17 @@ class AccountService {
 
   async userDelete(data) {
     return await apiUserDelete(data.state)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        throw error;
+      });
+  }
+
+  userUpdateEntire(data) {
+    return apiUserUpdateEntire(data)
       .then((response) => {
         return response.data;
       })

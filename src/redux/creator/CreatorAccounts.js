@@ -9,6 +9,7 @@ export const creatorAccounts = {
     userAll,
     userSingle,
     userDelete,
+    userUpdateEntire,
     getAccountDetail
 };
 
@@ -304,6 +305,59 @@ function userDelete(data) {
 
         return {
             type: actionAccounts.USER_DELETE_FAILURE, data: { message: emsg }
+        }
+    }
+}
+
+function userUpdateEntire(data) {
+    return dispatch => {
+        dispatch(request(data));
+
+        AccountService.userUpdateEntire(data)
+            .then(
+                body => {
+                    dispatch(success(body));
+                    dispatch({
+                        type: actionModals.OPEN_SIMPLE,
+                        action: "Update completed."
+                    });
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch({
+                        type: actionModals.OPEN_SIMPLE, action:
+                            () => {
+                                try {
+                                    if (error.response.data.message) {
+                                        console.log(error.response.data.message);
+                                    }
+                                    return 'Update failed';
+                                } catch (e) {
+                                    return 'Service in maintenance.'
+                                }
+                            }
+                    });
+                }
+            );
+    };
+
+    function request(data) { return { type: actionAccounts.USER_UPDATE_ENTIRE_REQUEST, data } }
+    function success(body) { return { type: actionAccounts.USER_UPDATE_ENTIRE_SUCCESS, body } }
+    function failure(error) {
+        let emsg = '';
+        try {
+            if (!error.response) {
+                emsg = error.message;
+            } else {
+
+                emsg = error.response.data.message;
+            }
+        } catch (e) {
+            emsg = 'Service in maintenance.';
+        }
+
+        return {
+            type: actionAccounts.USER_UPDATE_ENTIRE_FAILURE, data: { message: emsg }
         }
     }
 }

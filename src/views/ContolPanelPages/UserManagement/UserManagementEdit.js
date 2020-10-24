@@ -102,7 +102,7 @@ export default function UserManagementEdit(props) {
     handleChange({ target: { id: 'emailVerified', value: accou.userSingle.emailVerified } })
     handleChange({ target: { id: 'roleList', value: accou.userSingle.roleList } })
 
-    handleChange({ target: { id: 'realname', value: accou.userSingle.personInformation.realName } })
+    handleChange({ target: { id: 'realname', value: accou.userSingle.personInformation?.realName } })
     handleChange({ target: { id: 'company', value: accou.userSingle.personInformation.company } })
     handleChange({ target: { id: 'job', value: accou.userSingle.personInformation.job } })
     handleChange({ target: { id: 'phone', value: accou.userSingle.personInformation.phone } })
@@ -243,15 +243,14 @@ export default function UserManagementEdit(props) {
   const handleClickUpdateProfileButton = (event) => {
     event.preventDefault();
 
-    if (checkInputComplete(['realname', 'company', 'job', 'phone', 'address', 'taxcode']) === false) {
-      return false;
-    }
+    // if (checkInputComplete(['realname', 'company', 'job', 'phone', 'address', 'taxcode']) === false) {
+    //   return false;
+    // }
 
     backupInputs = inputs;
 
-    dispatch(creatorAccounts.updateDetail({
+    dispatch(creatorAccounts.userUpdateEntire({
       ...inputs,
-      realName: inputs.realname,
       id: userId
     }));
 

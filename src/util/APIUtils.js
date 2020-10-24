@@ -16,7 +16,6 @@ const configNormalGet = {
 
 const configNormalGetWithToken = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
-    // withCredentials: true,
     headers: { ...authHeader() },
     validateStatus: function (status) {
         return status >= 200 && status < 300; // default
@@ -84,6 +83,18 @@ normalGetWithTokenRequest.interceptors.request.use(
     }
 );
 
+jsonWithTokenRequest.interceptors.request.use(
+    function (config) {
+        // Do something before request is sent
+        config.headers.Authorization = authHeader().Authorization;
+        return config;
+    },
+    function (error) {
+        // Do something with request error
+        return Promise.reject(error);
+    }
+);
+
 export const apiUserLogin = data => xformRequest.post("/oauth/token", data);
 export const apiUserCheck = data => xformRequest.post("/oauth/check_token", data);
 export const apiUserSignUp = data => jsonRequest.post("/auth/signup", data);
@@ -97,6 +108,7 @@ export const apiAccountUpdateDetail = data => jsonWithTokenRequest.post("/accoun
 export const apiUserAll = () => normalGetWithTokenRequest.get("/user/all");
 export const apiUserSingle = data => normalGetWithTokenRequest.get("/user/single/" + data);
 export const apiUserDelete = data => normalGetWithTokenRequest.get("/user/delete/" + data);
+export const apiUserUpdateEntire = data => jsonWithTokenRequest.post("/user/update/entire", data);
 
 export const apiRoleMultiAll = () => normalGetWithTokenRequest.get("/role/multi/all");
 
