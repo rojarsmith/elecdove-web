@@ -168,7 +168,7 @@ function Table({ columns, data }) {
                       classes={{
                         select: classes.select
                       }}
-                      value={pageSelect}
+                      value={pageSelectData.length >= 1 ? pageSelect : ""}
                       onChange={event => {
                         gotoPage(event.target.value);
                         handlePageSelect(event.target.value);

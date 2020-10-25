@@ -46,7 +46,7 @@ export default function UserManagementEdit(props) {
   const defaultInputs = {
     actived: false,
     email: '',
-    emailVerified: '',
+    emailVerified: false,
     roleList: [],
     realname: '',
     // realnameState: '',
@@ -124,16 +124,16 @@ export default function UserManagementEdit(props) {
   function handleChangeCustomCheckboxs(event) {
     const { id, checked } = event.target;
 
-    let bbb = role.allRoles.filter((role)=>{return role.code === id});
+    let bbb = role.allRoles.filter((role) => { return role.code === id });
 
     const newChecked = [...inputs.roleList];
-    if(checked) {
+    if (checked) {
       newChecked.push(...bbb);
-      setInputs(inputs => ({...inputs, roleList: newChecked}));
-    }else{
-      let ddd = newChecked.filter((role)=>{return role.code !== id});
+      setInputs(inputs => ({ ...inputs, roleList: newChecked }));
+    } else {
+      let ddd = newChecked.filter((role) => { return role.code !== id });
       let ccc = 0;
-      setInputs(inputs => ({...inputs, roleList: ddd}));
+      setInputs(inputs => ({ ...inputs, roleList: ddd }));
     }
   }
 
@@ -144,6 +144,24 @@ export default function UserManagementEdit(props) {
 
   function handleInputValidateLogic(itemname) {
     switch (itemname) {
+      case 'email':
+        if (inputs.email === '') {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "State"]: 'error',
+            [itemname + 'StateMessage']: "Please input E-mail."
+          }));
+          return false;
+        }
+        else if (ValidationUtils.validateEmail(inputs.email) === false) {
+          setInputs(inputs => ({
+            ...inputs,
+            [itemname + "State"]: 'error',
+            [itemname + 'StateMessage']: "Invalid E-mail."
+          }));
+          return false;
+        }
+        break;
       case 'realname':
         if (inputs.realname === '') {
           setInputs(inputs => ({
@@ -243,9 +261,9 @@ export default function UserManagementEdit(props) {
   const handleClickUpdateProfileButton = (event) => {
     event.preventDefault();
 
-    // if (checkInputComplete(['realname', 'company', 'job', 'phone', 'address', 'taxcode']) === false) {
-    //   return false;
-    // }
+    if (checkInputComplete(['email', 'realname', 'company', 'job', 'phone', 'address', 'taxcode']) === false) {
+      return false;
+    }
 
     backupInputs = inputs;
 
@@ -264,6 +282,10 @@ export default function UserManagementEdit(props) {
     setInputs({ ...defaultInputs });
 
     fillDefaultValue();
+  }
+
+  const handleClickPreviousButton = (event) => {
+    history.goBack();
   }
 
   function checkInputComplete(inputs) {
@@ -308,9 +330,15 @@ export default function UserManagementEdit(props) {
                     Regist Time:{' '}{accou.userSingle?.registTime}
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
+                    IP:{' '}{accou.userSingle?.ip}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.formCategory}>
+                      User can not login of inactived.
+                    </div>
                     <FormControlLabel
                       control={<Checkbox id="actived" checked={inputs.actived} onChange={handleChange} />}
-                      label="Actived"
+                      label="User Actived"
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
@@ -336,10 +364,13 @@ export default function UserManagementEdit(props) {
                     />
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.formCategory}>
+                      Role
+                    </div>
                     <CustomCheckboxs
                       id="rolelistCustomCheckboxs"
                       all={role.allRoles}
-                      checkedIndexes= {inputs.roleList}
+                      checkedIndexes={inputs.roleList}
                       checkboxs={role.allRoles}
                       checkboxsProps={{
                         onChange: (event) => handleChangeCustomCheckboxs(event),
@@ -448,7 +479,7 @@ export default function UserManagementEdit(props) {
                     />
                     <div className={classes.formCategory}>
                       <small>*</small> Required fields
-              </div>
+                    </div>
                   </GridItem>
                 </GridContainer>
                 <Button id="update-profile-button" color="rose" className={classes.updateProfileButton}
@@ -457,9 +488,14 @@ export default function UserManagementEdit(props) {
                   Update
               </Button>
                 <Button id="reset-profile-button" color="rose" className={classes.updateProfileButton}
-                  style={{ marginTop: 50 }}
+                  style={{ marginRight: 50, marginTop: 50 }}
                   onClick={(event) => handleClickResetProfileButton(event)}>
                   Reset
+              </Button>
+                <Button id="reset-profile-button" color="rose" className={classes.updateProfileButton}
+                  style={{ marginTop: 50 }}
+                  onClick={(event) => handleClickPreviousButton(event)}>
+                  Previous
               </Button>
                 <Clearfix />
               </CardBody>

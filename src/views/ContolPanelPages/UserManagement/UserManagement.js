@@ -108,17 +108,20 @@ export default function UserManagement(props) {
               <Dvr />
             </Button>{" "}
             {/* use this button to remove the data row */}
-            <Button
-              justIcon
-              round
-              simple
-              onClick={(event) => clickDelete(event, prop[1])
-              }
-              color="danger"
-              className="remove"
-            >
-              <Close />
-            </Button>{" "}
+            {
+              prop[1] !== 1 &&
+              <Button
+                justIcon
+                round
+                simple
+                onClick={(event) => clickDelete(event, prop[1])
+                }
+                color="danger"
+                className="remove"
+              >
+                <Close />
+              </Button>
+            }{" "}
           </div>
         )
       };
