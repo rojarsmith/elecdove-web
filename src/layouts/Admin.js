@@ -13,7 +13,7 @@ import FooterStyleA from "components/Footer/FooterStyleA.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { creatorAccounts } from "redux/creator";
+import { creatorAccounts, creatorRoles } from "redux/creator";
 import { useParams } from "react-router";
 import { useHistory } from 'react-router-dom';
 import routes from "routes.js";
@@ -40,6 +40,7 @@ export default function Dashboard(props) {
   const classes = useStyles();
   const authe = useSelector(state => state.authentication);
   const accou = useSelector(state => state.account);
+  const role = useSelector(state => state.role);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -58,6 +59,7 @@ export default function Dashboard(props) {
     }
 
     try {
+      dispatch(creatorRoles.roleMultiAll());
       dispatch(creatorAccounts.getUser({ history: history }));
     } catch (e) {
       history.push('/');
@@ -118,6 +120,27 @@ export default function Dashboard(props) {
     }
 
     return routes.map((prop, key) => {
+      // Permission
+      let pAllow = [];
+      if (accou.user && role) {
+        if (prop.code) {
+          let rolesRaw = role.allRoles.filter((ro) => {
+            return accou.user.authorities.indexOf(ro.code) >= 0;
+          })
+          let rolesFlat = rolesRaw.map((ro) => {
+            return ro.permissionList.map((item2) => { return item2.code })
+          }).flat()
+          pAllow = [...(new Set(rolesFlat))];
+          if (!pAllow || pAllow.length <= 0) {
+            return;
+          }
+        }
+      }
+
+      if (prop.code && pAllow.length <= 0) {
+        return (<div></div>);
+      }
+
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
@@ -141,6 +164,7 @@ export default function Dashboard(props) {
       }
     });
   };
+
   const sidebarMinimize = () => {
     setMiniActive(!miniActive);
   };

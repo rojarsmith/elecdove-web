@@ -24,10 +24,12 @@ var dashRoutes = [
   },
   {
     type: 'spliter',
+    code: 'ADMIN_PANEL'
   },
   {
     type: 'group-title',
-    text: 'Admin'
+    text: 'Admin',
+    code: 'ADMIN_PANEL'
   },
   {
     path: "/user-management/index",
@@ -35,7 +37,8 @@ var dashRoutes = [
     rtlName: "",
     icon: IconsBuild,
     component: UserManagement,
-    layout: "/contol-panel"
+    layout: "/contol-panel",
+    code: 'ADMIN_PANEL'
   },
   {
     type: 'hidden-page',

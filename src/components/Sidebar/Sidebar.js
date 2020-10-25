@@ -114,6 +114,25 @@ class Sidebar extends React.Component {
   createLinks = routes => {
     const { classes, color, rtlActive } = this.props;
     return routes.map((prop, key) => {
+      let pAllow = [];
+      if (prop.code && this.props.store.getState().account.user) {
+        let dbg0 = this.props.store.getState().account.user;
+        let dbg5 = this.props.store.getState().role.allRoles;
+
+        let rolesRaw = dbg5.filter((ro) => {
+          return dbg0.authorities.indexOf(ro.code) >= 0;
+        })
+        let rolesFlat = rolesRaw.map((ro) => {
+          return ro.permissionList.map((item2) => { return item2.code })
+        }).flat()
+        pAllow = [...(new Set(rolesFlat))].filter((ro) => {
+          return prop.code === ro;
+        });
+        if (!pAllow || pAllow.length <= 0) {
+          return;
+        }
+      }
+
       if (prop.redirect) {
         return null;
       }
