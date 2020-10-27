@@ -21,6 +21,7 @@ import Parallax from "components/Parallax/Parallax.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Footer from "components/Footer/Footer.js";
+import FooterStyleA from "components/Footer/FooterStyleA.js";
 import Table from "components/Table/Table.js";
 import Button from "components/CustomButtons/Button.js";
 import Card from "components/Card/Card.js";
@@ -293,63 +294,7 @@ export default function ShoppingCartPage({ ...rest }) {
           </Card>
         </div>
       </div>
-      <Footer
-        content={
-          <div>
-            <div className={classes.left}>
-              <List className={classes.list}>
-                <ListItem className={classes.inlineBlock}>
-                  <a
-                    href="https://elecdove.com/?ref=mkpr-shopping-cart"
-                    target="_blank"
-                    className={classes.block}
-                  >
-                    Elecdove
-                  </a>
-                </ListItem>
-                <ListItem className={classes.inlineBlock}>
-                  <a
-                    href="https://elecdove.com/presentation?ref=mkpr-shopping-cart"
-                    target="_blank"
-                    className={classes.block}
-                  >
-                    About us
-                  </a>
-                </ListItem>
-                <ListItem className={classes.inlineBlock}>
-                  <a
-                    href=""
-                    target="_blank"
-                    className={classes.block}
-                  >
-                    Blog
-                  </a>
-                </ListItem>
-                <ListItem className={classes.inlineBlock}>
-                  <a
-                    href="https://elecdove.com/license?ref=mkpr-shopping-cart"
-                    target="_blank"
-                    className={classes.block}
-                  >
-                    Licenses
-                  </a>
-                </ListItem>
-              </List>
-            </div>
-            <div className={classes.right}>
-              &copy; {1900 + new Date().getYear()} , made with{" "}
-              <Favorite className={classes.icon} /> by{" "}
-              <a
-                href="https://elecdove.com?ref=mkpr-shopping-cart"
-                target="_blank"
-              >
-                Elecdove
-              </a>{" "}
-              for a better web.
-            </div>
-          </div>
-        }
-      />
+      <Footer className={classes.footer} content={<FooterStyleA />} />
     </div>
   );
 }
