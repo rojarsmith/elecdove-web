@@ -25,6 +25,8 @@ import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import Clearfix from "components/Clearfix/Clearfix.js";
 
+import { useHistory } from 'react-router-dom';
+
 import suit1 from "assets/img/examples/suit-1.jpg";
 import suit2 from "assets/img/examples/suit-2.jpg";
 import suit3 from "assets/img/examples/suit-3.jpg";
@@ -72,6 +74,8 @@ export default function SectionProducts() {
     setChecked(newChecked);
   };
   const classes = useStyles();
+  const history = useHistory();
+
   return (
     <div className={classes.section}>
       <div className={classes.container}>
@@ -907,12 +911,12 @@ export default function SectionProducts() {
               <GridItem md={4} sm={4}>
                 <Card plain product>
                   <CardHeader noShadow image>
-                    <a href="#pablo">
+                    <a href="/product-page/">
                       <img src={suit1} alt=".." />
                     </a>
                   </CardHeader>
                   <CardBody plain>
-                    <a href="#pablo">
+                    <a href="/product-page">
                       <h4 className={classes.cardTitle}>Polo Ralph Lauren</h4>
                     </a>
                     <p className={classes.description}>
