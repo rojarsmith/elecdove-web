@@ -81,15 +81,15 @@ export default function UserProfile(props) {
 
   function fillDefaultValue() {
     console.info(accou)
-    // if (accou.account.id && accou.account?.personInformation?.realName) {
-      setAccountID(accou.account.id);
+    setAccountID(accou.account.id);
+    if (accou.account.personInformation) {
       handleChange({ target: { id: 'realname', value: accou.account.personInformation.realName } })
       handleChange({ target: { id: 'company', value: accou.account.personInformation.company } })
       handleChange({ target: { id: 'job', value: accou.account.personInformation.job } })
       handleChange({ target: { id: 'phone', value: accou.account.personInformation.phone } })
       handleChange({ target: { id: 'address', value: accou.account.personInformation.address } })
       handleChange({ target: { id: 'taxcode', value: accou.account.personInformation.taxcode } })
-    // }
+    }
   }
 
   function handleChange(event) {
