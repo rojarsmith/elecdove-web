@@ -16,6 +16,7 @@ import Person from "@material-ui/icons/Person";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 // core components
 import Button from "components/CustomButtons/Button.js";
+import ButtonBadge from "components/CustomButtons/ButtonBadge";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
@@ -165,9 +166,9 @@ export default function HeaderLinks(props) {
         </ListItem>
       )}
       <ListItem className={classes.listItem}>
-        <Button badgeContent={1} badgeContentMax={99} color="transparent" className={classes.navLink} component={NavLink} to="/shopping-cart-page">
+        <ButtonBadge badgeContent={1} badgeContentMax={99} color="transparent" className={classes.navLink} component={NavLink} to="/shopping-cart-page">
           <ShoppingCart className={classes.icons} />Shopping Cart
-        </Button>
+        </ButtonBadge>
       </ListItem>
       {
         process.env.REACT_APP_DEV &&
