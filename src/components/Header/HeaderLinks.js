@@ -95,6 +95,12 @@ export default function HeaderLinks(props) {
     dispatch({ type: actionModals.OPEN_SIMPLE, action: "function debug1 actionModals.OPEN_SIMPLE" });
   }
 
+  function labpage(event) {
+    event.preventDefault();
+
+    history.push("/lab-page");
+  }
+
   function debug1(event) {
     event.preventDefault();
 
@@ -177,21 +183,31 @@ export default function HeaderLinks(props) {
             }}
             dropdownList={[
               <Link className={classes.dropdownLink}
-                onClick={debugModal1}>
+                onClick={debugModal1}
+                to="/">
                 Modal1
               </Link>,
               <Link className={classes.dropdownLink}
-                onClick={debugModal2}>
+                onClick={debugModal2}
+                to="/">
                 Modal2
               </Link>,
               <Link
                 className={classes.dropdownLink}
-                onClick={debug1}>
+                onClick={labpage}
+                to="/">
+                LabPage
+              </Link>,
+              <Link
+                className={classes.dropdownLink}
+                onClick={debug1}
+                to="/">
                 Debug1
               </Link>,
               <Link
                 className={classes.dropdownLink}
-                onClick={debug2}>
+                onClick={debug2}
+                to="/">
                 Debug2
               </Link>
             ]}

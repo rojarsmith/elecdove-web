@@ -9,6 +9,7 @@ import { Route, Switch, withRouter, useLocation, useHistory } from 'react-router
 import AboutUsPage from "views/AboutUsPage/AboutUsPage.js";
 import ContactUsPage from "views/ContactUsPage/ContactUsPage.js";
 import EcommercePage from "views/EcommercePage/EcommercePage.js";
+import LabPage from "views/LabPage/LabPage.js";
 // import LandingPage from "views/LandingPage/LandingPage.js";
 import LoginPage from "views/LoginPage/LoginPage.js";
 import ShoppingCartPage from "views/ShoppingCartPage/ShoppingCartPage.js";
@@ -152,6 +153,7 @@ class App extends Component {
           <Route path="/login-page" component={LoginPage} />
           <Route path="/shopping-cart-page" component={ShoppingCartPage} />
           <Route path="/signup-page" component={SignupPage} />
+          <Route path="/lab-page" component={LabPage} />
           <Route path="/message-page" component={MessagePage} />
           <Route path="/product-page" component={ProductPage} />
           <Route path="/confirm-account/:token" render={(props) => <MessagePage type="confirmmail" {...props} />} />

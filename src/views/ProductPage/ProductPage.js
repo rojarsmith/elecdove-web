@@ -18,6 +18,7 @@ import VerifiedUser from "@material-ui/icons/VerifiedUser";
 import Favorite from "@material-ui/icons/Favorite";
 // core components
 import Header from "components/Header/Header.js";
+import HeaderBrand from "components/Header/HeaderBrand.js";
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import Parallax from "components/Parallax/Parallax.js";
 import GridContainer from "components/Grid/GridContainer.js";
@@ -47,7 +48,7 @@ import product4 from "assets/img/examples/product4.jpg";
 
 const useStyles = makeStyles(productStyle);
 
-export default function ProductPage() {
+export default function ProductPage({ ...rest }) {
   const [colorSelect, setColorSelect] = React.useState("0");
   const [sizeSelect, setSizeSelect] = React.useState("0");
   const classes = useStyles();
@@ -72,14 +73,16 @@ export default function ProductPage() {
   return (
     <div className={classes.productPage}>
       <Header
-        brand="Material Kit PRO React"
-        links={<HeaderLinks dropdownHoverColor="rose" />}
-        fixed
+        brand={<HeaderBrand />}
+        absolute
         color="transparent"
         changeColorOnScroll={{
           height: 100,
           color: "rose"
         }}
+        links={<HeaderLinks dropdownHoverColor="info" />}
+        fixed
+        {...rest}
       />
       <Parallax
         image={require("assets/img/bg6.jpg")}
